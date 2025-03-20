@@ -12,4 +12,9 @@ class UnitKerja extends Model
     {
         return $this->hasMany(Unit::class, 'unit_kerja_id', 'id');
     }
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class,'id');
+    }
 }

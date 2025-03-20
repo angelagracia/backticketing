@@ -17,4 +17,9 @@ class Type extends Model
     {
         return $this->belongsTo(Topic::class, 'topic_id', 'id');
     }
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class,'id');
+    }
 }

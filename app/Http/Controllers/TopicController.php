@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Type;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 
@@ -65,6 +66,13 @@ class TopicController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('kategori.index')->with('error', 'Data gagal diubah');
         }
+    }
+
+    public function detail($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $menu_master = Menu::all();
+        return view('back.kategori.detail', compact('topic', 'menu_master'));
     }
 
     public function hapus($id) {

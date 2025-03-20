@@ -11,5 +11,10 @@ class Status extends Model
     protected $table = 'master_status';
     protected $fillable = ['master_status'];
     protected $primaryKey = 'id';
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class,'id');
+    }
     
 }

@@ -40,7 +40,7 @@
                                   onclick="return confirm('Are you sure? This action cannot be undone.')">
                                   <i class="fas fa-trash"></i>
                                </a>
-                                <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
+                                <a href="{{ route('sub_kategori.detail',$item->id) }}" class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>
                     @endforeach

@@ -14,4 +14,9 @@ class Unit extends Model
     {
         return $this->belongsTo(UnitKerja::class, 'unit_kerja_id', 'id');
     }
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class,'id');
+    }
 }
