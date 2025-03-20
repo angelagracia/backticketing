@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Unit;
 use App\Models\Topic;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -26,8 +27,9 @@ class FrontendController extends Controller
     public function kirimcepat()
     {
         $peran = Unit::all();
+        $unit_kerja = UnitKerja::all();
         $kategori = Topic::all(); 
-        return view('front.layouts.input_form_kc', compact('peran','kategori'));
+        return view('front.layouts.input_form_kc', compact('peran','kategori','unit_kerja'));
     }
 
     public function home()
