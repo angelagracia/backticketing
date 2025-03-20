@@ -97,9 +97,9 @@
                           <label for="email">Email</label><span class="required"></span>
                           <input type="email" id="email" class="required" placeholder="Masukkan Email">
 
-                          <label for="role" class="mt-4">Unit Kerja</label><span class="required"></span>
+                          {{-- <label for="role" class="mt-4">Unit Kerja</label><span class="required"></span>
                           <select id="role" name="role"  class="form-select" required>
-                              {{-- <option value="">Pilih Unit Kerja</option> --}}
+                              <option value="">Pilih Unit Kerja</option>
                               <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
                               <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
                               <option value="3">Fakultas Seni Pertunjukan</option>
@@ -115,6 +115,14 @@
                               <option value="13">UPA Pengembangan Karir dan Kewirausahaan</option>
                               <option value="14">UPA  Layanan Uji Kompetensi</option>
                               <option value="15">Satuan Pengawas Internal</option>
+                          </select> --}}
+
+                          <label for="unit_kerja" class="mt-4">Unit Kerja</label><span class="required"></span>
+                          <select id="unit_kerja" name="unit_kerja" class="form-select" required>
+                              <option value="">Pilih Unit Kerja</option>
+                              @foreach($unit_kerja as $unit_kerja)
+                                  <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->name }}</option>
+                              @endforeach
                           </select>
 
                         </div>
