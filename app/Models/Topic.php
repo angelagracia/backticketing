@@ -16,6 +16,11 @@ class Topic extends Model
     {
         return $this->hasMany(Type::class,'id');
     }
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class,'id');
+    }
 }
 
 

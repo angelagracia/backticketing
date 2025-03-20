@@ -26,7 +26,7 @@
 
 
                 <div class="card-body">
-                    <form action="{{ route('sub_menu.prosesAdd') }}" method="POST">
+                    <form action="{{ route('sub-menu.prosesAdd') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <!-- Nama Sub Menu -->

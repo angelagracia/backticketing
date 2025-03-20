@@ -206,12 +206,16 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-wrap justify-content-end bottom-content">
-                                <a class="lost-pass" href="forgetpassword.html">Lupa password?</a>
+                                @if (Route::has('password.request'))
+                                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                                        {{ __('Forgot your password?') }}
+                                    </a>
+                                @endif
                             </div>
                             <div class="button">
                                 <button class="btn" type="submit">Sign In</button>
-                                <a class="btn alt" href="register.html">Buat Akun</a>
                             </div>
+                            <p class="text-center create-new-account mt-3">Kamu Belum memiliki akun ? <a href="{{ route('register') }}">Daftar</a></p>
                         </div>
                     </form>
                 </div>

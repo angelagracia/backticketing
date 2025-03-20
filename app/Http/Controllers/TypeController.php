@@ -75,6 +75,14 @@ class TypeController extends Controller
         }
     }
 
+
+    public function detail($id)
+    {
+        $master_type = Type::findOrFail($id);
+        $master_topic = Topic::all(); // Ambil semua data kategori
+        return view('back.sub_kategori.formDetail', compact('master_type', 'master_topic'));
+    }
+
     public function hapus($id)
     {
         $type = Type::findOrFail($id);
