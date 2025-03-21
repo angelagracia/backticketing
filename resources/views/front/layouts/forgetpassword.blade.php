@@ -11,12 +11,8 @@
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-
         <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
-
-
-		<link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
-
+        <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
@@ -493,10 +489,6 @@
         <script src="{{ asset('front/assets/js/wow.min.js') }}"></script>
         <script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
 		<script src="{{ asset('front/assets/js/main.js') }}"></script>
-        <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
-        <!-- <script>
-            CKEDITOR.replace( 'ckeditor' );
-        </script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
