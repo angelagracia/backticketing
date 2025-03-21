@@ -10,16 +10,20 @@
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Form Edit Ticket</h4>
+                    <h4>Detail Ticket</h4>
                 </div>
                 <div class="card-body p-0">
-                    <form action="{{ route('ticket.prosesEdit') }}" method="post" enctype="multipart/form-data">
+                    <form action="#" method="GET" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body">
                             <input type="hidden" name="id" value="{{ $ticket->id }}">
                             <div class="form-group">
                                 <label for="nama" class="form-label">Nama</label>
                                 <input type="text" name="nama" id="name" class="form-control" value="{{ $ticket->name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" name="status" id="status" class="form-control" value="{{ $ticket->status->name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
@@ -97,30 +101,23 @@
                                         <input type="checkbox" name="delete_lampiran[]" value="{{ $attachment->id }}"> Hapus
                                     </div>
                                 @endforeach
-
-
-                            
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="" class="form-label">Status</label>
-                                <div class="form-group">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select name="status" class="form-control" required>
-                                        @foreach ($enumValues as $value)
-                                            <option value="{{ $value }}" {{ old('status', $menu->status) == $value ? 'selected' : '' }}>
-                                                {{ ucfirst($value) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>                             --}}
-                            
-                        </div>
-                        <div class="card-footer text-right">
-                            <button type="submit"class="btn btn-primary mr-1">Edit</button>
-                            <a href="{{ route('ticket.index')}}" class="btn btn-secondary"> Kembali</a>
                         </div>
                     </form>
+                    <div class="card-footer text-right">
+                        <div class="d-flex justify-content-end">
+                            <a href="" class="btn btn-success mr-2"> Chatting</a>
+                            <a href="{{ route('ticket.index')}}" class="btn btn-danger mr-2"> Kembali</a>
+                            <form action="{{ route('ticket.proses', $ticket->id) }}" method="POST">
+                                @csrf
+                                @method('POST')
+                                @if($ticket->status_id != 2) <!-- Cek jika status_id bukan 2 (Processed) -->
+                                    <button type="submit" class="btn btn-primary mr-1">Proses</button>
+                                @endif
+                            </form>                                                       
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
