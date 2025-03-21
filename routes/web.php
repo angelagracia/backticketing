@@ -129,6 +129,8 @@ Route::post('/get-subcategories', [TicketController::class, 'getSubcategories'])
 Route::post('/ticket/prosesTambah', [TicketController::class, 'prosesTambah'])->name('ticket.prosesTambah');
 Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
 Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name('ticket.prosesEdit');
+Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
 Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
 
 

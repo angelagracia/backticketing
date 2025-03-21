@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\Ticket;
-use App\Models\TicketAttachment;
-use App\Models\Topic;
 use App\Models\Type;
 use App\Models\Unit;
+use App\Models\Topic;
+use App\Models\Ticket;
 use App\Models\UnitKerja;
 use Illuminate\Http\Request;
+use App\Models\TicketAttachment;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -81,7 +82,7 @@ class TicketController extends Controller
             'unit_kerja_id' => $request->unit_kerja_id,
             'topic_id' => $request->topic_id,
             'type_id' => $request->type_id,
-            'judul' => $request->judul,
+            'title' => $request->judul,
             'req_description' => $request->description,
             'status_id' => 1, // Status otomatis Open
             
@@ -117,4 +118,105 @@ class TicketController extends Controller
         // return view('back.topic.formEdit', ['topic' => $topic, 'master_menu' => $menu_master]);
         return view('back.ticket.formEdit', compact('ticket', 'menu_master','master_unit','unit_kerja','topic_master','master_type'));
     }
+
+    public function prosesEdit(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'no_telepon' => 'required',
+            'unit' => 'required',
+            'unit_kerja' => 'required',
+            'kategori' => 'required',
+            'sub_kategori' => 'required',
+            'judul' => 'required',
+            'description' => 'required',
+            'lampiran.*' => 'mimes:jpg,jpeg,png,pdf,docx|max:2048',
+        
+        ]);
+
+        // Cari tiket berdasarkan ID
+        $ticket = Ticket::findOrFail($request->id);
+
+        // Update data tiket
+        $ticket->update([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'telepon' => $request->no_telepon,
+            'unit_id' => $request->unit,
+            'unit_kerja_id' => $request->unit_kerja,
+            'topic_id' => $request->kategori,
+            'type_id' => $request->sub_kategori,
+            'title' => $request->judul,
+            'req_description' => $request->description,
+        
+        ]);
+
+        // Hapus lampiran yang dipilih
+        if ($request->delete_lampiran) {
+            foreach ($request->delete_lampiran as $attachId) {
+                $attachment = TicketAttachment::find($attachId);
+                if ($attachment) {
+                    Storage::delete('public/' . $attachment->file_path);
+                    $attachment->delete();
+                }
+            }
+        }
+
+        // Simpan lampiran baru jika ada
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->file('lampiran') as $file) {
+                $filePath = $file->store('lampiran', 'public');
+                TicketAttachment::create([
+                    'ticket_id' => $ticket->id,
+                    'file_name' => $file->getClientOriginalName(),
+                    'file_path' => $filePath,
+                ]);
+            }
+        }
+        // Redirect ke halaman tiket setelah update
+        return redirect()->route('ticket.index')->with('success', 'Data berhasil diubah');
+    }
+
+
+    public function detail($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $master_unit = Unit::all();
+        $unit_kerja = UnitKerja::all();
+        $topic_master = Topic::all();
+        $master_type = Type::all();
+        $menu_master = Menu::all();
+        return view('back.ticket.formDetail', compact('ticket', 'menu_master','master_unit','unit_kerja','topic_master','master_type'));
+
+    }
+
+
+    public function delete($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete();
+        return redirect()->route('ticket.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    
+    public function proses($id)
+    {
+        // Cari tiket berdasarkan ID
+
+        $ticket = Ticket::findOrFail($id);
+        $ticket->status = 'Processed';
+
+        // Ubah status tiket menjadi "In Progress" atau status yang sesuai
+        $ticket->status_id = 2;  // Misalnya 2 untuk status "In Progress"
+        
+        // Simpan perubahan
+        $ticket->save();
+
+        // Kembalikan ke halaman sebelumnya dengan pesan sukses
+        return redirect()->route('ticket.index')->with('success', 'Status tiket berhasil diubah.');
+    }
+
+
 }
