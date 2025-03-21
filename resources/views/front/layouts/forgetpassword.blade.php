@@ -11,11 +11,23 @@
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
+
         <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+
+
+		<link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+
         <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
 		<link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
 		<!-- <link rel="stylesheet" href="dashboard/style.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -448,6 +460,27 @@
         
         
 		<!-- ========================= JS here ========================= -->
+
+
+<script src="{{ asset('front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+
+<script src="{{ asset('front/assets/js/contact-form.js') }}"></script>
+<script src="{{ asset('front/assets/js/count-up.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
+<script src="{{ asset('front/assets/js/isotope.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/wow.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
+<script src="{{ asset('front/assets/js/main.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
+<!-- <script>
+    CKEDITOR.replace( 'ckeditor' );
+</script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
