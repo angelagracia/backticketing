@@ -8,41 +8,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('front/assets/img/logo/icon-isi.png') }}">
-        <!-- Place favicon.ico in the root directory -->
+
 		<!-- ========================= CSS here ========================= -->
 		<link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
         <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-		<link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
-		<!-- <link rel="stylesheet" href="dashboard/style.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
     </head>
     <body>
-        <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-
         <!-- ========================= preloader start ========================= -->
-            <div class="preloader">
-                <div class="loader">
-                    <div class="ytp-spinner">
-                        <div class="ytp-spinner-container">
-                            <div class="ytp-spinner-rotator">
-                                <div class="ytp-spinner-left">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
-                                <div class="ytp-spinner-right">
-                                    <div class="ytp-spinner-circle"></div>
-                                </div>
+        <div class="preloader">
+            <div class="loader">
+                <div class="ytp-spinner">
+                    <div class="ytp-spinner-container">
+                        <div class="ytp-spinner-rotator">
+                            <div class="ytp-spinner-left">
+                                <div class="ytp-spinner-circle"></div>
+                            </div>
+                            <div class="ytp-spinner-right">
+                                <div class="ytp-spinner-circle"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <!-- preloader end -->
 
         <!-- ========================= header start ========================= -->
@@ -52,7 +46,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index.html">
-                                <img src="{{ asset('front/assets/img/logo/logo-ticketing.svg') }}" alt="Logo">
+                                <img src="{{ asset('front/assets/img/logo/logo-new.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -69,23 +63,17 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="page-scroll" href="#about">About</a>
-                                    </li>
-                                    <li class="nav-item">
+                                    </li> 
+                                     <li class="nav-item">
                                         <a class="page-scroll" href="#alur-tiketing">Alur Tiketing</a>
-                                    </li>
+                                    </li> 
                                     <li class="nav-item">
                                         <a class="page-scroll" href="#faqs">FAQS</a>
                                     </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="page-scroll" href="#team">Team</a>
-                                    </li> -->
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="{{ route('contact') }}">Contact</a>
+                                        <a class="page-scroll" href="{{route('contact')}}">Contact</a>
                                     </li>
                                 </ul>
-                                <!-- <div class="header-btn">
-                                    <a href="javascript:void(0)" class="theme-btn">Get Started</a>
-                                </div> -->
                             </div> <!-- navbar collapse -->
                             <div class="button">
                                 {{-- <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
@@ -99,63 +87,35 @@
                     </div>
                 </div> <!-- row -->
             </div> <!-- container -->
-        
         </header>
         <!-- ========================= header end ========================= -->
 
-        <!-- ========================= carousel-section end ========================= -->
-
-        <!-- <section id="home" class="hero-area style2">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="hero-content wow fadeInLeft" data-wow-delay=".3s">
-                            <h1>Helpdesk UPA TIK ISI Yogyakarta</h1>
-                            <p>From open source to pro services, Piqes helps you
-                                to build, deploy, test, and monitor apps.</p>
-                                <div class="subscribe-section mt-5">
-                                    <form action="#" class="subscribe-form wow fadeInRight" data-wow-delay=".4s">
-                                        <input type="text" name="subs-email" id="subs-email" placeholder="Cari Ticket">
-                                        <a href="detail_ticket_kc.html"><button type="submit"><i class="lni lni-search-alt"></i></button></a>
-                                    </form>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
-                            <img src="dashboard/woman-image.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
 
         <!-- Start Hero Area -->
-    <section class="hero-area style3" id="home">
-        <div class="hero-inner" style="background-image:url('{{ asset('front/assets/img/carousel/Saraswati.png') }}');">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-lg-6 co-12">
-                        <div class="home-slider">
-                            <div class="hero-text">
-                                <!-- <h5 class="wow fadeInUp" data-wow-delay=".2s">We're here to help our clients.</h5> -->
-                                <h1 class="wow fadeInUp" data-wow-delay=".4s">Helpdesk UPA TIK ISI Yogyakarta</h1>
-                                <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk UPA TIK berkomitmen untuk memberikan dukungan terkait sistem informasi, jaringan internet, perangkat keras dan lunak, serta layanan TIK lainnya guna mendukung kelancaran kegiatan akademik dan administratif.</p>
-                                <div class="subscribe-section mt-5">
-                                    <form action="{{ route('detail_ticket_kc') }}" class="subscribe-form wow fadeInRight" data-wow-delay=".4s">
-                                        <input type="text" name="subs-email" id="subs-email" placeholder="Cari Ticket">
-                                        <a href="{{ route('detail_ticket_kc') }}"><button type="submit"><i class="lni lni-search-alt"></i></button></a>
-                                    </form>
+        <section class="hero-area style3" id="home">
+            <div class="hero-inner" style="background-image: url('{{ asset('front/assets/img/carousel/Saraswati.png') }}');">
+                <div class="container">
+                    <div class="row ">
+                        <div class="col-lg-6 co-12">
+                            <div class="home-slider">
+                                <div class="hero-text">
+                                    <!-- <h5 class="wow fadeInUp" data-wow-delay=".2s">We're here to help our clients.</h5> -->
+                                    <h1 class="wow fadeInUp" data-wow-delay=".4s">Helpdesk UPA TIK ISI Yogyakarta</h1>
+                                    <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk UPA TIK berkomitmen untuk memberikan dukungan terkait sistem informasi, jaringan internet, perangkat keras dan lunak, serta layanan TIK lainnya guna mendukung kelancaran kegiatan akademik dan administratif.</p>
+                                    <div class="subscribe-section mt-5">
+                                        <form action="" class="subscribe-form wow fadeInRight" data-wow-delay=".4s">
+                                            <input type="text" name="subs-email" id="subs-email" placeholder="Cari Ticket">
+                                            <a href=""><button type="submit"><i class="lni lni-search-alt"></i></button></a>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--/ End Hero Area -->
+        </section>
+        <!--/ End Hero Area -->
 
         <!-- ========================= carousel-section end ========================= -->
 
@@ -168,10 +128,6 @@
                             <div class="about-img-wrapper">
                                 <div class="about-img position-relative d-inline-block wow fadeInLeft" data-wow-delay=".3s">
                                     <img src="{{ asset('front/assets/img/carousel/Group 5.png') }}" alt="">
-                                    <!-- <div class="about-experience">
-                                        <h3>5 Year Of Working Experience</h3>
-                                        <p>We Crafted an aweso design library that is robust and intuitive to use.</p>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -194,103 +150,51 @@
         </section>
         <!--========================= about-section end========================= -->
 
-        <!-- ========================= feature-section start ========================= -->
-        <!-- <section id="features" class="feature-section pt-100">
+
+        <!-- Start Features Area -->
+        <section class="features style2 section pt-100 pb-100">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 col-md-9 mx-auto">
                         <div class="section-title text-center mb-55">
-                            <span class="wow fadeInDown" data-wow-delay=".2s">Features</span>
+                            <span class="wow fadeInDown" data-wow-delay=".2s">Our Features</span>
                             <h2 class="wow fadeInUp" data-wow-delay=".4s">Kenapa Helpdesk Ticketing ISI Yogyakarta ?</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">At vero eos et accusamus et iusto odio dignissimos ducimus quiblanditiis praesentium</p>
+                            <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk Ticketing ISI Yogyakarta hadir untuk memberikan kemudahan dalam pengelolaan layanan Teknologi Informasi dan Komunikasi (TIK) bagi sivitas akademika ISI Yogyakarta.</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="feature-box box-style">
-                            <div class="feature-icon box-icon-style">
-                                <i class="lni lni-layers"></i>
-                            </div>
-                            <div class="box-content-style feature-content">
-                                <h4>Empati</h4>
-                                <p>Memberikan solusi untuk permasalahan jaringan yang terjadi pada pelanggan</p>
-                            </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Start Single Feature -->
+                        <div class="single-feature wow fadeInUp" data-wow-delay=".2s">
+                            <i class="lni lni-comments-alt"></i>
+                            <h3><a href="#">EMPATI</a></h3>
+                            <p>Memberikan solusi untuk permasalahan jaringan yang terjadi pada civitas akademika di ISI Yogyakarta</p>
                         </div>
+                        <!-- End Single Feature -->
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="feature-box box-style">
-                            <div class="feature-icon box-icon-style">
-                                <i class="lni lni-brush-alt"></i>
-                            </div>
-                            <div class="box-content-style feature-content">
-                                <h4>Cepat</h4>
-                                <p>Merespon panggilan atau komplain pelanggan dengan cepat</p>
-                            </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Start Single Feature -->
+                        <div class="single-feature wow fadeInUp" data-wow-delay=".4s">
+                            <i class="lni lni-briefcase"></i>
+                            <h3><a href="#">CEPAT</a></h3>
+                            <p>Merespon panggilan atau komplain <br> kepada civitas akademika di ISI Yogyakarta dengan cepat</p>
                         </div>
+                        <!-- End Single Feature -->
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="feature-box box-style">
-                            <div class="feature-icon box-icon-style">
-                                <i class="lni lni-pointer-up"></i>
-                            </div>
-                            <div class="box-content-style feature-content">
-                                <h4>Terbaik</h4>
-                                <p>Memberikan service terbaik untuk kepuasan pelanggan</p>
-                            </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Start Single Feature -->
+                        <div class="single-feature wow fadeInUp" data-wow-delay=".6s">
+                            <i class="lni lni-select"></i>
+                            <h3><a href="#">TERBAIK</a></h3>
+                            <p>Memberikan service terbaik untuk kepuasan bagi civitas akademika <br> di ISI Yogyakarta</p>
                         </div>
+                        <!-- End Single Feature -->
                     </div>
                 </div>
             </div>
-        </section> -->
-        <!-- ========================= feature-section end ========================= -->
-
-
-        <!-- Start Features Area -->
-    <section class="features style2 section pt-100 pb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-7 col-md-9 mx-auto">
-                    <div class="section-title text-center mb-55">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Our Features</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Kenapa Helpdesk Ticketing ISI Yogyakarta ?</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk Ticketing ISI Yogyakarta hadir untuk memberikan kemudahan dalam pengelolaan layanan Teknologi Informasi dan Komunikasi (TIK) bagi sivitas akademika ISI Yogyakarta.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Feature -->
-                    <div class="single-feature wow fadeInUp" data-wow-delay=".2s">
-                        <i class="lni lni-comments-alt"></i>
-                        <h3><a href="#">EMPATI</a></h3>
-                        <p>Memberikan solusi untuk permasalahan jaringan yang terjadi pada civitas akademika di ISI Yogyakarta</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Feature -->
-                    <div class="single-feature wow fadeInUp" data-wow-delay=".4s">
-                        <i class="lni lni-briefcase"></i>
-                        <h3><a href="#">CEPAT</a></h3>
-                        <p>Merespon panggilan atau komplain <br> kepada civitas akademika di ISI Yogyakarta dengan cepat</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Single Feature -->
-                    <div class="single-feature wow fadeInUp" data-wow-delay=".6s">
-                        <i class="lni lni-select"></i>
-                        <h3><a href="#">TERBAIK</a></h3>
-                        <p>Memberikan service terbaik untuk kepuasan bagi civitas akademika <br> di ISI Yogyakarta</p>
-                    </div>
-                    <!-- End Single Feature -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Features Area -->
+        </section>
+        <!-- /End Features Area -->
 
         
         <!-- =============== alur-tiketing start =============== -->
@@ -370,6 +274,7 @@
             </div>
         </section>
         <!-- =============== alur-tiketing end =============== -->
+        
         <!-- ========================= service-section start ========================= -->
         <section id="services" class="service-section pt-130">
             <div class="container">
@@ -430,197 +335,98 @@
             </div>
         </section>
         <!-- ========================= service-section end ========================= -->
-
-        <!-- =============== FAQ start ============== -->
-        <!-- <section id="faq" class="ud-faq pt-150">
-            <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                            <div class="ud-section-title text-center mx-auto">
-                                <span style="margin-top:-90px;">FAQ</span>
-                                <h2 style="margin-top: 50px;">Frequently Asked Questions</h2>
-                                <p style="margin-top: 50px;">
-                                There are many variations of passages of Lorem Ipsum available
-                                but the majority have suffered alteration in some form.
-                                </p>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 50px;">
-                            <div class="col-lg-6">
-                                <div class="process-faq">
-                                    <div class="faq-item mb-15 wow fadeInUp" data-wow-delay=".1s">
-                                        <div class="accordion"  id="accordionExample3">
-                                            <div class="faq-header" id="faq-heading-7">
-                                                <button class="faq-btn collapsed" type="button" data-toggle="collapse" data-target="#faq-7"
-                                                        aria-expanded="true" aria-controls="faq-7">
-                                                        <span class="pt-0">Bagaimana cara menggunakan sistem helpdesk tiketing?</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div id="faq-7" class="collapse" aria-labelledby="faq-heading-7" data-parent="#accordionExample3">
-                                            <div class="faq-body">
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddinonumy eirmod tempor invidunt
-                                                    ut labore.Smratseo is a brand of digital agency.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="faq-item mb-15 wow fadeInUp" data-wow-delay=".1s">
-                                        <div class="accordion"  id="accordionExample3">
-                                            <div class="faq-header" id="faq-heading-8">
-                                                <button class="faq-btn collapsed" type="button" data-toggle="collapse" data-target="#faq-8"
-                                                        aria-expanded="true" aria-controls="faq-8">
-                                                        <span class="pt-0">Bagaimana cara mengubah tiket yang sudah dibuat?</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div id="faq-8" class="collapse " aria-labelledby="faq-heading-8" data-parent="#accordionExample3">
-                                            <div class="faq-body">
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddinonumy eirmod tempor invidunt
-                                                    ut labore.Smratseo is a brand of digital agency.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="process-faq">
-                                    <div class="faq-item mb-15 wow fadeInUp" data-wow-delay=".1s">
-                                        <div class="accordion"  id="accordionExample3">
-                                            <div class="faq-header" id="faq-heading-9">
-                                                <button class="faq-btn collapsed" type="button" data-toggle="collapse" data-target="#faq-9"
-                                                        aria-expanded="true" aria-controls="faq-9">
-                                                        <span class="pt-0">Apa yang harus dilakukan apabila tiket sudah diakhiri tapi pekerjaan belum selesai sepenuhnya?</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div id="faq-9" class="collapse" aria-labelledby="faq-heading-9" data-parent="#accordionExample3">
-                                            <div class="faq-body">
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddinonumy eirmod tempor invidunt
-                                                    ut labore.Smratseo is a brand of digital agency.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="faq-item mb-15 wow fadeInUp" data-wow-delay=".1s">
-                                        <div class="accordion"  id="accordionExample3">
-                                            <div class="faq-header" id="faq-heading-10">
-                                                <button class="faq-btn collapsed" type="button" data-toggle="collapse" data-target="#faq-10"
-                                                        aria-expanded="true" aria-controls="faq-10">
-                                                        <span class="pt-0">Which license I need?</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div id="faq-10" class="collapse " aria-labelledby="faq-heading-10" data-parent="#accordionExample3">
-                                            <div class="faq-body">
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddinonumy eirmod tempor invidunt
-                                                    ut labore.Smratseo is a brand of digital agency.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="main-btn" style="margin-left: auto;" href="faqs.html">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <!-- =============== FAQ end ===============  -->
         
 
-         <!-- Start Faq Area -->
-    <section class="faq section pb-100 pt-100" id="faqs">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-7 col-md-9 mx-auto">
-                    <div class="section-title text-center mx-auto wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                        <span>FAQ</span>
-                        <h2>Frequently Asked Questions</h2>
-                        <p>FAQ kumpulan pertanyaan yang sering diajukan mengenai layanan Helpdesk Ticketing ISI Yogyakarta.</p>
+        <!-- Start Faq Area -->
+        <section class="faq section pb-100 pt-100" id="faqs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md-9 mx-auto">
+                        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                            <span>FAQ</span>
+                            <h2>Frequently Asked Questions</h2>
+                            <p>FAQ kumpulan pertanyaan yang sering diajukan mengenai layanan Helpdesk Ticketing ISI Yogyakarta.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-8 offset-lg-2 col-md-12 col-12">
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <span>Bagaimana cara masuk ke sistem helpdesk tiketing?</span><i class="lni lni-chevron-down"></i>
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                        ultrices gravida.</p>
+                    <div class="col-lg-8 offset-lg-2 col-md-12 col-12">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span>Bagaimana cara masuk ke sistem helpdesk tiketing?</span><i class="lni lni-chevron-down"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
+                                            ultrices gravida.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <span>Siapa saja yang boleh mengirim keluhan di sistem ticketing?</span><i
-                                        class="lni lni-chevron-down"></i>
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                        ultrices gravida.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                        ultrices gravida.</p>
+                            <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span>Siapa saja yang boleh mengirim keluhan di sistem ticketing?</span><i
+                                            class="lni lni-chevron-down"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
+                                            ultrices gravida.</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
+                                            ultrices gravida.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    <span>Apa yang harus dilakukan apabila tiket sudah diakhiri tapi pekerjaan belum selesai sepenuhnya?</span><i
-                                        class="lni lni-chevron-down"></i>
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                        ultrices gravida.</p>
+                            <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <span>Apa yang harus dilakukan apabila tiket sudah diakhiri tapi pekerjaan belum selesai sepenuhnya?</span><i
+                                            class="lni lni-chevron-down"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
+                                            ultrices gravida.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    <span>Bagaimana cara masuk menggunakan sistem kirim cepat?</span><i
-                                        class="lni lni-chevron-down"></i>
-                                </button>
-                            </h2>
-                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                                        ultrices gravida.</p>
+                            <div class="accordion-item wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <span>Bagaimana cara masuk menggunakan sistem kirim cepat?</span><i
+                                            class="lni lni-chevron-down"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
+                                            ultrices gravida.</p>
+                                    </div>
                                 </div>
                             </div>
+                            <a class="main-btn" style="margin-right: auto;" href="{{ route('faqs') }}">Selengkapnya</a>
                         </div>
-                        <a class="main-btn" style="margin-right: auto;" href="{{ route('faqs') }}">Selengkapnya</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--/ End Faq Area -->
+        </section>
+        <!--/ End Faq Area -->
 
 
         <!-- ========================= footer start ========================= -->
@@ -630,7 +436,7 @@
                     <div class="col-xl-5 col-lg-4 col-md-4">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
                             <a href="index.html" class="logo mb-30"><img src="{{ asset('front/assets/img/logo/Group 4.svg') }}" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                             <div class="footer-social-links">
                                 <ul class="d-flex">
                                     <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>
@@ -660,25 +466,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-3 col-lg-3 col-md-6">
-                        <div class="footer-widget mb-60 wow fadeInUp" data-wow-delay=".6s">
-                            <h4>Service</h4>
-                            <ul class="footer-links">
-                                <li>
-                                    <a href="javascript:void(0)">Marketing</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Branding</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Graphics Design</a>
-                                </li> 
-                            </ul>
-                        </div>
-                    </div> -->
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-20 wow fadeInRight" data-wow-delay=".8s">
                             <h4>Contact</h4>
@@ -697,7 +484,6 @@
                         </div>
                     </div>
                 </div>
-    
                 <div class="copyright-area">
                     <p class="mb-0 text-black text-center">Copyright © 2025. UPA. Teknologi Informasi dan Komunikasi</p>
                 </div>
@@ -710,166 +496,161 @@
             <i class="lni lni-arrow-up"></i>
         </a>
 
-    <!-- Login Modal -->
-    <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog max-width-px-840 position-relative">
-            <button type="button"
-                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-                data-dismiss="modal"><i class="lni lni-close"></i></button>
-            <div class="login-modal-main">
-                <div class="row no-gutters">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="heading text-center">
-                                <h3>Masuk Akun</h3>
-                                <p>Masuk untuk melanjutkan akun Anda</p>
-                            </div>
-                            <div class="or-devider">
-                               
-                            </div>
-                            <form action="/">
-                                <div class="form-group">
-                                    <label for="email" class="label">E-mail</label>
-                                    <input type="email" class="form-control" placeholder="contoh@gmail.com" id="email">
+        <!-- Login Modal -->
+        <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog max-width-px-840 position-relative">
+                <button type="button"
+                    class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                    data-dismiss="modal"><i class="lni lni-close"></i></button>
+                <div class="login-modal-main">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="heading text-center">
+                                    <h3>Masuk Akun</h3>
+                                    <p>Masuk untuk melanjutkan akun Anda</p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Kata Sandi</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control" id="password"
-                                            placeholder="Masukkan Kata Sandi">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex flex-wrap justify-content-end">
-                                    <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Lupa Kata Sandi</a>
-                                </div>
-                                <div class="form-group mb-8 button" >
-                                    <button class="btn btn-primary"> <a href="#">Masuk</a>
-                                    </button>
-                                </div>
-                                <p class="text-center create-new-account">Belum memiliki Akun? <a href="#" data-toggle="modal" data-target="#signup" data-dismiss="modal">Daftar</a></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Login Modal -->
-
-    <!-- Signup Modal -->
-    <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog max-width-px-840 position-relative">
-            <button type="button"
-                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-                data-dismiss="modal"><i class="lni lni-close"></i></button>
-            <div class="login-modal-main">
-                <div class="row no-gutters">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="heading text-center">
-                                <h3>Buat Akun Baru</h3>
-                                <p>Buat akun Anda untuk melanjutkan proses ticketing</p>
-                            </div>
-                            <div class="or-devider">
-                                <!-- <span>Or</span> -->
-                            </div>
-                            <form action="/">
-                                <div class="form-group">
-                                    <label for="email" class="label">E-mail</label>
-                                    <input type="email" class="form-control" placeholder="contoh@gmail.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Kata Sandi</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control"
-                                            placeholder="Masukkan Kata Sandi">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Konfirmasi Kata Sandi</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control"
-                                            placeholder="Masukkan Kata Sandi">
-                                    </div>
-                                </div>
-                                <div class="form-group mb-8 button">
-                                    <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Daftar</a>
-                                    </button>
-                                </div>
-                                <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Masuk</a></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Signup Modal -->
-
-    <!-- Kirim Cepat -->
-
-
-    <div class="modal fade form-modal" id="kircep" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog max-width-px-900 position-relative">
-            <button type="button"
-                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-                data-dismiss="modal"><i class="lni lni-close"></i></button>
-            <div class="login-modal-main modal-lg">
-                <div class="row no-gutters">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="heading">
-                                <h3>Create a free Account <br> Today</h3>
-                                <!-- <p>Create your account to continue <br> and explore new jobs.</p> -->
-                            </div>
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
-                                </div>
-                                <div class="form-group">
-                                  <label for="message-text" class="col-form-label">Message:</label>
-                                  <textarea class="summernote" name="ckeditor"></textarea>
-                                </div>
+                                <div class="or-devider">
                                 
-                                <div class="row">
-                                    <div class="col-12">
-                                      <div class="card">
-                                        <div class="card-header">
-                                          <h4>Multiple Upload</h4>
-                                        </div>
-                                        <div class="card-body">
-                                          <form action="#" class="dropzone" id="mydropzone">
-                                            <div class="fallback">
-                                              <input name="file" type="file" multiple />
-                                            </div>
-                                          </form>
-                                        </div>
-                                      </div>
-                                    </div>
                                 </div>
-                            </form>    
-                                <div class="form-group row mb-4">
-                                    <div class="col-sm-12 col-md-7">
-                                    <button class="btn btn-primary mt-3">Publish</button>
-                                </div>                 
+                                <form action="/">
+                                    <div class="form-group">
+                                        <label for="email" class="label">E-mail</label>
+                                        <input type="email" class="form-control" placeholder="contoh@gmail.com" id="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="label">Kata Sandi</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" id="password"
+                                                placeholder="Masukkan Kata Sandi">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex flex-wrap justify-content-end">
+                                        <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Lupa Kata Sandi</a>
+                                    </div>
+                                    <div class="form-group mb-8 button" >
+                                        <button class="btn btn-primary"> <a href="#">Masuk</a>
+                                        </button>
+                                    </div>
+                                    <p class="text-center create-new-account">Belum memiliki Akun? <a href="#" data-toggle="modal" data-target="#signup" data-dismiss="modal">Daftar</a></p>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- End Login Modal -->
 
+        <!-- Signup Modal -->
+        <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog max-width-px-840 position-relative">
+                <button type="button"
+                    class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                    data-dismiss="modal"><i class="lni lni-close"></i></button>
+                <div class="login-modal-main">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="heading text-center">
+                                    <h3>Buat Akun Baru</h3>
+                                    <p>Buat akun Anda untuk melanjutkan proses ticketing</p>
+                                </div>
+                                <div class="or-devider">
+                                    <!-- <span>Or</span> -->
+                                </div>
+                                <form action="/">
+                                    <div class="form-group">
+                                        <label for="email" class="label">E-mail</label>
+                                        <input type="email" class="form-control" placeholder="contoh@gmail.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="label">Kata Sandi</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control"
+                                                placeholder="Masukkan Kata Sandi">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="label">Konfirmasi Kata Sandi</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control"
+                                                placeholder="Masukkan Kata Sandi">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-8 button">
+                                        <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Daftar</a>
+                                        </button>
+                                    </div>
+                                    <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Masuk</a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Signup Modal -->
 
-    <!-- End Kirim Cepat -->
+        <!-- Kirim Cepat -->
+        <div class="modal fade form-modal" id="kircep" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog max-width-px-900 position-relative">
+                <button type="button"
+                    class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                    data-dismiss="modal"><i class="lni lni-close"></i></button>
+                <div class="login-modal-main modal-lg">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="heading">
+                                    <h3>Create a free Account <br> Today</h3>
+                                    <!-- <p>Create your account to continue <br> and explore new jobs.</p> -->
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Message:</label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Message:</label>
+                                    <textarea class="summernote" name="ckeditor"></textarea>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                            <h4>Multiple Upload</h4>
+                                            </div>
+                                            <div class="card-body">
+                                            <form action="#" class="dropzone" id="mydropzone">
+                                                <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                                </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </form>    
+                                    <div class="form-group row mb-4">
+                                        <div class="col-sm-12 col-md-7">
+                                        <button class="btn btn-primary mt-3">Publish</button>
+                                    </div>                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Kirim Cepat -->
         
 		<!-- ========================= JS here ========================= -->
 		<script src="{{ asset('front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
-
 		<script src="{{ asset('front/assets/js/contact-form.js') }}"></script>
         <script src="{{ asset('front/assets/js/count-up.min.js') }}"></script>
         <script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
@@ -879,18 +660,15 @@
         <script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
 		<script src="{{ asset('front/assets/js/main.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
-        <!-- <script>
-            CKEDITOR.replace( 'ckeditor' );
-        </script> -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 new WOW().init();
             });
         </script>
-         <script type="text/javascript">
+        <script type="text/javascript">
             //========= testimonial 
             tns({
                 container: '.testimonial-slider',

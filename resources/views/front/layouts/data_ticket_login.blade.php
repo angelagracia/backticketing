@@ -7,30 +7,28 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/icon-isi.png">
+		<link rel="shortcut icon" type="image/x-icon" href="{{asset('front/assets/img/logo/icon-isi.png')}}">
         <!-- Place favicon.ico in the root directory -->
         
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-        <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
-		<link rel="stylesheet" href="assets/css/animate.css">
-		<link rel="stylesheet" href="assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="assets/css/main.css">
-        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"> -->
+        <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     </head>
     <body>
-          <!-- ========================= header start ========================= -->
-          <header class="header navbar-area bg-white">
+        <!-- ========================= header start ========================= -->
+        <header class="header navbar-area bg-white">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                            <a class="navbar-brand" href="{{route('index')}}">
+                                <img src="{{asset('front/assets/img/logo/logo-new.svg')}}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -43,25 +41,15 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="page-scroll active" href="dashboard/home.html">Home</a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="page-scroll" href="#about">About</a>
-                                    </li> -->
-                                    <!-- <li class="nav-item">
-                                        <a class="page-scroll" href="#alur-tiketing">Alur Tiketing</a>
-                                    </li> -->
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="#portfolio">FAQS</a>
+                                        <a class="page-scroll active" href="{{route('home')}}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="contact_login.html">Contact</a>
+                                        <a class="page-scroll" href="{{route('faqs_login')}}">FAQS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="{{route('home.contact_login')}}">Contact</a>
                                     </li>
                                 </ul>
-                                <!-- <div class="header-btn">
-                                    <a href="javascript:void(0)" class="theme-btn">Get Started</a>
-                                </div> -->
-
                             
 
                             </div> <!-- navbar collapse -->
@@ -101,20 +89,18 @@
                                 <!-- button profile -->
                                 <ul class="sign-in">
                                     <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="profile.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="dashboard/profile.html"><i class="lni lni-briefcase"></i>Profile</a>
-                                        <a class="dropdown-item" href="dashboard/akun.html"><i class="lni lni-rocket"></i> Account</a>
+                                        <a class="dropdown-item" href="{{route('profile')}}"><i class="lni lni-briefcase"></i>Profil</a>
+                                        <a class="dropdown-item" href="{{route('akun')}}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
                                 </ul>
-
                         </nav> <!-- navbar -->
                     </div>
                 </div> <!-- row -->
             </div> <!-- container -->
-        
         </header>
         <!-- ========================= header end ========================= -->
 
@@ -123,8 +109,14 @@
             <div class="card shadow-sm p-4">
                 <h4 class="mb-4">Data Tiket
                     <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
-                    <a href="detail_tiket.html"><button class="btn-data-tiket-detail">Detail</button></a>
-                    <button class="btn-edit-ticket-hidup" data-bs-toggle="modal" data-bs-target="#editTiketModal">Edit</button>
+                    <a href="{{ route('detail_ticket_login', ['id' => $ticket->id]) }}">
+                        <button class="btn-data-tiket-detail">Detail</button>
+                    </a>                    
+                    <a href="{{ route('ticketlogin.edit', $ticket->id) }}">
+                        <button class="btn-edit-ticket-hidup">Edit</button>
+                    </a>
+                    
+                    
                 </h4>
                 <div class="row content-section">
                     <div class="col-md-1"></div>
@@ -132,20 +124,20 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">No. Tiket</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">009992812</p>
+                            <p class="text-value">{{ ($ticket->ticket_number) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Nama</p>
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
-                                Irenne Dwi Natalia <br>
-                                <span class="text-muted">Tendik</span>
+                                {{ $ticket->name }} <br>
+                                <span class="text-muted">{{ $ticket->unit->name }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan</p>
+                            <p class="text-value">{{ $ticket->topic->name }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div> 
@@ -153,17 +145,26 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Status</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><span class="status-badge">Processed</span></p>
+                            <p class="text-value"><span class="status-badge status-open">{{ $ticket->status->name }}</span></p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Tanggal/Waktu</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">30/12/2024 13:30</p>
+                            <p class="text-value">{{ $ticket->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Lampiran</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><a href="#">screen-shot-1.jpg</a></p>
+                            <p class="text-value">
+                                @foreach($ticket->attachments as $attachment)
+                                <div>
+                                    @if(in_array(pathinfo($attachment->file_path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg']))
+                                        <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" width="100">
+                                    @else
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">Lihat Lampiran</a>
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -178,8 +179,8 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <a href="{{route('index')}}" class="logo mb-30"><img src="{{asset('front/assets/img/logo-isi-black.svg')}}" alt="logo"></a>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                             <div class="footer-social-links">
                                 <ul class="d-flex">
                                     <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>
@@ -295,57 +296,61 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editTicketForm">
+
+                        <form id="editTicketForm" method="POST">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <div class="input-box">
+                                    <input type="hidden" id="ticket_id" name="ticket_id">
                                     <label for="name">Nama <span class="required"></span></label>
-                                    <input type="text" id="name" class="required" placeholder="Masukkan Nama">
+                                    <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama" readonly>
                                 </div>
                                 <div class="input-box">
                                     <label for="title">Judul <span class="required"></span></label>
-                                    <input type="text" id="title" class="required" placeholder="Masukkan Judul">
+                                    <input type="text" id="title" name="judul" class="required" placeholder="Masukkan Judul">
                                 </div>
                             </div>
         
                             <div class="form-group">
                                 <div class="input-box half-width">
-                                  <label for="email">Email <span class="required"></span></label>
-                                  <input type="email" id="email" class="required" placeholder="Masukkan Email">
-        
-                                  <label for="role" class="mt-4">Unit Kerja <span class="required"></span></label>
-                                  <select id="role" class="form-select required">
-                                      <option value="">Pilih Unit Kerja</option>
-                                      <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
-                                      <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
-                                      <option value="3">Fakultas Seni Pertunjukan</option>
-                                      <option value="4">Fakultas Seni Rupa dan Desain</option>
-                                      <option value="5">Fakultas Seni Media Rekam</option>
-                                      <option value="6">Program Pascasarjana</option>
-                                      <option value="7">Lembaga Penelitian dan Pengabdian Masyarakat</option>
-                                      <option value="8">Lembaga Penjaminan Mutu dan Pengembangan Pembelajaran</option>
-                                      <option value="9">UPA Teknologi Informasi dan Komunikasi</option>
-                                      <option value="10">UPA Galeri dan Koleksi Seni</option>
-                                      <option value="12">UPA Bahasa</option>
-                                      <option value="12">UPA Pertunjukan Seni</option>
-                                      <option value="13">UPA Pengembangan Karir dan Kewirausahaan</option>
-                                      <option value="14">UPA  Layanan Uji Kompetensi</option>
-                                      <option value="15">Satuan Pengawas Internal</option>
-                                  </select>
+                                    <label for="email">Email <span class="required"></span></label>
+                                    <input type="email" id="email" name="email" class="required" placeholder="Masukkan Email" readonly>
+            
+                                    <label for="role" class="mt-4">Unit Kerja <span class="required"></span></label>
+                                    <select id="unit_kerja" name="unit_kerja" class="form-select required" disabled>
+                                        <option value="">Pilih Unit Kerja</option>
+                                        <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
+                                        <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
+                                        <option value="3">Fakultas Seni Pertunjukan</option>
+                                        <option value="4">Fakultas Seni Rupa dan Desain</option>
+                                        <option value="5">Fakultas Seni Media Rekam</option>
+                                        <option value="6">Program Pascasarjana</option>
+                                        <option value="7">Lembaga Penelitian dan Pengabdian Masyarakat</option>
+                                        <option value="8">Lembaga Penjaminan Mutu dan Pengembangan Pembelajaran</option>
+                                        <option value="9">UPA Teknologi Informasi dan Komunikasi</option>
+                                        <option value="10">UPA Galeri dan Koleksi Seni</option>
+                                        <option value="12">UPA Bahasa</option>
+                                        <option value="12">UPA Pertunjukan Seni</option>
+                                        <option value="13">UPA Pengembangan Karir dan Kewirausahaan</option>
+                                        <option value="14">UPA  Layanan Uji Kompetensi</option>
+                                        <option value="15">Satuan Pengawas Internal</option>
+                                    </select>
         
                                 </div>
                                 <div class="input-box half-width">
-                                  <label for="description">Deskripsi <span class="required"></span></label>
-                                  <textarea id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                                    <label for="description">Deskripsi <span class="required"></span></label>
+                                    <textarea id="description" name="deskripsi" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <div class="input-box">
                                     <label for="phone">No. telepon <span class="required"></span></label>
-                                    <input type="text" id="phone" class="required" placeholder="Masukkan No. Telepon">
+                                    <input type="text" id="phone" name="no_telepon" class="required" placeholder="Masukkan No. Telepon" readonly>
         
                                     <label for="role" class="mt-4">Peran <span class="required"></span></label>
-                                    <select id="role" class="form-select required">
+                                    <select id="unit" name="unit" class="form-select required" disabled>
                                         <option value="">Pilih Peran</option>
                                         <option value="1">Rektorat</option>
                                         <option value="2">Dekanat</option>
@@ -355,26 +360,25 @@
                                         <option value="6">Tendik</option>
                                         <option value="7">Umum</option>
                                     </select>
-        
-                                    
-        
+
                                     <label for="category" class="mt-4">Kategori <span class="required"></span></label>
-                                    <select id="category" class="form-select required" onchange="checkCategory()">
+                                    <select id="category" name="category" class="form-select required" onchange="checkCategory()">
                                         <option value="">Pilih Kategori</option>
                                         <option value="1">Perbaikan</option>
                                         <option value="2">Penambahan</option>
                                         <option value="3">Permohonan</option>
                                         <option value="4">Pemeliharaan</option>
                                     </select>
-        
+
                                     <label for="subcategory" class="mt-4">Sub Kategori <span class="required"></span></label>
-                                    <select id="subcategory" class="form-select required">
+                                    <select id="subcategory" name="sub_category" class="form-select required">
                                         <option value="">Pilih Sub Kategori</option>
                                         <option value="1">Perbaikan Jaringan</option>
                                         <option value="2">Penambahan Bandwidth</option>
                                         <option value="3">Pemasangan Jaringan</option>
                                         <option value="4">Perbaikan Komputer</option>
                                     </select>
+
         
                                 </div>
                                 <div class="input-box">
@@ -388,7 +392,7 @@
                                         </div>
                                         <div class="upload-box">
                                             <span>Upload file</span>
-                                            <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
+                                            <input type="file" name="lampiran[]" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
                                         </div>
                                     </div>
                                 </div>
@@ -406,26 +410,23 @@
         <!-- ========================= Edit Tiket End ===================== -->
 
         <!-- ========================= JS here ========================= -->
-        
-        
-        <!-- ========================= JS here ========================= -->
                 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-                
                 <!-- <script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script> -->
+                <script src="{{ asset('front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/contact-form.js') }}"></script>
+                <script src="{{ asset('front/assets/js/count-up.min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
+                <script src="{{ asset('front/assets/js/isotope.min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/glightbox.min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/wow.min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
+                <script src="{{ asset('front/assets/js/main.js') }}"></script>
+                <script src="{{ asset('front/assets/js/chat.js') }}"></script>
+                <script src="{{ asset('front/assets/js/input_form.js') }}"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-                <script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
-                <script src="assets/js/contact-form.js"></script>
-                <script src="assets/js/count-up.min.js"></script>
-                <script src="assets/js/tiny-slider.js"></script>
-                <script src="assets/js/isotope.min.js"></script>
-                <script src="assets/js/glightbox.min.js"></script>
-                <script src="assets/js/wow.min.js"></script>
-                <script src="assets/js/imagesloaded.min.js"></script>
-                <script src="assets/js/main.js"></script>
-                <script src="assets/js/chat.js"></script>
-                <script src="input_form.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <!-- <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script> -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
                 <script>
                     document.getElementById("logoutButton").addEventListener("click", function (event) {
                         event.preventDefault(); // Mencegah link langsung dijalankan
@@ -518,5 +519,42 @@
                         });
                     });
                 </script> -->
+
+                {{-- <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let editButtons = document.querySelectorAll(".btn-edit-ticket-hidup");
+
+                        editButtons.forEach(button => {
+                            button.addEventListener("click", function () {
+                                // Ambil data dari atribut data-*
+                                let ticketId = this.getAttribute("data-id");
+                                let name = this.getAttribute('data-name');
+                                let title = this.getAttribute("data-title");
+                                let description = this.getAttribute("data-description");
+                                let email = this.getAttribute("data-email");
+                                let phone = this.getAttribute("data-phone");
+                                let unitKerja = this.getAttribute("data-unit-kerja");
+                                let unit = this.getAttribute("data-unit");
+                                let category = this.getAttribute("data-category");
+                                let subCategory = this.getAttribute("data-sub-category");
+
+                                // Masukkan ke dalam form modal
+                                document.getElementById("ticket_id").value = ticketId;
+                                document.getElementById("name").value = name;
+                                document.getElementById("title").value = title;
+                                document.getElementById("description").value = description;
+                                document.getElementById("email").value = email;
+                                document.getElementById("phone").value = phone;
+                                document.getElementById("unit").value = unit; // Unit peran
+                                document.getElementById("unit_kerja").value = unitKerja; // Unit kerja
+                                document.getElementById("category").value = category; // Kategori
+                                document.getElementById("subcategory").value = subCategory; // Sub kategori
+
+                                // Update form action untuk update
+                                document.getElementById("editTicketForm").action = `/ticket/${ticketId}/update`;
+                            });
+                        });
+                    });
+                </script> --}}
     </body>
 </html>

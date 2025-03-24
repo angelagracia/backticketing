@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
         <!-- Select2 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">        </head>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"></head>
     <body>
        <!-- ========================= header start ========================= -->
        <header class="header navbar-area bg-white">
@@ -26,8 +26,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html">
-                            <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                        <a class="navbar-brand" href="{{ route('index') }}">
+                            <img src="{{ asset('front/assets/img/logo/logo_new.svg') }}" alt="Logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -40,7 +40,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul id="nav" class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="page-scroll active" href="#home">Home</a>
+                                    <a class="page-scroll active" href="{{ route('index') }}">Home</a>
                                 </li>
                                 <!-- <li class="nav-item">
                                     <a class="page-scroll" href="#about">About</a>
@@ -49,10 +49,10 @@
                                     <a class="page-scroll" href="#alur-tiketing">Alur Tiketing</a>
                                 </li> -->
                                 <li class="nav-item">
-                                    <a class="page-scroll" href="faqs.html">FAQS</a>
+                                    <a class="page-scroll" href="{{ route('faqs') }}">FAQS</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="page-scroll" href="contact.html">Contact</a>
+                                    <a class="page-scroll" href="{{ route('contact') }}">Contact</a>
                                 </li>
                             </ul>
                             <!-- <div class="header-btn">
@@ -80,42 +80,23 @@
                 <span style="color: red;">*</span> Semua informasi adalah benar dan bebas dari kesalahan.
             </div>
             <div class="form-container-inputform">
-                <form id="submissionForm">
+                <form name="input_kc" action="{{ route('prosesSimpan') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <div class="input-box">
                             <label for="name">Nama</label><span class="required"></span>
-                            <input type="text" id="name" class="required" placeholder="Masukkan Nama">
+                            <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama">
                         </div>
                         <div class="input-box">
                             <label for="title">Judul</label><span class="required"></span>
-                            <input type="text" id="title" class="required" placeholder="Masukkan Judul">
+                            <input type="text" name="judul" id="title" class="required" placeholder="Masukkan Judul">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="input-box half-width">
                           <label for="email">Email</label><span class="required"></span>
-                          <input type="email" id="email" class="required" placeholder="Masukkan Email">
-
-                          {{-- <label for="role" class="mt-4">Unit Kerja</label><span class="required"></span>
-                          <select id="role" name="role"  class="form-select" required>
-                              <option value="">Pilih Unit Kerja</option>
-                              <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
-                              <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
-                              <option value="3">Fakultas Seni Pertunjukan</option>
-                              <option value="4">Fakultas Seni Rupa dan Desain</option>
-                              <option value="5">Fakultas Seni Media Rekam</option>
-                              <option value="6">Program Pascasarjana</option>
-                              <option value="7">Lembaga Penelitian dan Pengabdian Masyarakat</option>
-                              <option value="8">Lembaga Penjaminan Mutu dan Pengembangan Pembelajaran</option>
-                              <option value="9">UPA Teknologi Informasi dan Komunikasi</option>
-                              <option value="10">UPA Galeri dan Koleksi Seni</option>
-                              <option value="12">UPA Bahasa</option>
-                              <option value="12">UPA Pertunjukan Seni</option>
-                              <option value="13">UPA Pengembangan Karir dan Kewirausahaan</option>
-                              <option value="14">UPA  Layanan Uji Kompetensi</option>
-                              <option value="15">Satuan Pengawas Internal</option>
-                          </select> --}}
+                          <input type="email" name="email" id="email" class="required" placeholder="Masukkan Email">
 
                           <label for="unit_kerja" class="mt-4">Unit Kerja</label><span class="required"></span>
                           <select id="unit_kerja" name="unit_kerja" class="form-select" required>
@@ -128,14 +109,14 @@
                         </div>
                         <div class="input-box half-width">
                           <label for="description">Deskripsi</label><span class="required"></span>
-                          <textarea id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                          <textarea name="deskripsi" id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="input-box">
                             <label for="phone">No. telepon</label><span class="required"></span>
-                            <input type="text" id="phone" class="required" placeholder="Masukkan No. Telepon">
+                            <input type="text" name="no_telepon" id="phone" class="required" placeholder="Masukkan No. Telepon">
 
                             <label for="unit" class="mt-4">Peran</label><span class="required"></span>
                             <select id="unit" name="unit" class="form-select" required>
@@ -144,9 +125,6 @@
                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                 @endforeach
                             </select>
-
-                            
-
                             <label for="category" class="mt-4">Kategori</label><span class="required"></span>
                             <select id="category" name="category" class="form-select" required onchange="checkCategory()">
                                 <option value="">Pilih Kategori</option>
@@ -154,15 +132,13 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            
 
-                            <label for="subcategory" class="mt-4">Sub Kategori</label><span class="required"></span>
-                            <select id="subcategory" class="form-select required">
+                            <label for="sub_category" class="mt-4">Sub Kategori</label><span class="required"></span>
+                            <select id="sub_category" name="sub_category" class="form-select" required>
                                 <option value="">Pilih Sub Kategori</option>
-                                <option value="1">Perbaikan Jaringan</option>
-                                <option value="2">Penambahan Bandwidth</option>
-                                <option value="3">Pemasangan Jaringan</option>
-                                <option value="4">Perbaikan Komputer</option>
+                                @foreach($sub_kategory as $sub_kategory)
+                                    <option value="{{ $sub_kategory->id }}">{{ $sub_kategory->name }}</option>
+                                @endforeach
                             </select>
 
                         </div>
@@ -177,23 +153,15 @@
                                 </div>
                                 <div class="upload-box">
                                     <span>Upload file</span>
-                                    <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
+                                    <input type="file" name="lampiran[]" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class="button-container">
-                    <button type="submit" class="btn btn-primary" id="swal-6">Kirim</button>
-                </div>
-                <!-- <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card">
-                      <div class="card-body text-center">
-                        <div class="mb-2">Success Message</div>
-                        <button class="btn btn-primary" id="toastr-2">Launch</button>
-                      </div>
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
-                </div> -->
+                </form>
             </div>
         </div>
            
@@ -206,8 +174,8 @@
                         <div class="row">
                             <div class="col-xl-3 col-lg-4 col-md-6">
                                 <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                                    <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                                    <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                                    <a href="{{ route('index') }}" class="logo mb-30"><img src="{{ asset('front/assets/img/logo-isi-black.svg') }}" alt="logo"></a>
+                                    <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                                     <div class="footer-social-links">
                                         <ul class="d-flex">
                                             <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>
@@ -237,25 +205,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- <div class="col-xl-3 col-lg-3 col-md-6">
-                                <div class="footer-widget mb-60 wow fadeInUp" data-wow-delay=".6s">
-                                    <h4>Service</h4>
-                                    <ul class="footer-links">
-                                        <li>
-                                            <a href="javascript:void(0)">Marketing</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">Branding</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">Web Design</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">Graphics Design</a>
-                                        </li> 
-                                    </ul>
-                                </div>
-                            </div> -->
                             <div class="col-xl-5 col-lg-6 col-md-6">
                                 <div class="footer-widget mb-60 wow fadeInRight" data-wow-delay=".8s">
                                     <h4>Contact</h4>
@@ -307,7 +256,7 @@
                 
                 
 
-                <script>
+                {{-- <script>
                     document.getElementById("swal-6").addEventListener("click", function () {
                         Swal.fire({
                             title: "Pastikan Data Yang Di Inputkan Sudah Benar Dan Lengkap",
@@ -336,10 +285,10 @@
                         });
                     });
 
-               </script>
+               </script> --}}
 
     <!-- Login Modal -->
-    <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog max-width-px-840 position-relative">
             <button type="button"
                 class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -368,10 +317,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-flex flex-wrap justify-content-end">
-                                    <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                                    <a href="{{ route('forgetpassword') }}" class="font-size-3 text-dodger line-height-reset">Lupa Kata Sandi</a>
                                 </div>
                                 <div class="form-group mb-8 button" >
-                                    <button class="btn btn-primary"> <a href="dashboard/home.html">Log in</a>
+                                    <button class="btn btn-primary"> <a href="{{ route('home') }}">Log in</a>
                                     </button>
                                 </div>
                                 <p class="text-center create-new-account">Belum memiliki Akun? <a href="#" data-toggle="modal" data-target="#signup" data-dismiss="modal">Sign Up</a></p>
@@ -381,11 +330,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Login Modal -->
 
     <!-- Signup Modal -->
-    <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog max-width-px-840 position-relative">
             <button type="button"
                 class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -407,34 +356,34 @@
                                     <input type="email" class="form-control" placeholder="example@gmail.com">
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="label">Password</label>
+                                    <label for="password" class="label">Kata Sandi</label>
                                     <div class="position-relative">
                                         <input type="password" class="form-control"
                                             placeholder="Enter password">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="label">Confirm Password</label>
+                                    <label for="password" class="label">Konfirmasi Kata Sandi</label>
                                     <div class="position-relative">
                                         <input type="password" class="form-control"
                                             placeholder="Enter password">
                                     </div>
                                 </div>
                                 <div class="form-group mb-8 button">
-                                    <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Sign Up</a>
+                                    <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Daftar</a>
                                     </button>
                                 </div>
-                                <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Sign In</a></p>
+                                <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Masuk</a></p>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Signup Modal -->
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             let labels = document.querySelectorAll("label");
             let categorySelect = document.getElementById("category");
@@ -462,6 +411,15 @@
             // Jalankan saat dropdown kategori berubah
             categorySelect.addEventListener("change", checkCategory);
             checkCategory(); // Panggil sekali saat halaman pertama kali dimuat
+        });
+
+    </script> --}}
+
+    <script>
+        document.getElementById("submissionForm").addEventListener("submit", function(event) {
+        if (confirm("Yakin ingin mengirim?")) {
+                this.submit(); // Pastikan form dikirim
+            }
         });
 
     </script>

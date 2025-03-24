@@ -23,14 +23,87 @@ use App\Http\Controllers\PermissionsController;
 //     return view('welcome');
 // });
 
-Route::get('/', [FrontendController::class, 'index']);
-Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+// Route bagian kirim cepat
+Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('/kirimcepat', [FrontendController::class, 'kirimcepat'])->name('kirimcepat');
-Route::get('/faqs', [FrontendController::class, 'faqs'])->name('faqs');
-Route::get('/detail_ticket_kc', [FrontendController::class, 'detail_ticket_kc'])->name('detail_ticket_kc');
+Route::get('/input_form_kc', [FrontendController::class, 'input_form_kc'])->name('input_form_kc');
+Route::post('/proses-simpan', [FrontendController::class, 'prosesSimpan'])->name('prosesSimpan');
+Route::get('/ticket/{id}/detail_ticket_kc', [FrontendController::class, 'detail_ticket_kc'])
+    ->name('detail_ticket_kc');
 
+
+
+Route::get('/forgetpassword', [FrontendController::class, 'forgetpassword'])->name('forgetpassword');
+Route::get('/faqs', [FrontendController::class, 'faqs'])->name('faqs');
+Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+
+// Route bagian login
+
+Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
+Route::get('/home/akun', [FrontendController::class, 'akun'])
+    ->name('akun') 
+    ->middleware(['auth', 'verified']);
+
+Route::get('/home/profile', [FrontendController::class, 'profile'])
+    ->name('profile') 
+    ->middleware(['auth', 'verified']);
+
+
+
+
+
+Route::get('/home/input_form', [FrontendController::class, 'input_form'])
+    ->name('input_form')
+    ->middleware(['auth', 'verified']);
+
+Route::post('/simpan-login', [FrontendController::class, 'prosesSimpanLogin'])
+->name('prosesSimpanLogin')
+->middleware(['auth', 'verified']);
+
+Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_ticket_login'])
+    ->name('data_ticket_login')
+    ->middleware(['auth', 'verified']);
+
+
+Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_ticket_login'])
+    ->name('data_ticket_login');
+
+ Route::get('/ticket/{id}/detail', [FrontendController::class, 'show'])->name('detail_ticket_login');
+
+
+// Route::get('/ticket/{id}/detail_ticket_kc', [FrontendController::class, 'detail_ticket_kc'])
+//     ->name('detail_ticket_kc');
+
+
+
+
+
+
+
+Route::get('/home/detail_ticket', [FrontendController::class, 'detail_ticket'])
+    ->name('detail_ticket')
+    ->middleware(['auth', 'verified']);
+
+Route::get('/home/detail_ticket_closed', [FrontendController::class, 'detail_ticket_closed'])
+    ->name('home.detail_ticket_closed')
+    ->middleware(['auth', 'verified']);
+
+Route::get('/home/faqs_login', [FrontendController::class, 'faqs_login'])
+    ->name('faqs_login')
+    ->middleware(['auth', 'verified']);
+
+Route::get('/home/contact_login', [FrontendController::class, 'contact_login'])
+    ->name('home.contact_login')
+    ->middleware(['auth', 'verified']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+
+Route::get('/ticket/{id}', [FrontendController::class, 'getTicketById']);
+Route::get('/home/ticket/{id}/edit', [FrontendController::class, 'edit'])->name('ticketlogin.edit');
+Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate'])->name('ticket.prosesUpdate');
+
+
 
 
 

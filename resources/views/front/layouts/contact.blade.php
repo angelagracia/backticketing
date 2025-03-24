@@ -51,8 +51,8 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="{{ asset('front/assets/img/logo/logo-ticketing.svg') }}" alt="Logo">
+                            <a class="navbar-brand" href="{{ route('index') }}l">
+                                <img src="{{ asset('front/assets/img/logo/logo_new.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -65,10 +65,10 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="index.html">Home</a>
+                                        <a class="page-scroll" href="{{ route('index') }}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="faqs.html">FAQ</a>
+                                        <a class="page-scroll" href="{{ route('faqs') }}l">FAQ</a>
                                     </li>
                                     <!-- <li class="nav-item">
                                         <a class="page-scroll" href="#alur-tiketing">Alur Tiketing</a>
@@ -80,7 +80,7 @@
                                         <a class="page-scroll" href="#team">Team</a>
                                     </li> -->
                                     <li class="nav-item">
-                                        <a class="page-scroll active" href="contact.html">Contact</a>
+                                        <a class="page-scroll" href="{{ route('contact') }}">Contact</a>
                                     </li>
                                 </ul>
                                 <!-- <div class="header-btn">
@@ -90,7 +90,7 @@
                             <div class="button">
                                 <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
                                         class="lni lni-lock-alt"></i> Login</a>
-                                <a href="input_form_kc.html" class="btn">Kirim cepat</a>
+                                <a href="{{ route('input_form_kc') }}" class="btn">Kirim cepat</a>
                             </div>
                         </nav> <!-- navbar -->
                     </div>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('index') }}">Home</a></li>
                         <li>Contact Us</li>
                     </ul>
                 </div>
@@ -174,18 +174,18 @@
                         <div class="col-lg-4 col-12">
                             <div class="contact-info">
                                 <div class="single-head">
-                                    <h3 class="inner-title">Contact Info</h3>
+                                    <h3 class="inner-title">Informasi Kontak</h3>
                                     <div class="single-info">
                                         <i class="lni lni-phone"></i>
                                         <ul>
-                                            <span>Location</span>
+                                            <span>Lokasi</span>
                                             <li>Jl. Parangtritis Km. 6.5 Sewon Bantul <br> Yogyakarta 55188 <br> Indonesia</li>
                                         </ul>
                                     </div>
                                     <div class="single-info">
                                         <i class="lni lni-envelope"></i>
                                         <ul>
-                                            <span>Call Us</span>
+                                            <span>Telepon</span>
                                             <li><a href="#">0274-379133</a></li>
                                             <li><a href="#">373659</a></li>
                                         </ul>
@@ -193,7 +193,7 @@
                                     <div class="single-info">
                                         <i class="lni lni-map"></i>
                                         <ul>
-                                            <span>Mail Us</span>
+                                            <span>Email</span>
                                             <li><a href="mailto:support@yourmail.com">arts@isi.ac.id</a></li>
                                             <li><a href="mailto:contact@yourmail.com">helpdeskupatik@isi.ac.id</a></li>
                                         </ul>
@@ -201,9 +201,9 @@
                                     <div class="single-info">
                                         <i class="lni lni-map"></i>
                                         <ul>
-                                            <span>Office Hour</span>
-                                            <li>Monday - Friday (8.00-17.00)</li>
-                                            <li>Sunday - Thusday (Tutup)</li>
+                                            <span>Jam Kerja</span>
+                                            <li>Senin - Jumat (8.00-17.00)</li>
+                                            <li>Sabtu - Minggu (Tutup)</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -222,8 +222,8 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <a href="{{ route('index') }}" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                             <div class="footer-social-links">
                                 <ul class="d-flex">
                                     <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>
@@ -322,10 +322,10 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex flex-wrap justify-content-end">
-                                <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                                <a href="{{ route('forgetpassword') }}" class="font-size-3 text-dodger line-height-reset">Lupa Password</a>
                             </div>
                             <div class="form-group mb-8 button" >
-                                <button class="btn btn-primary"> <a href="dashboard/home.html">Log in</a>
+                                <button class="btn btn-primary"> <a href="{{ route('home') }}">Log in</a>
                                 </button>
                             </div>
                             <p class="text-center create-new-account">Belum memiliki Akun? <a href="#" data-toggle="modal" data-target="#signup" data-dismiss="modal">Sign Up</a></p>
@@ -368,17 +368,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="label">Confirm Password</label>
+                                <label for="password" class="label">Konfirmasi Password</label>
                                 <div class="position-relative">
                                     <input type="password" class="form-control"
                                         placeholder="Enter password">
                                 </div>
                             </div>
                             <div class="form-group mb-8 button">
-                                <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Sign Up</a>
+                                <button class="btn btn-primary"><a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Daftar</a>
                                 </button>
                             </div>
-                            <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Sign In</a></p>
+                            <p class="text-center create-new-account">Sudah memiliki Akun? <a href="#" data-toggle="modal" data-target="#login" data-dismiss="modal">Masuk</a></p>
                         </form>
                     </div>
                 </div>

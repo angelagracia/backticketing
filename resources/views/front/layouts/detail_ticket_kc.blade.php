@@ -11,12 +11,12 @@
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-		<link rel="stylesheet" href="assets/css/animate.css">
-		<link rel="stylesheet" href="assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
     </head>
     <body>
 
@@ -27,8 +27,8 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                            <a class="navbar-brand" href="{{ route('index') }}">
+                            <img src="{{ asset('front/assets/img/logo/logo_new.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -41,7 +41,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="page-scroll active" href="index.html">Home</a>
+                                        <a class="page-scroll active" href="{{ route('index') }}">Home</a>
                                     </li>
                                     <!-- <li class="nav-item">
                                         <a class="page-scroll" href="#about">About</a>
@@ -50,13 +50,13 @@
                                         <a class="page-scroll" href="#services">Alur ticketing</a>
                                     </li> -->
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="faqs.html">FAQS</a>
+                                        <a class="page-scroll" href="{{ route('faqs') }}">FAQS</a>
                                     </li>
                                     <!-- <li class="nav-item">
                                         <a class="page-scroll" href="#team">Team</a>
                                     </li> -->
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="contact.html">Contact</a>
+                                        <a class="page-scroll" href="{{ route('contact') }}">Contact</a>
                                     </li>
                                 </ul>
                                 <!-- <div class="header-btn">
@@ -67,7 +67,7 @@
                              <div class="button">
                                 <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
                                         class="lni lni-lock-alt"></i> Login</a>
-                                <a href="input_form_kc.html" class="btn">Kirim cepat</a>
+                                <a href="{{ route('input_form_kc') }}" class="btn">Kirim cepat</a>
                             </div>
                         </nav> <!-- navbar -->
                     </div>
@@ -85,20 +85,20 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">No. Tiket</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">009992812</p>
+                            <p class="text-value">{{ ($ticket->ticket_number) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Nama</p>
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
-                                Irenne Dwi Natalia <br>
-                                <span class="text-muted">Tendik</span>
+                                {{ $ticket->name }} <br>
+                                <span class="text-muted">{{ $ticket->unit->name }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan</p>
+                            <p class="text-value">{{ $ticket->topic->name }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
@@ -106,17 +106,28 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Status</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><span class="status-badge status-open">Open</span></p>
+                            <p class="text-value"><span class="status-badge status-open">{{ $ticket->status->name }}</span></p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Tanggal/Waktu</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">30/12/2024 13:30</p>
+                            <p class="text-value">{{ $ticket->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Lampiran</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><a href="#">screen-shot-1.jpg</a></p>
+                            <p class="text-value">
+                                @foreach($ticket->attachments as $attachment)
+                                <div>
+                                    @if(in_array(pathinfo($attachment->file_path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg']))
+                                        <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" width="100">
+                                    @else
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">Lihat Lampiran</a>
+                                    @endif
+                                </div>
+                            @endforeach
+                            
+                            </p>
                         </div>
                     </div> 
                 </div>
@@ -128,8 +139,8 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <a href="{{ route('index') }}" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                         </div>
                     </div>
                     <div class="col-xl-3 offset-xl-1 col-lg-3 col-md-6">
@@ -223,15 +234,15 @@
         </a>
         
 		<!-- ========================= JS here ========================= -->
-		<script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
-		<script src="assets/js/contact-form.js"></script>
-        <script src="assets/js/count-up.min.js"></script>
-        <script src="assets/js/tiny-slider.js"></script>
-        <script src="assets/js/isotope.min.js"></script>
-        <script src="assets/js/glightbox.min.js"></script>
-        <script src="assets/js/wow.min.js"></script>
-        <script src="assets/js/imagesloaded.min.js"></script>
-		<script src="assets/js/main.js"></script>
+		<script src="{{ asset('front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+		<script src="{{ asset('front/assets/js/contact-form.js') }}"></script>
+        <script src="{{ asset('front/assets/js/count-up.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
+        <script src="{{ asset('front/assets/js/isotope.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/glightbox.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/wow.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
+		<script src="{{ asset('front/assets/js/main.js') }}"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const logoutBtn = document.querySelector(".logout-btn");
@@ -279,7 +290,7 @@
                                 </div>
                             </div>
                             <div class="form-group d-flex flex-wrap justify-content-end">
-                                <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                                <a href="forgetpassword.html" class="font-size-3 text-dodger line-height-reset">Lupa Password</a>
                             </div>
                             <div class="form-group mb-8 button" >
                                 <button class="btn btn-primary"> <a href="dashboard/home.html">Log in</a>
@@ -325,7 +336,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="label">Confirm Password</label>
+                                <label for="password" class="label">Konfirmasi Password</label>
                                 <div class="position-relative">
                                     <input type="password" class="form-control"
                                         placeholder="Enter password">

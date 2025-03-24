@@ -13,12 +13,12 @@
 		<!-- ========================= CSS here ========================= -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-		<link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-		<link rel="stylesheet" href="assets/css/animate.css">
-		<link rel="stylesheet" href="assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
     </head>
     <body>
 
@@ -30,7 +30,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index.html">
-                                <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                                <img src="{{ asset('front/assets/img/logo/logo_new.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -55,7 +55,7 @@
                                         <a class="page-scroll" href="#portfolio">FAQS</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="contact_login.html">Contact</a>
+                                        <a class="page-scroll" href="{{ route('contact') }}">Contact</a>
                                     </li>
                                 </ul>
                                 <!-- <div class="header-btn">
@@ -102,8 +102,8 @@
                                     <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="profile.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="dashboard/profile.html"><i class="lni lni-briefcase"></i>Profile</a>
-                                        <a class="dropdown-item" href="dashboard/akun.html"><i class="lni lni-rocket"></i> Account</a>
+                                        <a class="dropdown-item" href="dashboard/profile.html"><i class="lni lni-briefcase"></i>Profil</a>
+                                        <a class="dropdown-item" href="dashboard/akun.html"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
@@ -129,20 +129,20 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">No. Tiket</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">009992812</p>
+                            <p class="text-value">{{ ($ticket->ticket_number) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Nama</p>
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
-                                Irenne Dwi Natalia <br>
-                                <span class="text-muted">Tendik</span>
+                                {{ $ticket->name }} <br>
+                                <span class="text-muted">{{ $ticket->unit->name }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan</p>
+                            <p class="text-value">{{ $ticket->topic->name }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
@@ -150,17 +150,27 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Status</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><span class="status-badge">Processed</span></p>
+                            <p class="text-value"><span class="status-badge">{{ $ticket->status->name }}</span></p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Tanggal/Waktu</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">30/12/2024 13:30</p>
+                            <p class="text-value">{{ $ticket->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Lampiran</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><a href="#">screen-shot-1.jpg</a></p>
+                            <p class="text-value">
+                                @foreach($ticket->attachments as $attachment)
+                                    <div>
+                                        @if(in_array(pathinfo($attachment->file_path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg']))
+                                            <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" width="100">
+                                        @else
+                                            <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">Lihat Lampiran</a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -172,7 +182,7 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Judul</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan Printer</p>
+                            <p class="text-value">{{ ($ticket->title) }}</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +193,7 @@
                             <p class="fw-bold text-start text-label">Deskripsi</p>
                             <p class="fw-bold colon">:</p>
                         </div>
-                        <p class="d-flex align-items-center mb-2 tiket-desc">Ketika saya menggunakan printer Epson untuk mencetak dokumen, LED printer selalu berwarna merah dan menampilkan peringatan.</p>
+                        <p class="d-flex align-items-center mb-2 tiket-desc">{{ $ticket->req_description }}</p>
                     </div>
                 </div>
 
@@ -251,7 +261,7 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
                             <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                             <div class="footer-social-links">
                                 <ul class="d-flex">
                                     <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>

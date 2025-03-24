@@ -7,28 +7,28 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/icon-isi.png">
+		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('front/assets/img/logo/icon-isi.png') }}">
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
-		<link rel="stylesheet" href="assets/css/animate.css">
-		<link rel="stylesheet" href="assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     </head>
     <body>
-
-
         <!-- ========================= header start ========================= -->
         <header class="header navbar-area bg-white">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                            <a class="navbar-brand" href="{{ route('index') }}">
+                                <img src="{{ asset('front/assets/img/logo/logo-ticketing.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -41,28 +41,19 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="page-scroll active" href="dashboard/home.html">Home</a>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="page-scroll" href="#about">About</a>
-                                    </li> -->
-                                    <!-- <li class="nav-item">
-                                        <a class="page-scroll" href="#alur-tiketing">Alur Tiketing</a>
-                                    </li> -->
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="#portfolio">FAQS</a>
+                                        <a class="page-scroll active" href="{{route('home')}}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="contact_login.html">Contact</a>
+                                        <a class="page-scroll" href="{{route('home/faqs_login')}}">FAQS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="{{route('home/contact_login')}}">Contact</a>
                                     </li>
                                 </ul>
-                                <!-- <div class="header-btn">
-                                    <a href="javascript:void(0)" class="theme-btn">Get Started</a>
-                                </div> -->
-
                             </div> <!-- navbar collapse -->
-                              <!-- Notification -->
-                              <div class="notification">
+
+                            <!-- Notification -->
+                            <div class="notification">
                                 <div class="nav-item">
                                     <i class="lni lni-alarm" id="notificationIcon"></i>
                                     <span class="badge">3</span>
@@ -97,20 +88,18 @@
                             <!-- button profile -->
                             <ul class="sign-in">
                                 <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="profile.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="dashboard/profile.html"><i class="lni lni-briefcase"></i>Profile</a>
-                                    <a class="dropdown-item" href="dashboard/akun.html"><i class="lni lni-rocket"></i> Account</a>
+                                    <a class="dropdown-item" href="{{ route('home.profile') }}"><i class="lni lni-briefcase"></i>Profil</a>
+                                    <a class="dropdown-item" href="{{ route('home.akun') }}"><i class="lni lni-rocket"></i> Akun</a>
                                     <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                 </div>
                                 </li>
                             </ul>
-
                         </nav> <!-- navbar -->
                     </div>
                 </div> <!-- row -->
             </div> <!-- container -->
-        
         </header>
         <!-- ========================= header end ========================= -->
 
@@ -238,14 +227,15 @@
                 <button class="btn-ticket-closed">Ticket Closed</button>
             </div>
         </div>
-         <!-- ========================= footer start ========================= -->
-         <footer class="footer pt-100">
+
+        <!-- ========================= footer start ========================= -->
+        <footer class="footer pt-100">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
-                            <a href="index.html" class="logo mb-30"><img src="assets/img/logo-isi-black.svg" alt="logo"></a>
-                            <p class="mb-30 footer-desc">We Crafted an awesome desig library that is robust and intuitive to use. No matter you're building a business presentation websit.</p>
+                            <a href="{{ route('index') }}" class="logo mb-30"><img src="{{ asset('front/assets/img/logo-isi-black.svg') }}" alt="logo"></a>
+                            <p class="mb-30 footer-desc">Institut Seni Indonesia Yogyakarta atau ISI Yogyakarta, berdiri sejak 23 Juli 1984, adalah Perguruan Tinggi Negeri Seni Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia dengan berbagai bidang seni terlengkap dan terbaik di Indonesia.</p>
                         </div>
                     </div>
                     <div class="col-xl-3 offset-xl-1 col-lg-3 col-md-6">
@@ -267,25 +257,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-3 col-lg-3 col-md-6">
-                        <div class="footer-widget mb-60 wow fadeInUp" data-wow-delay=".6s">
-                            <h4>Service</h4>
-                            <ul class="footer-links">
-                                <li>
-                                    <a href="javascript:void(0)">Marketing</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Branding</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Graphics Design</a>
-                                </li> 
-                            </ul>
-                        </div>
-                    </div> -->
                     <div class="col-xl-5 col-lg-6 col-md-6">
                         <div class="footer-widget mb-60 wow fadeInRight" data-wow-delay=".8s">
                             <h4>Contact</h4>
@@ -308,7 +279,7 @@
                 <div class="copyright-area">
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                             <div class="footer-social-links">
+                            <div class="footer-social-links">
                                 <ul class="d-flex">
                                     <li><a href="javascript:void(0)"><i class="lni lni-facebook-original"></i></a></li>
                                     <li><a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a></li>
@@ -317,10 +288,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <p class="wow fadeInUp" data-wow-delay=".3s">Template by <a
-                                    href="https://uideck.com" rel="nofollow">UIdeck</a></p>
-                        </div> -->
                     </div>
                 </div>
 
@@ -338,16 +305,21 @@
         </a>
         
 		<!-- ========================= JS here ========================= -->
-		<script src="assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
-		<script src="assets/js/contact-form.js"></script>
-        <script src="assets/js/count-up.min.js"></script>
-        <script src="assets/js/tiny-slider.js"></script>
-        <script src="assets/js/isotope.min.js"></script>
-        <script src="assets/js/glightbox.min.js"></script>
-        <script src="assets/js/wow.min.js"></script>
-        <script src="assets/js/imagesloaded.min.js"></script>
-		<script src="assets/js/main.js"></script>
+        <script src="{{ asset('front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/contact-form.js') }}"></script>
+        <script src="{{ asset('front/assets/js/count-up.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
+        <script src="{{ asset('front/assets/js/isotope.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/glightbox.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/wow.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/imagesloaded.min.js') }}"></script>
+        <script src="{{ asset('front/assets/js/main.js') }}"></script>
+        <script src="{{ asset('front/assets/js/chat.js') }}"></script>
+        <script src="{{ asset('front/assets/js/input_form.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        
         <script>
             document.getElementById("logoutButton").addEventListener("click", function (event) {
                 event.preventDefault(); // Mencegah link langsung dijalankan
@@ -393,7 +365,6 @@
                     dropdown.style.display = "none";
                 }
             });
-
-           </script>
+        </script>
     </body>
 </html>

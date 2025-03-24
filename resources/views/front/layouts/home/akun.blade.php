@@ -11,13 +11,13 @@
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="../assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="../assets/css/LineIcons.2.0.css">
-		<link rel="stylesheet" href="../assets/css/animate.css">
-		<link rel="stylesheet" href="../assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="../assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="../assets/css/main.css">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="{{ asset('..front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('..front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('..front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('..front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('..front/assets/css/glightbox.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}">
+		<link rel="stylesheet" href="{{ asset('style.css') }}">
 
     </head>
     <body>
