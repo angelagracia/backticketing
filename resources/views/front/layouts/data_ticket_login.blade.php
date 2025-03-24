@@ -44,7 +44,7 @@
                                         <a class="page-scroll active" href="{{route('home')}}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="{{route('home.faqs')}}">FAQS</a>
+                                        <a class="page-scroll" href="{{route('faqs_login')}}">FAQS</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="page-scroll" href="{{route('home.contact_login')}}">Contact</a>
@@ -91,8 +91,8 @@
                                     <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{route('home.profile')}}"><i class="lni lni-briefcase"></i>Profil</a>
-                                        <a class="dropdown-item" href="{{route('home.akun')}}"><i class="lni lni-rocket"></i> Akun</a>
+                                        <a class="dropdown-item" href="{{route('profile')}}"><i class="lni lni-briefcase"></i>Profil</a>
+                                        <a class="dropdown-item" href="{{route('akun')}}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
@@ -109,8 +109,14 @@
             <div class="card shadow-sm p-4">
                 <h4 class="mb-4">Data Tiket
                     <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
-                    <a href="detail_tiket.html"><button class="btn-data-tiket-detail">Detail</button></a>
-                    <button class="btn-edit-ticket-hidup" data-bs-toggle="modal" data-bs-target="#editTiketModal">Edit</button>
+                    <a href="{{ route('detail_ticket_login', ['id' => $ticket->id]) }}">
+                        <button class="btn-data-tiket-detail">Detail</button>
+                    </a>                    
+                    <a href="{{ route('ticketlogin.edit', $ticket->id) }}">
+                        <button class="btn-edit-ticket-hidup">Edit</button>
+                    </a>
+                    
+                    
                 </h4>
                 <div class="row content-section">
                     <div class="col-md-1"></div>
@@ -118,20 +124,20 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">No. Tiket</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">009992812</p>
+                            <p class="text-value">{{ ($ticket->ticket_number) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Nama</p>
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
-                                Irenne Dwi Natalia <br>
-                                <span class="text-muted">Tendik</span>
+                                {{ $ticket->name }} <br>
+                                <span class="text-muted">{{ $ticket->unit->name }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan</p>
+                            <p class="text-value">{{ $ticket->topic->name }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div> 
@@ -139,17 +145,26 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Status</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><span class="status-badge">Processed</span></p>
+                            <p class="text-value"><span class="status-badge status-open">{{ $ticket->status->name }}</span></p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Tanggal/Waktu</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">30/12/2024 13:30</p>
+                            <p class="text-value">{{ $ticket->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Lampiran</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><a href="#">screen-shot-1.jpg</a></p>
+                            <p class="text-value">
+                                @foreach($ticket->attachments as $attachment)
+                                <div>
+                                    @if(in_array(pathinfo($attachment->file_path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg']))
+                                        <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" width="100">
+                                    @else
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">Lihat Lampiran</a>
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -281,25 +296,29 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editTicketForm">
+
+                        <form id="editTicketForm" method="POST">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <div class="input-box">
+                                    <input type="hidden" id="ticket_id" name="ticket_id">
                                     <label for="name">Nama <span class="required"></span></label>
-                                    <input type="text" id="name" class="required" placeholder="Masukkan Nama" readonly>
+                                    <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama" readonly>
                                 </div>
                                 <div class="input-box">
                                     <label for="title">Judul <span class="required"></span></label>
-                                    <input type="text" id="title" class="required" placeholder="Masukkan Judul">
+                                    <input type="text" id="title" name="judul" class="required" placeholder="Masukkan Judul">
                                 </div>
                             </div>
         
                             <div class="form-group">
                                 <div class="input-box half-width">
                                     <label for="email">Email <span class="required"></span></label>
-                                    <input type="email" id="email" class="required" placeholder="Masukkan Email" readonly>
+                                    <input type="email" id="email" name="email" class="required" placeholder="Masukkan Email" readonly>
             
                                     <label for="role" class="mt-4">Unit Kerja <span class="required"></span></label>
-                                    <select id="role" class="form-select required" disabled>
+                                    <select id="unit_kerja" name="unit_kerja" class="form-select required" disabled>
                                         <option value="">Pilih Unit Kerja</option>
                                         <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
                                         <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
@@ -321,17 +340,17 @@
                                 </div>
                                 <div class="input-box half-width">
                                     <label for="description">Deskripsi <span class="required"></span></label>
-                                    <textarea id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                                    <textarea id="description" name="deskripsi" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <div class="input-box">
                                     <label for="phone">No. telepon <span class="required"></span></label>
-                                    <input type="text" id="phone" class="required" placeholder="Masukkan No. Telepon" readonly>
+                                    <input type="text" id="phone" name="no_telepon" class="required" placeholder="Masukkan No. Telepon" readonly>
         
                                     <label for="role" class="mt-4">Peran <span class="required"></span></label>
-                                    <select id="role" class="form-select required" disabled>
+                                    <select id="unit" name="unit" class="form-select required" disabled>
                                         <option value="">Pilih Peran</option>
                                         <option value="1">Rektorat</option>
                                         <option value="2">Dekanat</option>
@@ -343,22 +362,23 @@
                                     </select>
 
                                     <label for="category" class="mt-4">Kategori <span class="required"></span></label>
-                                    <select id="category" class="form-select required" onchange="checkCategory()">
+                                    <select id="category" name="category" class="form-select required" onchange="checkCategory()">
                                         <option value="">Pilih Kategori</option>
                                         <option value="1">Perbaikan</option>
                                         <option value="2">Penambahan</option>
                                         <option value="3">Permohonan</option>
                                         <option value="4">Pemeliharaan</option>
                                     </select>
-        
+
                                     <label for="subcategory" class="mt-4">Sub Kategori <span class="required"></span></label>
-                                    <select id="subcategory" class="form-select required">
+                                    <select id="subcategory" name="sub_category" class="form-select required">
                                         <option value="">Pilih Sub Kategori</option>
                                         <option value="1">Perbaikan Jaringan</option>
                                         <option value="2">Penambahan Bandwidth</option>
                                         <option value="3">Pemasangan Jaringan</option>
                                         <option value="4">Perbaikan Komputer</option>
                                     </select>
+
         
                                 </div>
                                 <div class="input-box">
@@ -372,7 +392,7 @@
                                         </div>
                                         <div class="upload-box">
                                             <span>Upload file</span>
-                                            <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
+                                            <input type="file" name="lampiran[]" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
                                         </div>
                                     </div>
                                 </div>
@@ -499,5 +519,42 @@
                         });
                     });
                 </script> -->
+
+                {{-- <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let editButtons = document.querySelectorAll(".btn-edit-ticket-hidup");
+
+                        editButtons.forEach(button => {
+                            button.addEventListener("click", function () {
+                                // Ambil data dari atribut data-*
+                                let ticketId = this.getAttribute("data-id");
+                                let name = this.getAttribute('data-name');
+                                let title = this.getAttribute("data-title");
+                                let description = this.getAttribute("data-description");
+                                let email = this.getAttribute("data-email");
+                                let phone = this.getAttribute("data-phone");
+                                let unitKerja = this.getAttribute("data-unit-kerja");
+                                let unit = this.getAttribute("data-unit");
+                                let category = this.getAttribute("data-category");
+                                let subCategory = this.getAttribute("data-sub-category");
+
+                                // Masukkan ke dalam form modal
+                                document.getElementById("ticket_id").value = ticketId;
+                                document.getElementById("name").value = name;
+                                document.getElementById("title").value = title;
+                                document.getElementById("description").value = description;
+                                document.getElementById("email").value = email;
+                                document.getElementById("phone").value = phone;
+                                document.getElementById("unit").value = unit; // Unit peran
+                                document.getElementById("unit_kerja").value = unitKerja; // Unit kerja
+                                document.getElementById("category").value = category; // Kategori
+                                document.getElementById("subcategory").value = subCategory; // Sub kategori
+
+                                // Update form action untuk update
+                                document.getElementById("editTicketForm").action = `/ticket/${ticketId}/update`;
+                            });
+                        });
+                    });
+                </script> --}}
     </body>
 </html>

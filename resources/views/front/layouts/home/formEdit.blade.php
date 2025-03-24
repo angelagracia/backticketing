@@ -122,86 +122,89 @@
                 <span style="color: red;">*</span> Semua informasi adalah benar dan bebas dari kesalahan.
             </div>
             <div class="form-container-inputform">
-                <form  name="input_kc" action="{{ route('prosesSimpanLogin') }}" method="POST" enctype="multipart/form-data">
+                <form  name="input_kc" action="{{ route('ticket.prosesUpdate') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="input-box">
                             <label for="name">Nama</label><span class="required"></span>
-                            <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama">
+                            <input type="text" name="nama" id="name" class="required" value="{{ $ticket->name }}" required>
                         </div>
                         <div class="input-box">
                             <label for="title">Judul</label><span class="required"></span>
-                            <input type="text" name="judul" id="title" class="required" placeholder="Masukkan Judul">
+                            <input type="text" name="judul" id="title" class="required" value="{{ $ticket->title }}" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="input-box half-width">
                           <label for="email">Email</label><span class="required"></span>
-                          <input type="email" name="email" id="email" class="required" placeholder="Masukkan Email">
+                          <input type="email" name="email" id="email" class="required" value="{{ $ticket->email }}" required>
 
                           <label for="unit_kerja" class="mt-4">Unit Kerja</label><span class="required"></span>
                           <select id="unit_kerja" name="unit_kerja" class="form-select" required>
                               <option value="">Pilih Unit Kerja</option>
                               @foreach($unit_kerja as $unit_kerja)
-                                  <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->name }}</option>
+                              <option value="{{ $unit_kerja->id }}" {{ $ticket->unit_kerja_id == $unit_kerja->id ? 'selected' : '' }}>{{ $unit_kerja->name }}</option>
                               @endforeach
                           </select>
 
                         </div>
                         <div class="input-box half-width">
                           <label for="description">Deskripsi</label><span class="required"></span>
-                          <textarea name="deskripsi" id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                          <textarea name="deskripsi" id="description" class="required" rows="3">{{ $ticket->req_description }}</textarea>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="input-box">
                             <label for="phone">No. telepon</label><span class="required"></span>
-                            <input type="text" name="no_telepon" id="phone" class="required" placeholder="Masukkan No. Telepon">
+                            <input type="text" name="no_telepon" id="phone" class="required" value="{{ $ticket->telepon }}">
 
                             <label for="unit" class="mt-4">Peran</label><span class="required"></span>
                             <select id="unit" name="unit" class="form-select" required>
                                 <option value="">Pilih Peran</option>
-                                @foreach($peran as $unit)
-                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @foreach($master_unit as $unit)
+                                    <option value="{{ $unit->id }}" {{ $ticket->unit_id == $unit->id ? 'selected' : '' }}>{{ $unit->name }}</option>
                                 @endforeach
                             </select>
                             <label for="category" class="mt-4">Kategori</label><span class="required"></span>
                             <select id="category" name="category" class="form-select" required onchange="checkCategory()">
                                 <option value="">Pilih Kategori</option>
-                                @foreach($kategori as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @foreach($topic_master as $category)
+                                <option value="{{ $category->id }}" {{ $ticket->topic_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                 @endforeach
                             </select>
 
                             <label for="sub_category" class="mt-4">Sub Kategori</label><span class="required"></span>
                             <select id="sub_category" name="sub_category" class="form-select" required>
                                 <option value="">Pilih Sub Kategori</option>
-                                @foreach($sub_kategory as $sub_kategory)
-                                    <option value="{{ $sub_kategory->id }}">{{ $sub_kategory->name }}</option>
+                                @foreach($master_type as $sub_kategory)
+                                <option value="{{ $sub_kategory->id }}" {{ $ticket->type_id == $sub_kategory->id ? 'selected' : '' }}>{{ $sub_kategory->name }}</option>
                                 @endforeach
                             </select>
 
                         </div>
-                        <div class="input-box">
-                            <label class="form-label">Lampiran <span id="lampiranBintang" style="color:red;">*</span></label>
-                            <div class="file-upload">
-                                <div class="preview-box" id="previewBox">
-                                    <span id="previewText">Preview File</span>
-                                    <img id="previewImage" src="" alt="" style="display: none;">
-                                    <a id="previewLink" href="#" target="_blank" style="display: none;">Lihat File</a>
-                                    <div class="overlay" id="removeBtn" onclick="removeFile()" style="display: none;">Hapus</div>
-                                </div>
-                                <div class="upload-box">
-                                    <span>Upload file</span>
-                                    <input type="file" name="lampiran[]" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
-                                </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Lampiran Lama:</label>
+                                @foreach ($ticket->attachments as $attachment)
+                                    <div>
+                                        <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" style="max-width: 150px; max-height: 150px; display: block;">
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">{{ $attachment->file_name }}</a>
+                                        <input type="checkbox" name="delete_lampiran[]" value="{{ $attachment->id }}"> Hapus
+                                    </div>
+                                @endforeach
+    
                             </div>
+                            <label for="lampiran">Lampiran (Bisa Upload Banyak File)</label>
+                            <input type="file" name="lampiran[]" id="lampiran" class="form-control" multiple>
                         </div>
+                    
+                        {{-- Tampilkan Lampiran Lama --}}
                     </div>
+                    <input type="hidden" name="id" value="{{ $ticket->id }}">
                     <div class="button-container">
-                        <button type="submit" class="btn btn-primary" id="swal-2">Kirim</button>
+                        <button type="submit" class="btn btn-primary" id="swal-2">Update</button>
                     </div>
                 </form>
             </div>

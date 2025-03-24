@@ -80,42 +80,23 @@
                 <span style="color: red;">*</span> Semua informasi adalah benar dan bebas dari kesalahan.
             </div>
             <div class="form-container-inputform">
-                <form id="submissionForm">
+                <form name="input_kc" action="{{ route('prosesSimpan') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <div class="input-box">
                             <label for="name">Nama</label><span class="required"></span>
-                            <input type="text" id="name" class="required" placeholder="Masukkan Nama">
+                            <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama">
                         </div>
                         <div class="input-box">
                             <label for="title">Judul</label><span class="required"></span>
-                            <input type="text" id="title" class="required" placeholder="Masukkan Judul">
+                            <input type="text" name="judul" id="title" class="required" placeholder="Masukkan Judul">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="input-box half-width">
                           <label for="email">Email</label><span class="required"></span>
-                          <input type="email" id="email" class="required" placeholder="Masukkan Email">
-
-                          {{-- <label for="role" class="mt-4">Unit Kerja</label><span class="required"></span>
-                          <select id="role" name="role"  class="form-select" required>
-                              <option value="">Pilih Unit Kerja</option>
-                              <option value="1">Biro Perencanaan, Keuangan, dan Umum</option>
-                              <option value="2">Biro Akademik, Kemahasiswaan, dan Kerja Sama</option>
-                              <option value="3">Fakultas Seni Pertunjukan</option>
-                              <option value="4">Fakultas Seni Rupa dan Desain</option>
-                              <option value="5">Fakultas Seni Media Rekam</option>
-                              <option value="6">Program Pascasarjana</option>
-                              <option value="7">Lembaga Penelitian dan Pengabdian Masyarakat</option>
-                              <option value="8">Lembaga Penjaminan Mutu dan Pengembangan Pembelajaran</option>
-                              <option value="9">UPA Teknologi Informasi dan Komunikasi</option>
-                              <option value="10">UPA Galeri dan Koleksi Seni</option>
-                              <option value="12">UPA Bahasa</option>
-                              <option value="12">UPA Pertunjukan Seni</option>
-                              <option value="13">UPA Pengembangan Karir dan Kewirausahaan</option>
-                              <option value="14">UPA  Layanan Uji Kompetensi</option>
-                              <option value="15">Satuan Pengawas Internal</option>
-                          </select> --}}
+                          <input type="email" name="email" id="email" class="required" placeholder="Masukkan Email">
 
                           <label for="unit_kerja" class="mt-4">Unit Kerja</label><span class="required"></span>
                           <select id="unit_kerja" name="unit_kerja" class="form-select" required>
@@ -128,14 +109,14 @@
                         </div>
                         <div class="input-box half-width">
                           <label for="description">Deskripsi</label><span class="required"></span>
-                          <textarea id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                          <textarea name="deskripsi" id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="input-box">
                             <label for="phone">No. telepon</label><span class="required"></span>
-                            <input type="text" id="phone" class="required" placeholder="Masukkan No. Telepon">
+                            <input type="text" name="no_telepon" id="phone" class="required" placeholder="Masukkan No. Telepon">
 
                             <label for="unit" class="mt-4">Peran</label><span class="required"></span>
                             <select id="unit" name="unit" class="form-select" required>
@@ -144,9 +125,6 @@
                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                 @endforeach
                             </select>
-
-                            
-
                             <label for="category" class="mt-4">Kategori</label><span class="required"></span>
                             <select id="category" name="category" class="form-select" required onchange="checkCategory()">
                                 <option value="">Pilih Kategori</option>
@@ -154,15 +132,13 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            
 
-                            <label for="subcategory" class="mt-4">Sub Kategori</label><span class="required"></span>
-                            <select id="subcategory" class="form-select required">
+                            <label for="sub_category" class="mt-4">Sub Kategori</label><span class="required"></span>
+                            <select id="sub_category" name="sub_category" class="form-select" required>
                                 <option value="">Pilih Sub Kategori</option>
-                                <option value="1">Perbaikan Jaringan</option>
-                                <option value="2">Penambahan Bandwidth</option>
-                                <option value="3">Pemasangan Jaringan</option>
-                                <option value="4">Perbaikan Komputer</option>
+                                @foreach($sub_kategory as $sub_kategory)
+                                    <option value="{{ $sub_kategory->id }}">{{ $sub_kategory->name }}</option>
+                                @endforeach
                             </select>
 
                         </div>
@@ -177,15 +153,15 @@
                                 </div>
                                 <div class="upload-box">
                                     <span>Upload file</span>
-                                    <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
+                                    <input type="file" name="lampiran[]" id="fileInput" accept=".png,.jpg,.jpeg,.pdf" onchange="previewFile()">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </div>
                 </form>
-                <div class="button-container">
-                    <button type="submit" class="btn btn-primary" id="swal-6">Kirim</button>
-                </div>
             </div>
         </div>
            
@@ -280,7 +256,7 @@
                 
                 
 
-                <script>
+                {{-- <script>
                     document.getElementById("swal-6").addEventListener("click", function () {
                         Swal.fire({
                             title: "Pastikan Data Yang Di Inputkan Sudah Benar Dan Lengkap",
@@ -309,10 +285,10 @@
                         });
                     });
 
-               </script>
+               </script> --}}
 
     <!-- Login Modal -->
-    <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog max-width-px-840 position-relative">
             <button type="button"
                 class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -354,11 +330,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Login Modal -->
 
     <!-- Signup Modal -->
-    <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog max-width-px-840 position-relative">
             <button type="button"
                 class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -404,10 +380,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Signup Modal -->
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             let labels = document.querySelectorAll("label");
             let categorySelect = document.getElementById("category");
@@ -435,6 +411,15 @@
             // Jalankan saat dropdown kategori berubah
             categorySelect.addEventListener("change", checkCategory);
             checkCategory(); // Panggil sekali saat halaman pertama kali dimuat
+        });
+
+    </script> --}}
+
+    <script>
+        document.getElementById("submissionForm").addEventListener("submit", function(event) {
+        if (confirm("Yakin ingin mengirim?")) {
+                this.submit(); // Pastikan form dikirim
+            }
         });
 
     </script>

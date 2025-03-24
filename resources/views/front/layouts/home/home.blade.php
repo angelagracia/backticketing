@@ -73,9 +73,9 @@
                                     <li class="nav-item">
                                         <a class="page-scroll" href="#faqs">FAQS</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="{{ route('home.contact_login') }}">Contact</a>
-                                    </li>
+                                    {{-- <li class="nav-item">
+                                        <a class="page-scroll" href="{{ route('../front.layouts.contact_login') }}">Contact</a>
+                                    </li> --}}
                                 </ul>
 
                             </div> <!-- navbar collapse -->
@@ -115,15 +115,14 @@
                                 <!-- button profile -->
                                 <ul class="sign-in">
                                     <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="profile.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
+                                    <a class="nav-link dropdown-toggle" href="{{ route('profile') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="profile.html"><i class="lni lni-briefcase"></i>Profil</a>
-                                        <a class="dropdown-item" href="akun.html"><i class="lni lni-rocket"></i> Akun</a>
+                                        <a class="dropdown-item" href="{{ route('profile') }}"><i class="lni lni-briefcase"></i>Profil</a>
+                                        <a class="dropdown-item" href="{{ route('akun') }}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
                                 </ul>
-
                         </nav> <!-- navbar -->
                     </div>
                 </div> <!-- row -->
@@ -151,7 +150,7 @@
                                         </form>
                                     </div>
                                     <div class="button text-center mt-3">
-                                        <a href="../input_form.html"><button type="submit" class="theme-btn">Buat Tiket Permohonan</button></a>
+                                        <a href="{{ route('input_form') }}" class="theme-btn">Buat Tiket Permohonan</a>
                                     </div>
                                 </div>
                             </div>

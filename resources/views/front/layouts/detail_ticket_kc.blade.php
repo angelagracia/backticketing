@@ -85,20 +85,20 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">No. Tiket</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">009992812</p>
+                            <p class="text-value">{{ ($ticket->ticket_number) }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Nama</p>
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
-                                Irenne Dwi Natalia <br>
-                                <span class="text-muted">Tendik</span>
+                                {{ $ticket->name }} <br>
+                                <span class="text-muted">{{ $ticket->unit->name }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">Perbaikan</p>
+                            <p class="text-value">{{ $ticket->topic->name }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
@@ -106,17 +106,28 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Status</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><span class="status-badge status-open">Open</span></p>
+                            <p class="text-value"><span class="status-badge status-open">{{ $ticket->status->name }}</span></p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Tanggal/Waktu</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">30/12/2024 13:30</p>
+                            <p class="text-value">{{ $ticket->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Lampiran</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value"><a href="#">screen-shot-1.jpg</a></p>
+                            <p class="text-value">
+                                @foreach($ticket->attachments as $attachment)
+                                <div>
+                                    @if(in_array(pathinfo($attachment->file_path, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg']))
+                                        <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="Lampiran" width="100">
+                                    @else
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">Lihat Lampiran</a>
+                                    @endif
+                                </div>
+                            @endforeach
+                            
+                            </p>
                         </div>
                     </div> 
                 </div>

@@ -204,19 +204,18 @@ class TicketController extends Controller
     public function proses($id)
     {
         // Cari tiket berdasarkan ID
-
         $ticket = Ticket::findOrFail($id);
-        $ticket->status = 'Processed';
-
-        // Ubah status tiket menjadi "In Progress" atau status yang sesuai
-        $ticket->status_id = 2;  // Misalnya 2 untuk status "In Progress"
+        
+        // Pastikan hanya mengupdate status_id, bukan status
+        $ticket->status_id = 2; // Contoh: 2 = "In Progress"
         
         // Simpan perubahan
         $ticket->save();
-
-        // Kembalikan ke halaman sebelumnya dengan pesan sukses
+    
+        // Redirect dengan pesan sukses
         return redirect()->route('ticket.index')->with('success', 'Status tiket berhasil diubah.');
     }
+    
 
 
 }
