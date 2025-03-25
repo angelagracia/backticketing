@@ -7,17 +7,19 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/icon-isi.png">
+		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('front/assets/img/logo/icon-isi.png') }}">
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="{{ asset('..front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('..front/assets/css/LineIcons.2.0.css') }}">
-		<link rel="stylesheet" href="{{ asset('..front/assets/css/animate.css') }}">
-		<link rel="stylesheet" href="{{ asset('..front/assets/css/tiny-slider.css') }}">
-		<link rel="stylesheet" href="{{ asset('..front/assets/css/glightbox.min.css') }}">
-		<link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('../front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/glightbox.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/main.css') }}">
 		<link rel="stylesheet" href="{{ asset('style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     </head>
     <body>
@@ -51,7 +53,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index.html">
-                                <img src="../assets/img/logo/logo-ticketing.svg" alt="Logo">
+                                <img src="{{ asset('../front/assets/img/logo/logo-ticketing.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -162,53 +164,24 @@
             <div class="col-sm-12 col-md-8 col-lg-9">
               <div class="row page-content">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <div class="inner-box">
-                    <div class="dashboard-box">
-                      <h2 class="dashbord-title">Ubah Email</h2>
-                    </div>
-                    <div class="dashboard-wrapper">
-                        <label class="control-label">Email Baru</label>
-                      <div class="form-group mb-3">
-                        <input class="form-control input-md" name="email" placeholder="masukkan email anda" type="email">
-                      </div>
-                      <!-- <div class="form-group mb-3 tg-inputwithicon">
-                        <label class="control-label">Categories</label>
-                       
-                          <select class="form-select">
-                            <option value="none">Select Categories</option>
-                            <option value="none">Mobiles</option>
-                            <option value="none">Electronics</option>
-                            <option value="none">Training</option>
-                            <option value="none">Real Estate</option>
-                            <option value="none">Services</option>
-                            <option value="none">Training</option>
-                            <option value="none">Vehicles</option>
-                          </select>
-                      </div>
-                      <div class="form-group mb-3">
-                        <label class="control-label">Price Title</label>
-                        <input class="form-control input-md" name="price" placeholder="Ad your Price" type="text">
-                        <div class="tg-checkbox">
-                          <input id="tg-priceoncall" type="checkbox" name="priceoncall" value="on">
-                          <label for="tg-priceoncall">Price On Call</label>
+                    <div class="inner-box">
+                        <div class="dashboard-box">
+                            <h2 class="dashbord-title">Ubah Email</h2>
                         </div>
-                      </div>
-                      <div class="form-group md-3">
-                        <section id="editor">
-                          <div id="summernote">
-                          </div>
-                        </section>
-                      </div>
-                      <label class="tg-fileuploadlabel" for="tg-photogallery">
-                        <span>Drop files anywhere to upload</span>
-                        <span>Or</span>
-                        <span class="btn btn-common">Select Files</span>
-                        <span>Maximum upload file size: 500 KB</span>
-                        <input id="tg-photogallery" class="tg-fileinput" type="file" name="file">
-                      </label> -->
-                      <button class="btn btn-common mt-1" type="button" style="width: auto; margin-right: auto; margin-left: 10px;" onclick="simpanData()">Ubah Email</button>
+                        <div class="dashboard-wrapper">
+                            <form id="updateEmailForm">
+                                @csrf <!-- Tambahkan CSRF token untuk keamanan -->
+                                <label class="control-label">Email Baru</label>
+                                <div class="form-group mb-3">
+                                    <input class="form-control input-md" id="email" name="email" placeholder="Masukkan email anda" type="email" required>
+                                </div>
+                                <button class="btn btn-common mt-1 btn-primary" type="button" onclick="simpanData()">Ubah Email</button>
+                            </form>
+                            <div id="responseMessage"></div> <!-- Tempat menampilkan pesan sukses/gagal -->
+                        </div>
                     </div>
                 </div>
+                
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-50">
                     <div class="inner-box">
                       <div class="dashboard-box">
@@ -262,7 +235,7 @@
                           <span>Maximum upload file size: 500 KB</span>
                           <input id="tg-photogallery" class="tg-fileinput" type="file" name="file">
                         </label> -->
-                        <button class="btn btn-common mt-1" type="button" style="width: auto; margin-right: auto; margin-left: 10px;" onclick="simpanData()">Simpan Kata Sandi</button>
+                        <button class="btn btn-common mt-1 btn-primary" type="button" style="width: auto;  margin-right: auto; margin-left: 10px;" onclick="simpanData()">Simpan Kata Sandi</button>
                       </div>
                   </div>
             </div>
@@ -563,15 +536,15 @@
         </a>
         
 		<!-- ========================= JS here ========================= -->
-		<script src="../assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
-		<script src="../assets/js/contact-form.js"></script>
-        <script src="../assets/js/count-up.min.js"></script>
-        <script src="../assets/js/tiny-slider.js"></script>
-        <script src="../assets/js/isotope.min.js"></script>
-        <script src="../assets/js/glightbox.min.js"></script>
-        <script src="../assets/js/wow.min.js"></script>
-        <script src="../assets/js/imagesloaded.min.js"></script>
-		<script src="../assets/js/main.js"></script>
+		<script src="{{ asset('../front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+		<script src="{{ asset('../front/assets/js/contact-form.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/count-up.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/tiny-slider.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/isotope.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/glightbox.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/wow.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/imagesloaded.min.js') }}"></script>
+		<script src="{{ asset('../front/assets/js/main.js') }}"></script>
         <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
         <script>
             CKEDITOR.replace( 'ckeditor' );

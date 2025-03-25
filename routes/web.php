@@ -4,6 +4,7 @@ use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicKategori;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TypeController;
@@ -15,9 +16,13 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
+use App\Http\Controllers\EmailUpdateController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ProfileLoginController;
+use App\Http\Controllers\UserPortalAuthController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -31,6 +36,10 @@ Route::post('/proses-simpan', [FrontendController::class, 'prosesSimpan'])->name
 Route::get('/ticket/{id}/detail_ticket_kc', [FrontendController::class, 'detail_ticket_kc'])
     ->name('detail_ticket_kc');
 
+Route::get('/cari-ticket', [FrontendController::class, 'searchTicket'])->name('searchTicket');
+Route::get('/cari-ticket', [FrontendController::class, 'searchTicketLogin'])->name('searchTicketLogin');
+
+
 
 
 Route::get('/forgetpassword', [FrontendController::class, 'forgetpassword'])->name('forgetpassword');
@@ -40,13 +49,26 @@ Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 // Route bagian login
 
 Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
-Route::get('/home/akun', [FrontendController::class, 'akun'])
-    ->name('akun') 
+Route::get('/home/akun', [ProfileController::class, 'profile.edit'])
+    ->name('profile.edit') 
     ->middleware(['auth', 'verified']);
 
 Route::get('/home/profile', [FrontendController::class, 'profile'])
     ->name('profile') 
     ->middleware(['auth', 'verified']);
+
+    Route::group(['prefix' => 'portal', 'middleware' => ['web']], function () {
+        Route::get('/login-portal', [UserPortalAuthController::class, 'showLoginForm'])->name('user_portal.login');
+        Route::post('/login-portal', [UserPortalAuthController::class, 'loginPortal'])->name('loginPortal');
+        Route::post('/logout-portal', [UserPortalAuthController::class, 'logout'])->name('user_portal.logout');
+    
+        Route::middleware('auth:users_portal')->group(function () {
+            Route::get('/backoffice', function () {
+                return view('back.backoffice');
+            })->name('user_portal.dashboard');
+        });
+    });
+    
 
 
 
@@ -75,14 +97,10 @@ Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_t
 //     ->name('detail_ticket_kc');
 
 
-
-
-
-
-
 Route::get('/home/detail_ticket', [FrontendController::class, 'detail_ticket'])
     ->name('detail_ticket')
     ->middleware(['auth', 'verified']);
+    
 
 Route::get('/home/detail_ticket_closed', [FrontendController::class, 'detail_ticket_closed'])
     ->name('home.detail_ticket_closed')
@@ -99,7 +117,6 @@ Route::get('/home/contact_login', [FrontendController::class, 'contact_login'])
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
-Route::get('/ticket/{id}', [FrontendController::class, 'getTicketById']);
 Route::get('/home/ticket/{id}/edit', [FrontendController::class, 'edit'])->name('ticketlogin.edit');
 Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate'])->name('ticket.prosesUpdate');
 
@@ -108,7 +125,7 @@ Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    // ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 // Route::get('/dashboard', function () {
@@ -139,6 +156,12 @@ Route::get('/sub_kategori/hapus/{id}', [TypeController::class, 'hapus'])->name('
 
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/add', [UserController::class, 'add'])->name('users.add');
+Route::post('/users/prosesAdd', [UserController::class, 'prosesAdd'])->name('users.prosesAdd');
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
+Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
+Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 
 
 Route::get('/peran', [UnitController::class, 'index'])->name('peran.index');
@@ -184,7 +207,7 @@ Route::get('/unit_kerja/add', [UnitKerjaController::class, 'add'])->name('unit_k
 
 
 Route::get('/ticket', [TicketController::class, 'index'])->name('ticket.index');
-Route::get('/ticket/add', [TicketController::class, 'add'])->name('ticket.add');
+Route::get('/ticket/addData', [TicketController::class, 'addData'])->name('ticket.addData');
 Route::post('/get-subcategories', [TicketController::class, 'getSubcategories']);
 Route::post('/ticket/prosesTambah', [TicketController::class, 'prosesTambah'])->name('ticket.prosesTambah');
 Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
@@ -194,10 +217,54 @@ Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('t
 Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
 
 
+Route::get('/hak-akses', [HakAksesController::class, 'index'])->name('hak_akses.index');
+
+
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/profile', [ProfileLoginController::class, 'edit'])->name('profile.edit');
+// });
+
+Route::post('/change-email', [EmailUpdateController::class, 'requestEmailChange'])->middleware('auth');
+Route::get('/verify-email/{token}', [EmailUpdateController::class, 'verifyNewEmail']);
+
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/home/akun', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/home/akun', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/home/akun', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// chat
+Route::get('/messages', [ChatController::class, 'fetchMessages']);
+Route::post('/messages', [ChatController::class, 'sendMessage']);
+
+Route::post('/send-message', [ChatController::class, 'sendMessage']);
+
+
+
+// Route untuk menampilkan riwayat berdasarkan nomor tiket
+Route::get('/ticket/{ticketNumber}/history', [TicketController::class, 'showTicketHistory'])->name('ticket.history');
+
+// // untuk permission lihat
+// Route::get('/manage-users', [UserController::class, 'index'])->middleware('permission:Lihat');
+// Route::post('/roles/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
+
+
 
 require __DIR__.'/auth.php';

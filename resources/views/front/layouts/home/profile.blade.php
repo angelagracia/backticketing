@@ -11,13 +11,13 @@
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- ========================= CSS here ========================= -->
-		<link rel="stylesheet" href="../assets/css/bootstrap-5.0.0-alpha.min.css">
-        <link rel="stylesheet" href="../assets/css/LineIcons.2.0.css">
-		<link rel="stylesheet" href="../assets/css/animate.css">
-		<link rel="stylesheet" href="../assets/css/tiny-slider.css">
-		<link rel="stylesheet" href="../assets/css/glightbox.min.css">
-		<link rel="stylesheet" href="../assets/css/main.css">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/bootstrap-5.0.0-alpha.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('../front/assets/css/LineIcons.2.0.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/animate.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/tiny-slider.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/glightbox.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('../front/assets/css/main.css') }}">
+		<link rel="stylesheet" href="{{ asset('style.css') }}">
 
     </head>
     <body>
@@ -51,7 +51,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index.html">
-                                <img src="assets/img/logo/logo-ticketing.svg" alt="Logo">
+                                <img src="{{ asset('front/assets/img/logo/logo-ticketing.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -172,7 +172,7 @@
                                         <label class="form-label"><strong>Foto Diri</strong></label>
                                         <div class="d-flex align-items-center">
                                             <div class="profile-photo me-3">
-                                                <img id="profileImage" src="../assets/img/client-logo/avatar-1.png" alt="Foto Profil" width="110" height="110" style="border-radius: 0%; object-fit: cover; border: 1px solid #ccc;">
+                                                <img id="profileImage" src="{{ asset('../front/assets/img/client-logo/avatar-1.png') }}" alt="Foto Profil" width="110" height="110" style="border-radius: 0%; object-fit: cover; border: 1px solid #ccc;">
                                             </div>
                                             <input type="file" id="fileInput" accept="image/*" style="display: none;">
                                             <button class="btn btn-dark ml-3" onclick="document.getElementById('fileInput').click();">Pilih Foto</button>
@@ -218,7 +218,7 @@
                                         <small class="text-muted">Anda dapat mengubah alamat email melalui menu <a href="akun.html">Akun</a>.</small>
                                     </div>
 
-                                    <button class="btn btn-common mt-1" type="button" style="width: 140px; margin-right: auto; margin-left: 10px;" onclick="simpanData()">Ubah Profil</button>
+                                    <button class="btn btn-common mt-1 btn-primary" type="button" style="width: 140px; margin-right: auto; margin-left: 10px;" onclick="simpanData()">Ubah Profil</button>
 
                             </div>
                         </div>
@@ -523,15 +523,15 @@
         </a>
         
 		<!-- ========================= JS here ========================= -->
-		<script src="../assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
-		<script src="../assets/js/contact-form.js"></script>
-        <script src="../assets/js/count-up.min.js"></script>
-        <script src="../assets/js/tiny-slider.js"></script>
-        <script src="../assets/js/isotope.min.js"></script>
-        <script src="../assets/js/glightbox.min.js"></script>
-        <script src="../assets/js/wow.min.js"></script>
-        <script src="../assets/js/imagesloaded.min.js"></script>
-		<script src="../assets/js/main.js"></script>
+		<script src="{{ asset('../front/assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
+		<script src="{{ asset('../front/assets/js/contact-form.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/count-up.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/tiny-slider.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/isotope.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/glightbox.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/wow.min.js') }}"></script>
+        <script src="{{ asset('../front/assets/js/imagesloaded.min.js') }}"></script>
+		<script src="{{ asset('../front/assets/js/main.js') }}"></script>
         <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
         <!-- <script>
             CKEDITOR.replace( 'ckeditor' );

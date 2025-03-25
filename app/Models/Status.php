@@ -16,5 +16,11 @@ class Status extends Model
     {
         return $this->hasMany(Ticket::class,'id');
     }
+
+    public function histories()
+    {
+        return $this->hasMany(TicketHistory::class);
+    }
+
     
 }

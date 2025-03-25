@@ -106,16 +106,28 @@
                     </form>
                     <div class="card-footer text-right">
                         <div class="d-flex justify-content-end">
-                            <a href="" class="btn btn-success mr-2"> Chatting</a>
-                            <a href="{{ route('ticket.index')}}" class="btn btn-danger mr-2"> Kembali</a>
+                            <a href="" class="btn btn-success mr-2">Chatting</a>
+                            <a href="{{ route('ticket.index') }}" class="btn btn-danger mr-2">Kembali</a>
+                        
                             <form action="{{ route('ticket.proses', $ticket->id) }}" method="POST">
                                 @csrf
                                 @method('POST')
-                                @if($ticket->status_id != 2) <!-- Cek jika status_id bukan 2 (Processed) -->
+                                @if($ticket->status_id != 2) 
+                                    <!-- Jika status_id bukan 2 (Processed), tampilkan tombol "Proses" -->
                                     <button type="submit" class="btn btn-primary mr-1">Proses</button>
                                 @endif
-                            </form>                                                       
+                            </form>
+                        
+                            @if($ticket->status_id == 2) 
+                                <!-- Jika status_id adalah 2 (Processed), tampilkan tombol "Konfirmasi" -->
+                                <form action="" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-warning">Konfirmasi</button>
+                                </form>
+                            @endif
                         </div>
+                        
                         
                     </div>
                 </div>

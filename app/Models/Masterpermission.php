@@ -9,6 +9,12 @@ class Masterpermission extends Model
 {
     use HasFactory;
     protected $table = 'master_permissions';
-    protected $fillable = ['name', 'description', 'code', 'created_by', 'updated_by', 'deleted_by'];
+    protected $fillable = ['name'];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'permission_role');
+    }
+    
     
 }

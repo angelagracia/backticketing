@@ -6,9 +6,11 @@ use App\Models\Type;
 use App\Models\Unit;
 use App\Models\Topic;
 use App\Models\Ticket;
+use App\Mail\TicketAdded;
 use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use App\Models\TicketAttachment;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class FrontendController extends Controller
@@ -40,13 +42,15 @@ class FrontendController extends Controller
     
     public function kirimcepat()
     {
-        $peran = Unit::all();
-        $unit_kerja = UnitKerja::all();
-        $kategori = Topic::all(); 
-        return view('front.layouts.input_form_kc', compact('peran','kategori','unit_kerja'));
-        $kategori = Topic::all(); 
-        $sub_kategory = Type::all();
-        return view('front.layouts.input_form_kc', compact('peran','kategori','unit_kerja','sub_kategory'));
+    // Ambil data yang dibutuhkan
+    $peran = Unit::all();
+    $unit_kerja = UnitKerja::all();
+    $kategori = Topic::all(); 
+    $sub_kategory = Type::all();  // Ambil data sub_kategory
+
+    // Kirim semua data ke view dalam satu return
+    return view('front.layouts.input_form_kc', compact('peran', 'kategori', 'unit_kerja', 'sub_kategory'));
+
     }
     
     public function prosesSimpan(Request $request)
@@ -117,7 +121,6 @@ class FrontendController extends Controller
         return view('front.layouts.input_form', compact('peran','kategori','unit_kerja','sub_kategory'));
     }
 
-    
     public function prosesSimpanLogin(Request $request)
     {
         $request->validate([
@@ -161,6 +164,8 @@ class FrontendController extends Controller
                     ]);
                 }
             }
+
+            Mail::to($request->user()->email)->send(new TicketAdded($ticket));
           
             return redirect()->route('data_ticket_login', ['id' => $ticket->id])->with('success', 'Tiket berhasil dibuat!');
 
@@ -279,6 +284,31 @@ public function show($id)
         return redirect()->route('data_ticket_login', ['id' => $ticket->id])
         ->with('success', 'Data berhasil diubah');
 
+    }
+
+    public function searchTicket(Request $request)
+{
+    // Ambil input dari form pencarian
+    $search = $request->input('subs-email');
+
+    // Cari tiket berdasarkan nomor tiket
+    $ticket = Ticket::where('ticket_number', 'like', '%' . $search . '%')->first();
+
+    // Kembalikan hasil pencarian ke view
+    return view('front.layouts.detail_ticket_kc', compact('ticket'));
+}
+
+
+    public function searchTicketLogin(Request $request)
+    {
+        // Ambil input dari form pencarian
+        $search = $request->input('subs-email');
+
+        // Cari tiket berdasarkan nomor tiket
+        $ticket = Ticket::where('ticket_number', 'like', '%' . $search . '%')->first();
+
+        // Kembalikan hasil pencarian ke view
+        return view('front.layouts.detail_tiket', compact('ticket'));
     }
 
 

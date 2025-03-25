@@ -36,7 +36,7 @@
           <div class="card-header">
             <h4>Users</h4>
             <div class="card-header-action">
-              <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+              <a href="{{ route('users.add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
             </div>
           </div>
           <div class="card-body p-0">
@@ -57,9 +57,16 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>
-                                <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                                <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
+                                <a href="{{ route('users.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ route('users.delete',$item->id) }}" 
+                                  class="btn btn-danger btn-action mr-1" 
+                                  data-toggle="tooltip" 
+                                  title="Delete"
+                                  onclick="return confirm('Are you sure? This action cannot be undone.')">
+                                  <i class="fas fa-trash"></i>
+                               </a>
+                              
+                                <a href="{{ route('users.detail',$item->id) }}" class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>
                     @endforeach

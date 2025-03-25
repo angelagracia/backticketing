@@ -136,8 +136,8 @@
                             <label for="sub_category" class="mt-4">Sub Kategori</label><span class="required"></span>
                             <select id="sub_category" name="sub_category" class="form-select" required>
                                 <option value="">Pilih Sub Kategori</option>
-                                @foreach($sub_kategory as $sub_kategory)
-                                    <option value="{{ $sub_kategory->id }}">{{ $sub_kategory->name }}</option>
+                                @foreach($sub_kategory as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
 

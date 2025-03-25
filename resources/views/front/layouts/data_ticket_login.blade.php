@@ -92,7 +92,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{route('profile')}}"><i class="lni lni-briefcase"></i>Profil</a>
-                                        <a class="dropdown-item" href="{{route('akun')}}"><i class="lni lni-rocket"></i> Akun</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
@@ -115,7 +115,6 @@
                     <a href="{{ route('ticketlogin.edit', $ticket->id) }}">
                         <button class="btn-edit-ticket-hidup">Edit</button>
                     </a>
-                    
                     
                 </h4>
                 <div class="row content-section">

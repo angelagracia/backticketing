@@ -9,6 +9,8 @@
         </p>
     </header>
 
+
+
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
@@ -21,7 +23,7 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+        </div><br>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -45,10 +47,12 @@
                     @endif
                 </div>
             @endif
-        </div>
+        </div><br>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <div class="button">
+                <button class="btn" type="submit">Simpan</button>
+            </div>
 
             @if (session('status') === 'profile-updated')
                 <p

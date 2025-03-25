@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <h4>Data Ticket</h4>
                     <div class="card-header-action">
-                    <a href="{{ route('ticket.add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                    <a href="{{ route('ticket.addData') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
                 </div>
             </div>
 

@@ -202,42 +202,14 @@
                 <div class="history-box p-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <p>[12-02-2025 / 09:30:45] <strong>Ticket Status:</strong> <span class="text-success">Open</span></p>
-                            <div class="row content-section">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-11">
-                                    <ul class="ul-with-bullet">
-                                        <li>Pengguna mengajukan permohonan</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <p>[12-02-2025 / 09:35:09] <strong>Ticket Edited by User</strong></p>
-                            <div class="row content-section">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-11">
-                                    <ul class="ul-with-bullet">
-                                        <li>Pengguna mengubah permohonann</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <p>[12-02-2025 / 13:30:30] <strong>Ticket Status:</strong> <span class="text-warning">Processed</span></p>
-                            <div class="row content-section">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-11">
-                                    <ul class="ul-with-bullet">
-                                        <li>Permohonan sedang diproses</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <p>[12-02-2025 / 15:02:23] <strong>Ticket Confirmation</strong></p>
-                            <div class="row content-section">
-                                <div class="col-md-1"></div>
-                                <div class="col-md-11">
-                                    <ul class="ul-with-bullet">
-                                        <li>Permohonan selesai diproses.</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            @if($ticket->histories->count())
+                                @foreach($ticket->histories as $history)
+                                    <p>{{ $history->created_at }} - {{ $history->status->name }}: {{ $history->description }}</p>
+                                @endforeach
+                            @else
+                                <p>Riwayat tiket tidak ditemukan.</p>
+                            @endif
+
                         </div>
                         <div class="col-md-12 mt-30">
                             <p class="close-messages text-danger">
@@ -249,6 +221,7 @@
                         </div>
                     </div>
                 </div>
+
                 
                 <a href="#"><button class="btn-close-ticket mt-4" id="closeTicket">Close Ticket</button></a>
             </div>

@@ -118,7 +118,7 @@
                                     <a class="nav-link dropdown-toggle" href="{{ route('profile') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('profile') }}"><i class="lni lni-briefcase"></i>Profil</a>
-                                        <a class="dropdown-item" href="{{ route('akun') }}"><i class="lni lni-rocket"></i> Akun</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
                                     </li>
@@ -144,10 +144,10 @@
                                     <h1 class="wow fadeInUp" data-wow-delay=".4s">Helpdesk UPA TIK ISI Yogyakarta</h1>
                                     <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk UPA TIK berkomitmen untuk memberikan dukungan terkait sistem informasi, jaringan internet, perangkat keras dan lunak, serta layanan TIK lainnya guna mendukung kelancaran kegiatan akademik dan administratif.</p>
                                     <div class="subscribe-section mt-5">
-                                        <form action="../data_ticket_login.html" class="subscribe-form wow fadeInRight" data-wow-delay=".4s">
-                                            <input type="text" name="subs-email" id="subs-email" placeholder="Cari Ticket">
-                                            <a href="../data_ticket_login.html"><button type="submit"><i class="lni lni-search-alt"></i></button></a>
-                                        </form>
+                                        <form action="{{ route('ticket.history', ['ticketNumber' => '']) }}" method="get">
+                                            <input type="text" name="ticketNumber" placeholder="Masukkan Nomor Tiket" required>
+                                            <button type="submit">Cari Tiket</button>
+                                        </form>   
                                     </div>
                                     <div class="button text-center mt-3">
                                         <a href="{{ route('input_form') }}" class="theme-btn">Buat Tiket Permohonan</a>

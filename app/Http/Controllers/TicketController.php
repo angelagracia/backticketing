@@ -6,10 +6,15 @@ use App\Models\Menu;
 use App\Models\Type;
 use App\Models\Unit;
 use App\Models\Topic;
+use App\Models\Status;
 use App\Models\Ticket;
+use App\Mail\TicketAdded;
 use App\Models\UnitKerja;
 use Illuminate\Http\Request;
+use App\Models\TicketHistory;
 use App\Models\TicketAttachment;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
@@ -23,14 +28,14 @@ class TicketController extends Controller
         return view('back.ticket.index', compact('ticket', 'menu_master'));
     }
 
-    public function add()
+    public function addData()
     {
         $menu_master = Menu::all();
         $master_unit = Unit::all();
         $unit_kerja = UnitKerja::all();
         $topic_master = Topic::all();
         $master_type = Type::all();
-        return view('back.ticket.add', compact('menu_master','master_unit','unit_kerja','topic_master','master_type'));
+        return view('back.ticket.addData', compact('menu_master','master_unit','unit_kerja','topic_master','master_type'));
     }
 
     public function getSubcategories(Request $request)
@@ -100,6 +105,8 @@ class TicketController extends Controller
                 ]);
             }
         }
+
+        
 
         return redirect()->route('ticket.index')->with('success', 'Data berhasil ditambahkan');
         } catch (\Exception $e) {
@@ -205,7 +212,6 @@ class TicketController extends Controller
     {
 
         $ticket = Ticket::findOrFail($id);
-        $ticket->status = 'Processed';
 
         $ticket->status_id = 2;  
         
@@ -225,6 +231,61 @@ class TicketController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('ticket.index')->with('success', 'Status tiket berhasil diubah.');
     }
+
+    public function updateTicketStatus($ticketId, $newStatusId)
+{
+    // Cari tiket berdasarkan ID
+    $ticket = Ticket::findOrFail($ticketId);
+
+    // Simpan status tiket lama ke riwayat
+    $ticket->histories()->create([
+        'status_id' => $ticket->status_id, // status lama
+        'description' => 'Status berubah menjadi ' . $ticket->status->name, // Deskripsi perubahan status
+    ]);
+
+    // Update status tiket ke status baru
+    $ticket->status_id = $newStatusId;
+    $ticket->save();
+
+    // Ambil status baru setelah update
+    $newStatus = Status::findOrFail($newStatusId);
+
+    // Menyimpan riwayat untuk status baru
+    $ticket->histories()->create([
+        'status_id' => $newStatusId, // status baru
+        'description' => 'Status diperbarui menjadi ' . $newStatus->name, // Deskripsi perubahan status
+    ]);
+
+    // Redirect atau tampilkan halaman dengan status yang telah diperbarui
+    return redirect()->route('ticket.details', ['ticketId' => $ticket->id])
+                     ->with('success', 'Status tiket berhasil diperbarui!');
+}
+
+    
+
+    
+
+
+    // controller untuk menangani tampilan ticket
+    public function searchTicket(Request $request)
+    {
+        $email = $request->get('subs-email');
+    
+        // Cari tiket berdasarkan nomor tiket
+        $ticket = Ticket::where('ticket_number', $email)->with('histories.status')->first();
+    
+        // Debug: Cek apakah tiket ditemukan dan apakah riwayat sudah dimuat
+        dd($ticket);
+    
+        if (!$ticket) {
+            abort(404, 'Tiket tidak ditemukan');
+        }
+    
+        return view('front.layouts.detail_tiket', compact('ticket'));
+    }
+    
+
+    
 
 
 }
