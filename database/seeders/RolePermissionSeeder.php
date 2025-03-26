@@ -3,29 +3,24 @@
 namespace Database\Seeders;
 
 use App\Models\Masterpermission;
-use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
+use App\Models\Permission;
 
-class RolePermissionSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        // Buat Role
-        $admin = Role::create(['name' => 'Administrator']);
-        $editor = Role::create(['name' => 'Editor']);
+class RolePermissionSeeder extends Seeder {
+    public function run() {
+        $admin = Role::create(['name' => 'admin']);
+        $manager = Role::create(['name' => 'manager']);
+        $user = Role::create(['name' => 'user']);
 
-        // Buat Permissions
-        $permissions = ['Lihat', 'Tambah', 'Edit', 'Delete'];
-        
+        $permissions = ['view', 'create', 'edit', 'delete'];
+
         foreach ($permissions as $perm) {
-            $permission = Masterpermission::create(['name' => $perm]);
-            $admin->permissions()->attach($permission); // Beri semua akses ke Admin
+            $p = Masterpermission::create(['name' => $perm]);
+            $admin->permissions()->attach($p);
         }
-        
-        $editor->permissions()->attach(Masterpermission::where('name', '!=', 'Delete')->get()); // Editor tidak bisa hapus
+
+        $manager->permissions()->attach(Masterpermission::whereIn('name', ['view', 'edit'])->get());
+        $user->permissions()->attach(Masterpermission::where('name', 'view')->first());
     }
 }

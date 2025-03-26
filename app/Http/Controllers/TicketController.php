@@ -283,6 +283,12 @@ class TicketController extends Controller
     
         return view('front.layouts.detail_tiket', compact('ticket'));
     }
+
+    public function dashboard()
+    {
+        $totalTicketsOpen = Ticket::where('status', 'Opens')->count();
+        return view('dashboard', compact('totalTicketsOpen'));
+    }
     
 
     

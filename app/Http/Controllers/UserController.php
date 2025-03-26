@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $master_users = User::all();
-        $menu_master = Menu::all(); 
-        return view('back.user.index', compact('master_users', 'menu_master'));
-    }
+    public function index(Request $request)
+{
+    // Ambil semua user dengan relasi roles
+    $master_users = User::with('roles')->get(); 
+    // dd($master_users);
+
+    // Ambil semua role dari tabel roles
+    $master_roles = Role::all(); 
+
+    // Ambil semua menu dari tabel menus
+    $menu_master = Menu::all(); 
+
+    return view('back.user.index', compact('master_users', 'menu_master', ));
+}
 
     public function add()
     {

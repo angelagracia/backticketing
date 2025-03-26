@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Status;
+use App\Models\Ticket;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +17,42 @@ class DashboardController extends Controller
     {
         // return view('layouts.default');
         $menu_master = Menu::all(); 
-        return view('back.dashboard', compact('menu_master'));
+        $totalTicketsOpen = Ticket::whereHas('status', function ($query) {
+            $query->where('name', 'Opens');
+        })->count();
+        $totalTicketsProses = Ticket::whereHas('status', function ($query) {
+            $query->where('name', 'Processed');
+        })->count();
+        $totalTicketsClose = Ticket::whereHas('status', function ($query) {
+            $query->where('name', 'Closed');
+        })->count();
+
+
+
+        $statuses = Status::all();
+        $ticketData = [];
+
+        foreach ($statuses as $status) {
+            $ticketData[] = [
+                'status' => $status->name,
+                'count' => Ticket::where('status_id', $status->id)->count()
+            ];
+        }
+
+
+        $units = UnitKerja::withCount('ticket')->get(); // Pastikan ada relasi
+
+        $unitData = [];
+
+        foreach ($units as $unit) {
+            $unitData[] = [
+                'unit'  => $unit->name,
+                'count' => $unit->tickets_count
+            ];
+        }
+
+        
+        return view('back.dashboard', compact('menu_master','totalTicketsOpen','totalTicketsProses','totalTicketsClose','ticketData','unitData'));
     }
 
     /**

@@ -144,10 +144,10 @@
                                     <h1 class="wow fadeInUp" data-wow-delay=".4s">Helpdesk UPA TIK ISI Yogyakarta</h1>
                                     <p class="wow fadeInUp" data-wow-delay=".6s">Helpdesk UPA TIK berkomitmen untuk memberikan dukungan terkait sistem informasi, jaringan internet, perangkat keras dan lunak, serta layanan TIK lainnya guna mendukung kelancaran kegiatan akademik dan administratif.</p>
                                     <div class="subscribe-section mt-5">
-                                        <form action="{{ route('ticket.history', ['ticketNumber' => '']) }}" method="get">
-                                            <input type="text" name="ticketNumber" placeholder="Masukkan Nomor Tiket" required>
-                                            <button type="submit">Cari Tiket</button>
-                                        </form>   
+                                        <form action="{{ route('searchTicket') }}" method="GET" class="subscribe-form wow fadeInRight" data-wow-delay=".4s">
+                                            <input type="text" name="subs-email" id="subs-email" placeholder="Cari Nomor Ticket" required>
+                                            <button type="submit"><i class="lni lni-search-alt"></i></button>
+                                        </form>                 
                                     </div>
                                     <div class="button text-center mt-3">
                                         <a href="{{ route('input_form') }}" class="theme-btn">Buat Tiket Permohonan</a>

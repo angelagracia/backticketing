@@ -58,10 +58,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Ticket::class, 'user_id'); // Sesuaikan dengan foreign key
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
+    public function role()
+{
+    return $this->belongsTo(Role::class, 'role_id');
+}
 
     public function hasPermission($permission)
     {

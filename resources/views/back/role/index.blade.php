@@ -36,7 +36,7 @@
           <div class="card-header">
             <h4>Data Role</h4>
             <div class="card-header-action">
-              <a href="roles/add" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+              <a href="add" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
             </div>
           </div>
           <div class="card-body p-0">

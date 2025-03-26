@@ -88,8 +88,8 @@ Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_t
     ->middleware(['auth', 'verified']);
 
 
-Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_ticket_login'])
-    ->name('data_ticket_login');
+// Route::get('/ticket/{id}/data_ticket_login', [FrontendController::class, 'data_ticket_login'])
+//     ->name('data_ticket_login');
 
  Route::get('/ticket/{id}/detail', [FrontendController::class, 'show'])->name('detail_ticket_login');
 

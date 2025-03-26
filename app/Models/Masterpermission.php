@@ -11,9 +11,8 @@ class Masterpermission extends Model
     protected $table = 'master_permissions';
     protected $fillable = ['name'];
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'permission_role');
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_permission');
     }
     
     

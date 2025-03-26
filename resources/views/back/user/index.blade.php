@@ -47,18 +47,29 @@
                     <th>No.</th>
                     <th>Nama</th>
                     <th>email</th>
+                    <th>Roles</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>                         
-                    @foreach ($master_users as $item)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
+                  @foreach ($master_users as $key => $user)
+                      <tr>
+                          <td>{{ $loop->iteration }}</td>
+                          <td>{{ $user->name }}</td>
+                          <td>{{ $user->email }}</td>
+                          <td>
+                            @if(!empty($user->getRoleNames()))
+                              @foreach($user->getRoleNames() as $v)
+                                 <label class="badge bg-success">{{ $v }}</label>
+                              @endforeach
+                            @endif
+                          </td>
+
+                          
+                            
                             <td>
-                                <a href="{{ route('users.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="{{ route('users.delete',$item->id) }}" 
+                                <a href="{{ route('users.edit',$user->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ route('users.delete',$user->id) }}" 
                                   class="btn btn-danger btn-action mr-1" 
                                   data-toggle="tooltip" 
                                   title="Delete"
@@ -66,7 +77,7 @@
                                   <i class="fas fa-trash"></i>
                                </a>
                               
-                                <a href="{{ route('users.detail',$item->id) }}" class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
+                                <a href="{{ route('users.detail',$user->id) }}" class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>
                     @endforeach

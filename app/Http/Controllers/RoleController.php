@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use DB;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Models\Menu;
+use App\Models\User;
+ 
 
 class RoleController extends Controller
 {
     public function index()
     {
+        $menu_master = Menu::all();
         $master_roles = Role::all();
-        return view('back.role.index', ['master_roles' => $master_roles]);
+        return view('back.role.index', compact('master_roles','menu_master'));
     }
 
     public function add()
     {
         $getPermission = Permission::getRecord();
-        dd($getPermission);
         $data['getPermission'] = $getPermission;
         return view('back.role.role-add', $data);
     }
