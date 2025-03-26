@@ -11,6 +11,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
@@ -204,6 +205,10 @@ Route::get('/sub-menu/delete/{id}', [SubMenuController::class, 'delete'])->name(
 
 Route::get('/unit_kerja', [UnitKerjaController::class, 'index'])->name('unit_kerja.index');
 Route::get('/unit_kerja/add', [UnitKerjaController::class, 'add'])->name('unit_kerja.add');
+Route::post('/unit_kerja/prosesTambah', [UnitKerjaController::class, 'prosesTambah'])->name('unit_kerja.prosesTambah');
+Route::get('/unit_kerja/edit/{id}', [UnitKerjaController::class, 'edit'])->name('unit_kerja.edit');
+Route::post('/unit_kerja/prosesEdit', [UnitKerjaController::class, 'prosesEdit'])->name('unit_kerja.prosesEdit');
+Route::get('/unit_kerja/delete/{id}', [UnitKerjaController::class, 'delete'])->name('unit_kerja.delete');
 
 
 Route::get('/ticket', [TicketController::class, 'index'])->name('ticket.index');
@@ -215,6 +220,9 @@ Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name
 Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
 Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
 Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+
+
+Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
 
 
 Route::get('/hak-akses', [HakAksesController::class, 'index'])->name('hak_akses.index');

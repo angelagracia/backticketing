@@ -7,11 +7,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -52,15 +53,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Ticket::class,'id');
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id'); // Sesuaikan dengan foreign key
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
     public function hasPermission($permission)
-{
-    return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
-        $query->where('name', $permission);
-    })->exists();
-}
+    {
+        return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
+            $query->where('name', $permission);
+        })->exists();
+    }
+
+    
 }
