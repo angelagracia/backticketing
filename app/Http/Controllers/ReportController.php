@@ -34,7 +34,7 @@ class ReportController extends Controller
         $report = $query->with('attachments')->paginate(10); // Paginate jika data banyak
 
         // Mengambil data menu (jika ada)
-        $menu_master = Menu::all();
+        
 
         // Mengembalikan view dengan data yang sudah difilter
         return view('back.report.index', compact('report', 'menu_master'));
