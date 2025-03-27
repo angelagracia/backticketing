@@ -18,6 +18,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ChatController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -200,5 +201,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
 
 require __DIR__.'/auth.php';
