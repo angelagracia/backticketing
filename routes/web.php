@@ -18,6 +18,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\FormController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -53,8 +54,8 @@ Route::get('/home/profile', [FrontendController::class, 'profile'])
 
 
 Route::get('/home/input_form', [FrontendController::class, 'input_form'])
-    ->name('input_form')
-    ->middleware(['auth', 'verified']);
+    ->name('input_form');
+   // ->middleware(['auth', 'verified']);
 
 Route::post('/simpan-login', [FrontendController::class, 'prosesSimpanLogin'])
 ->name('prosesSimpanLogin')
@@ -193,6 +194,9 @@ Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name
 Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
 Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
 Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+
+//bagian form controller
+Route::post('/simpan-login', [FormController::class, 'prosesSimpanLogin'])->name('prosesSimpanLogin');
 
 
 Route::middleware('auth')->group(function () {
