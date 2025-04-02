@@ -14,6 +14,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\FrontendController;
@@ -249,10 +250,42 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::middleware(['permission:role-list|role-create|role-edit|role-delete'])
+    ->group(function () {
+        Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    });
+
+Route::middleware(['permission:role-create'])
+    ->group(function () {
+        Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    });
+
+Route::middleware(['permission:role-edit'])
+    ->group(function () {
+        Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    });
+
+Route::middleware(['permission:role-delete'])
+    ->group(function () {
+        Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    });
+
+
+    Route::group(['middleware' => ['auth']], function() {
+        Route::resource('roles', RoleController::class);
+        Route::resource('users', UserController::class);
+        Route::resource('products', ProductController::class);
+    });
 
 
 
 
+    Route::get('/report/export', [ReportController::class, 'export'])->name('report.export');
+    
+    
 
 
 

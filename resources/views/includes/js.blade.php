@@ -26,6 +26,7 @@
 
   <!-- Page Specific JS File -->
   <script src="{{ ('back/js/page/index-0.js') }}"></script>
+
   
   <!-- Template JS File -->
   <script src="{{ asset('back/js/scripts.js') }}"></script>

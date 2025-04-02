@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Report;
 use App\Models\Menu;
+use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Exports\ReportExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        // Memulai query untuk mengambil data Report
-        $query = Report::query();
-
-        // Filter berdasarkan Nama
-        if ($request->has('name') && $request->name != '') {
-            $query->where('name', 'like', '%' . $request->name . '%');
+        // Jika request AJAX (DataTables meminta data)
+        if ($request->ajax()) {
+            $query = Report::with('status')->select('tickets.*'); // Ubah 'reports.*' ke 'tickets.*'
+        
+            return DataTables::eloquent($query)
+                ->addColumn('status', function ($report) {
+                    return $report->status->name ?? '-';
+                })
+                ->addColumn('action', function ($report) {
+                    return '<a href="#" class="btn btn-sm btn-primary">Detail</a>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-
-        // Filter berdasarkan Nomor Ticket
-        if ($request->has('ticket_number') && $request->ticket_number != '') {
-            $query->where('ticket_number', 'like', '%' . $request->ticket_number . '%');
-        }
-
-        // Filter berdasarkan Status
-        if ($request->has('status') && $request->status != '') {
-            $query->whereHas('status', function ($query) use ($request) {
-                $query->where('name', $request->status);
-            });
-        }
-
-        // Mengambil data dengan relasi attachments
-        $report = $query->with('attachments')->paginate(10); // Paginate jika data banyak
-
-        // Mengambil data menu (jika ada)
         
 
-        // Mengembalikan view dengan data yang sudah difilter
-        return view('back.report.index', compact('report', 'menu_master'));
+        // Jika request bukan AJAX, tampilkan halaman dengan menu
+        $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
+        return view('back.report.index', compact('menu_master'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new ReportExport, 'reports.xlsx');
     }
 }
