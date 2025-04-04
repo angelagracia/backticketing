@@ -23,9 +23,10 @@ class TicketController extends Controller
     {
         
         $ticket = Ticket::all();
+        $status = Status::all();
         $menu_master = Menu::all();
         // $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
-        return view('back.ticket.index', compact('ticket', 'menu_master'));
+        return view('back.ticket.index', compact('ticket', 'menu_master', 'status'));
     }
 
     public function addData()
@@ -35,7 +36,7 @@ class TicketController extends Controller
         $unit_kerja = UnitKerja::all();
         $topic_master = Topic::all();
         $master_type = Type::all();
-        return view('back.ticket.addData', compact('menu_master','master_unit','unit_kerja','topic_master','master_type'));
+        return view('back.ticket.addData', compact('menu_master','master_unit','unit_kerja','topic_master','master_type','master_status'));
     }
 
     public function getSubcategories(Request $request)
@@ -260,6 +261,12 @@ class TicketController extends Controller
     return redirect()->route('ticket.details', ['ticketId' => $ticket->id])
                      ->with('success', 'Status tiket berhasil diperbarui!');
 }
+
+
+ public function chatUser($userId)
+    {
+        return view('user-chat', compact('userId'));
+    }
 
     
 

@@ -20,6 +20,8 @@ class ChatNotification extends Mailable
 
     public function build()
     {
-        return $this->subject('Pesan Baru dari Chat')->view('emails.chat_notification');
+        return $this->subject('Pesan Baru dari Chat')
+        ->view('emails.chat_notification')
+        ->with(['message' => $this->message]);
     }
 }

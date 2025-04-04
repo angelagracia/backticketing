@@ -192,8 +192,8 @@
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Deskripsi</p>
                             <p class="fw-bold colon">:</p>
+                            <p class="d-flex align-items-center mb-2 tiket-desc">{{ $ticket->req_description }}</p>
                         </div>
-                        <p class="d-flex align-items-center mb-2 tiket-desc">{{ $ticket->req_description }}</p>
                     </div>
                 </div>
 

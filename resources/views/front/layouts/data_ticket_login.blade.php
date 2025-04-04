@@ -108,7 +108,9 @@
         <div class="container">
             <div class="card shadow-sm p-4">
                 <h4 class="mb-4">Data Tiket
-                    <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
+                    <a href="{{ route('chat', ['id' => $ticket->id]) }}">
+                        <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
+                    </a>
                     <a href="{{ route('detail_ticket_login', ['id' => $ticket->id]) }}">
                         <button class="btn-data-tiket-detail">Detail</button>
                     </a>                    

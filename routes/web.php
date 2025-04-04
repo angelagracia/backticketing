@@ -127,7 +127,7 @@ Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    // ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 // Route::get('/dashboard', function () {
@@ -164,6 +164,9 @@ Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edi
 Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
 Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
 Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+// Route::get('dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('chat/{id}', [UserController::class, 'chatUser'])->middleware(['auth', 'verified'])->name('chat');
 
 
 Route::get('/peran', [UnitController::class, 'index'])->name('peran.index');
@@ -221,6 +224,7 @@ Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name
 Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
 Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
 Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+Route::get('chat/{id}', [TicketController::class, 'chatUser'])->middleware(['auth', 'verified'])->name('chat');
 
 
 Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
@@ -274,11 +278,11 @@ Route::middleware(['permission:role-delete'])
     });
 
 
-    Route::group(['middleware' => ['auth']], function() {
+    // Route::group(['middleware' => ['auth']], function() {
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
         Route::resource('products', ProductController::class);
-    });
+    // });
 
 
 

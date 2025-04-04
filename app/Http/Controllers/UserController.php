@@ -106,6 +106,8 @@
 namespace App\Http\Controllers;
     
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Arr;
@@ -125,9 +127,15 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $data = User::latest()->paginate(5);
+        // $users = User::whereNot('id', Auth::user()->id)->withCount(['unreadMessages'])->get();
   
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    public function chatUser($userId)
+    {
+        return view('user-chat', compact('userId'));
     }
     
     /**

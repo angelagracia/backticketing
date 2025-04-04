@@ -11,7 +11,12 @@ class Ticket extends Model
     use HasFactory;
 
     protected $table = 'tickets';
-    protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description','lampiran'];
+    // // protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description'];
+    // protected $fillable = ['name','title'];
+    protected $fillable = [
+        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description'
+    ];    
+    
     protected $guarded = ['id']; 
 
     protected static function boot()

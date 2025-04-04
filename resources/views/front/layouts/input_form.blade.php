@@ -127,11 +127,11 @@
                     <div class="form-group">
                         <div class="input-box">
                             <label for="name">Nama</label><span class="required"></span>
-                            <input type="text" name="nama" id="name" class="required" placeholder="Masukkan Nama">
+                            <input type="text" name="name" id="name" class="required" placeholder="Masukkan Nama">
                         </div>
                         <div class="input-box">
                             <label for="title">Judul</label><span class="required"></span>
-                            <input type="text" name="judul" id="title" class="required" placeholder="Masukkan Judul">
+                            <input type="text" name="title" id="title" class="required" placeholder="Masukkan Judul">
                         </div>
                     </div>
 
@@ -151,14 +151,14 @@
                         </div>
                         <div class="input-box half-width">
                           <label for="description">Deskripsi</label><span class="required"></span>
-                          <textarea name="deskripsi" id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
+                          <textarea name="description" id="description" class="required" rows="3" placeholder="Masukkan Deskripsi"></textarea>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="input-box">
-                            <label for="phone">No. telepon</label><span class="required"></span>
-                            <input type="text" name="no_telepon" id="phone" class="required" placeholder="Masukkan No. Telepon">
+                            <label for="no_telepon">No. telepon</label><span class="required"></span>
+                            <input type="text" name="no_telepon" id="no_telepon" class="required" placeholder="Masukkan No. Telepon">
 
                             <label for="unit" class="mt-4">Peran</label><span class="required"></span>
                             <select id="unit" name="unit" class="form-select" required>

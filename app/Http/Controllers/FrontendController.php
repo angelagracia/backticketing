@@ -121,38 +121,95 @@ class FrontendController extends Controller
         return view('front.layouts.input_form', compact('peran','kategori','unit_kerja','sub_kategory'));
     }
 
+    // public function prosesSimpanLogin(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $request->validate([
+    //         'name' => 'required|string|max:100',
+    //         'email' => 'required|email|max:100',
+    //         'no_telepon' => 'required|string|max:15',
+    //         'title' => 'required|string|max:100',
+    //         'unit_kerja' => 'required|exists:master_unit_kerja,id',
+    //         'unit' => 'required|exists:master_units,id',
+    //         'category' => 'required|exists:master_topic,id',
+    //        'sub_category' => 'required|exists:master_topic_type,id',
+    //         'deskripsi' => 'required|string',
+    //         'lampiran.*' => 'file|mimes:png,jpg,jpeg,pdf|max:2048',
+    //     ]);
+    
+    //     try {
+    //         // Simpan tiket
+    //         $ticket = Ticket::create([
+    //             'name' => $request->name,
+    //             'title' => $request->title,
+    //             'email' => $request->email,
+    //             'telepon' => $request->no_telepon,
+    //             'unit_id' => $request->unit,
+    //             'unit_kerja_id' => $request->unit_kerja,
+    //             'topic_id' => $request->category,
+    //             'type_id' => $request->sub_category,
+    //             'req_description' => $request->deskripsi,
+    //             'status_id' => 1,
+    //         ]);
+
+    //         // Simpan lampiran jika ada
+    //         if ($request->hasFile('lampiran')) {
+    //             foreach ($request->file('lampiran') as $file) {
+    //                 $fileName = time() . '_' . $file->getClientOriginalName();
+    //                 $filePath = $file->storeAs('uploads', $fileName, 'public');
+    
+    //                 TicketAttachment::create([
+    //                     'ticket_id' => $ticket->id,
+    //                     'file_name' => $file->getClientOriginalName(),
+    //                     'file_path' => $filePath
+    //                 ]);
+    //             }
+    //         }
+
+    //         Mail::to($request->user()->email)->send(new TicketAdded($ticket));
+          
+    //         return redirect()->route('data_ticket_login', ['id' => $ticket->id])->with('success', 'Tiket berhasil dibuat!');
+
+    //     } catch (\Exception $e) {
+    //         dd($e->getMessage()); // Tampilkan pesan error
+    //     }
+        
+    // }
+
     public function prosesSimpanLogin(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:100',
-            'judul' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
             'email' => 'required|email|max:100',
             'no_telepon' => 'required|string|max:15',
+            'title' => 'required|string|max:100',
             'unit_kerja' => 'required|exists:master_unit_kerja,id',
             'unit' => 'required|exists:master_units,id',
             'category' => 'required|exists:master_topic,id',
             'sub_category' => 'required|exists:master_topic_type,id',
-            'deskripsi' => 'required|string',
-            'lampiran.*' => 'file|mimes:png,jpg,jpeg,pdf|max:2048',
+            'description' => 'required|string',
+            'lampiran[].*' => 'file|mimes:png,jpg,jpeg,pdf|max:2048',
+
         ]);
     
         try {
             // Simpan tiket
             $ticket = Ticket::create([
-                'name' => $request->nama,
+                'name' => $request->name,
                 'email' => $request->email,
                 'telepon' => $request->no_telepon,
+                'title' => $request->title,
                 'unit_id' => $request->unit,
                 'unit_kerja_id' => $request->unit_kerja,
                 'topic_id' => $request->category,
                 'type_id' => $request->sub_category,
-                'title' => $request->judul,
-                'req_description' => $request->deskripsi,
+                'req_description' => $request->description,
                 'status_id' => 1,
             ]);
 
-            // Simpan lampiran jika ada
+             // Simpan lampiran jika ada
             if ($request->hasFile('lampiran')) {
+                // dd($request->file('lampiran'));
                 foreach ($request->file('lampiran') as $file) {
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $filePath = $file->storeAs('uploads', $fileName, 'public');
@@ -164,22 +221,23 @@ class FrontendController extends Controller
                     ]);
                 }
             }
-
-            Mail::to($request->user()->email)->send(new TicketAdded($ticket));
-          
+    
+            // Redirect dengan sukses
             return redirect()->route('data_ticket_login', ['id' => $ticket->id])->with('success', 'Tiket berhasil dibuat!');
-
+            
         } catch (\Exception $e) {
-            return redirect()->route('ticket.index')->with('error', 'Data gagal ditambahkan. ' . $e->getMessage());
+            dd('Error: ' . $e->getMessage()); // Untuk melihat pesan error lebih detail
         }
     }
+    
+
 
 
     public function data_ticket_login($id)
-{
-    $ticket = Ticket::findOrFail($id);
-    return view('front.layouts.data_ticket_login', compact('ticket'));
-}
+    {
+        $ticket = Ticket::findOrFail($id);
+        return view('front.layouts.data_ticket_login', compact('ticket'));
+    }
 
     
 
