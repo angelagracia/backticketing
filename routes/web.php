@@ -40,9 +40,14 @@ Route::post('/proses-simpan', [FrontendController::class, 'prosesSimpan'])->name
 Route::get('/ticket/{id}/detail_ticket_kc', [FrontendController::class, 'detail_ticket_kc'])
     ->name('detail_ticket_kc');
 
-Route::get('/cari-ticket', [FrontendController::class, 'searchTicket'])->name('searchTicket');
-Route::get('/cari-ticket', [FrontendController::class, 'searchTicketLogin'])->name('searchTicketLogin');
+// Route::get('/cari-ticket', [FrontendController::class, 'searchTicket'])->name('searchTicket');
+// Route::get('/cari-ticket', [FrontendController::class, 'searchTicketLogin'])->name('searchTicketLogin');
 
+Route::get('/cari-ticket', [FrontendController::class, 'search'])->name('ticket.search');
+
+Route::middleware(['auth:portal'])->group(function () {
+    Route::get('/user/tickets', [FrontendController::class, 'ticketlogin'])->name('ticket.search');
+});
 
 
 
@@ -553,7 +558,6 @@ Route::get('/ticket/{ticketNumber}/history', [TicketController::class, 'showTick
 // // untuk permission lihat
 // Route::get('/manage-users', [UserController::class, 'index'])->middleware('permission:Lihat');
 // Route::post('/roles/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
-
 
 
 require __DIR__.'/auth.php';

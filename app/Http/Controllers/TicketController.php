@@ -164,6 +164,12 @@ class TicketController extends Controller
         
         ]);
 
+        TicketHistory::create([
+            'ticket_id' => $ticket->id,
+            'status_id' => $ticket->status_id,
+            'description' => 'Data tiket diperbarui oleh admin.',
+        ]);
+
         // Hapus lampiran yang dipilih
         if ($request->delete_lampiran) {
             foreach ($request->delete_lampiran as $attachId) {
@@ -225,6 +231,12 @@ class TicketController extends Controller
         // Kembalikan ke halaman sebelumnya dengan pesan sukses
         return redirect()->route('ticket.index')->with('success', 'Status tiket berhasil diubah.');
         $ticket = Ticket::findOrFail($id);
+
+        TicketHistory::create([
+            'ticket_id' => $ticket->id,
+            'status_id' => $request->status_id,
+            'description' => 'Status diubah dari ' . $oldStatus . ' ke ' . $request->status_id,
+        ]);
         
         // Pastikan hanya mengupdate status_id, bukan status
         $ticket->status_id = 2; // Contoh: 2 = "In Progress"

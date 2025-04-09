@@ -63,9 +63,22 @@ class Ticket extends Model
     }
 
     public function histories()
+    {
+        return $this->hasMany(TicketHistory::class);
+    }
+    protected static function booted()
 {
-    return $this->hasMany(TicketHistory::class);
+    static::updated(function ($ticket) {
+        if ($ticket->isDirty('status_id')) {
+            TicketHistory::create([
+                'ticket_id' => $ticket->id,
+                'status_id' => $ticket->status_id,
+                'description' => 'Status otomatis tercatat',
+            ]);
+        }
+    });
 }
+
 
 
 

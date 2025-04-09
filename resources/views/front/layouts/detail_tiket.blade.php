@@ -209,6 +209,7 @@
                             @else
                                 <p>Riwayat tiket tidak ditemukan.</p>
                             @endif
+                            
 
                         </div>
                         <div class="col-md-12 mt-30">

@@ -39,6 +39,34 @@ class FrontendController extends Controller
     {
         return view('front.layouts.contact_login');
     }
+
+    public function search(Request $request)
+    {
+        $ticketNumber = $request->input('ticket_number');
+
+        $ticket = Ticket::where('ticket_number', $ticketNumber)->first();
+
+        if ($ticket) {
+            return view('front.layouts.detail_ticket_kc', compact('ticket'));
+        } else {
+            return redirect()->back()->with('error', 'Nomor ticket tidak ditemukan.');
+        }
+    }
+
+    public function ticketlogin(Request $request)
+    {
+        $user = auth('user_portals')->user();
+
+        $query = Ticket::where('user_id', $user->id);
+
+        if ($request->filled('ticket_number')) {
+            $query->where('ticket_number', 'like', '%' . $request->ticket_number . '%');
+        }
+
+        $tickets = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('front.layouts.home.home', compact('tickets'));
+    }
     
     public function kirimcepat()
     {
@@ -228,6 +256,9 @@ class FrontendController extends Controller
         } catch (\Exception $e) {
             dd('Error: ' . $e->getMessage()); // Untuk melihat pesan error lebih detail
         }
+
+        // pencarian nomer ticket
+        
     }
     
 
