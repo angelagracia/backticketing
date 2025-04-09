@@ -12,10 +12,12 @@ use App\Mail\TicketAdded;
 use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use App\Models\TicketHistory;
+use App\Mail\TicketCreatedMail;
 use App\Models\TicketAttachment;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\TicketCreatedNotification;
 
 class TicketController extends Controller
 {
@@ -110,7 +112,7 @@ class TicketController extends Controller
             }
         }
 
-        
+        Mail::to($ticket->email)->send(new TicketCreatedMail($ticket));
 
         return redirect()->route('ticket.index')->with('success', 'Data berhasil ditambahkan');
         } catch (\Exception $e) {

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'tickets';
     // // protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description'];
