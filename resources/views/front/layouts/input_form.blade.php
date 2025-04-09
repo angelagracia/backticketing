@@ -122,7 +122,7 @@
                 <span style="color: red;">*</span> Semua informasi adalah benar dan bebas dari kesalahan.
             </div>
             <div class="form-container-inputform">
-                <form  name="input_kc" action="{{ route('prosesSimpanLogin') }}" method="POST" enctype="multipart/form-data">
+                <form  name="input_form" action="{{ route('prosesSimpanLogin') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="input-box">
@@ -350,28 +350,23 @@
                         }
                     });
                 </script>
-                    
-               
 
-                {{-- <script>
-                   document.getElementById("swal-2").addEventListener("click", function() {
-                        Swal.fire({
-                            title: 'Data Berhasil Dikirim!',
-                            text: 'Anda akan dialihkan dalam beberapa detik...',
-                            icon: 'success',
-                            timer: 3000,
-                            showConfirmButton: false,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            allowEnterKey: false,
-                            timerProgressBar: true 
+                @if(session('success'))
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: '{{ session("success") }}',
+                                icon: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = "{{ route('data_tiket_login') }}";
+                            });
                         });
-                
-                        setTimeout(() => {
-                            window.location.href = "{{ route('') }}";
-                        }, 3000); 
-                    });
-               </script> --}}
+                    </script>
+                @endif
+
                <script>
                 document.getElementById("notificationIcon").addEventListener("click", function () {
                     var dropdown = document.getElementById("notificationDropdown");

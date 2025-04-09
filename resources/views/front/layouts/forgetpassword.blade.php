@@ -526,7 +526,6 @@
             });
         </script>
          <script type="text/javascript">
-            //========= testimonial 
             tns({
                 container: '.testimonial-slider',
                 items: 3,
@@ -556,7 +555,6 @@
                 }
             });
     
-            //====== counter up 
             var cu = new counterUp({
                 start: 0,
                 duration: 2000,

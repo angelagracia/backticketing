@@ -4,7 +4,6 @@ use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicKategori;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TypeController;
@@ -23,9 +22,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
 use App\Http\Controllers\EmailUpdateController;
 use App\Http\Controllers\PermissionsController;
+
 use App\Http\Controllers\Auth\BoLoginController;
 use App\Http\Controllers\PortalLoginController;
 
+
+
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\ChatController;
 
 
 // Route::get('/', function () {
@@ -84,8 +88,8 @@ Route::get('/home/profile', [FrontendController::class, 'profile'])
 
 
 Route::get('/home/input_form', [FrontendController::class, 'input_form'])
-    ->name('input_form')
-    ->middleware(['auth', 'verified']);
+    ->name('input_form');
+   // ->middleware(['auth', 'verified']);
 
 Route::post('/simpan-login', [FrontendController::class, 'prosesSimpanLogin'])
 ->name('prosesSimpanLogin')
@@ -462,12 +466,16 @@ Route::post('/change-email', [EmailUpdateController::class, 'requestEmailChange'
 Route::get('/verify-email/{token}', [EmailUpdateController::class, 'verifyNewEmail']);
 
 
+//bagian form controller
+Route::post('/simpan-login', [FormController::class, 'prosesSimpanLogin'])->name('prosesSimpanLogin');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/home/akun', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/home/akun', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/home/akun', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 
 
@@ -558,6 +566,9 @@ Route::get('/ticket/{ticketNumber}/history', [TicketController::class, 'showTick
 // // untuk permission lihat
 // Route::get('/manage-users', [UserController::class, 'index'])->middleware('permission:Lihat');
 // Route::post('/roles/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
+
+
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
 
 
 require __DIR__.'/auth.php';
