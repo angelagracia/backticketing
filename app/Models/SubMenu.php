@@ -20,6 +20,7 @@ class SubMenu extends Model
 
     public function permissions()
     {
-        return $this->hasMany(Permission::class, 'sub_menu_id');
+        return $this->hasMany(Permission::class, 'menu_code', 'code');
     }
+    
 }

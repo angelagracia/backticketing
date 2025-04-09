@@ -9,28 +9,52 @@ return [
         'passwords' => 'users',
     ],
 
-    'guards' => [
+   'guards' => [
     'web' => [
         'driver' => 'session',
         'provider' => 'users',
     ],
-    'users_portal' => [
+
+    'bo' => [
         'driver' => 'session',
-        'provider' => 'users_portal',
+        'provider' => 'user_bo',
+    ],
+
+    'portal' => [
+        'driver' => 'session',
+        'provider' => 'user_portals',
     ],
 ],
 
 
-    'providers' => [
+//     'providers' => [
+//     'users' => [
+//         'driver' => 'eloquent',
+//         'model' => App\Models\User::class,
+//     ],
+//     'users_portal' => [
+//         'driver' => 'eloquent',
+//         'model' => App\Models\UserPortal::class,
+//     ],
+// ],
+
+'providers' => [
     'users' => [
         'driver' => 'eloquent',
         'model' => App\Models\User::class,
     ],
-    'users_portal' => [
+
+    'user_bo' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\UserBO::class,
+    ],
+
+    'user_portals' => [
         'driver' => 'eloquent',
         'model' => App\Models\UserPortal::class,
     ],
 ],
+
 
     'passwords' => [
         'users' => [

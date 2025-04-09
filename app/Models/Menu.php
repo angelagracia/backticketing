@@ -40,4 +40,16 @@ class Menu extends Model
     {
         return $this->hasMany(SubMenu::class, 'menu_code', 'code');
     }
+
+
+    
+    // Di model Menu
+public function permissions()
+{
+    return $this->hasMany(Permission::class, 'menu_code', 'code');
+}
+
+    
+    
+
 }

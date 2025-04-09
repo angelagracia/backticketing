@@ -49,6 +49,8 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use App\Models\Menu;
+
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
@@ -141,16 +143,49 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): View
-    {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
+
+    // public function edit($id): View
+    // {
+    //     $role = Role::find($id);
+    //     $permission = Permission::get();
     
-        return view('roles.edit',compact('role','permission','rolePermissions'));
-    }
+    //     // Ambil permission yang dimiliki role
+    //     $rolePermissions = DB::table("role_has_permissions")
+    //         ->where("role_has_permissions.role_id", $id)
+    //         ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+    //         ->all();
+    
+    //     // Ambil menu dan submenu dengan relasi permission
+    //     $menu = Menu::with(['permissions', 'children.permissions'])
+    //         ->whereNull('parent_code')
+    //         ->orderBy('sequence')
+    //         ->get();
+    
+    //     return view('roles.edit', compact('role', 'permission', 'rolePermissions', 'menu'));
+    // }
+
+
+    public function edit($id): View
+{
+    $role = Role::findOrFail($id);
+    $permission = Permission::get();
+
+    $rolePermissions = DB::table("role_has_permissions")
+        ->where("role_has_permissions.role_id", $id)
+        ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+        ->all();
+
+    $menu = Menu::with([
+        'permissions',              // permission milik menu utama
+        'children.permissions'      // permission milik submenu
+    ])
+    ->whereNull('parent_code')     // atau where('type', 'menu_utama') tergantung struktur kamu
+    ->orderBy('sequence')
+    ->get();
+
+    return view('roles.edit', compact('role', 'permission', 'rolePermissions', 'menu'));
+}
+
     
     /**
      * Update the specified resource in storage.

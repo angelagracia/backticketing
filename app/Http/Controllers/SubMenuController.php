@@ -11,7 +11,11 @@ class SubMenuController extends Controller
 {
     public function index()
     {
-        $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
+        $menu_master = Menu::whereNull('parent_code')
+        ->with(['children.permissions', 'permissions'])
+        ->orderBy('sequence')
+        ->get();
+    
         $data = SubMenu::with('menu')->orderBy('menu_code')->get(); // Menampilkan menu terkait
         return view('back.submenu.index', compact('data','menu_master'));
     }

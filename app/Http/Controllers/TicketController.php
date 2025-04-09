@@ -24,9 +24,12 @@ class TicketController extends Controller
         
         $ticket = Ticket::all();
         $status = Status::all();
-        $menu_master = Menu::all();
+        $menu_master = Menu::whereNull('parent_code')
+        ->with(['children.permissions', 'permissions'])
+        ->orderBy('sequence')
+        ->get();
         // $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
-        return view('back.ticket.index', compact('ticket', 'menu_master', 'status'));
+        return view('back.ticket.index', compact('ticket', 'menu_master'));
     }
 
     public function addData()

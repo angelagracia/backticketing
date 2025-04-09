@@ -12,7 +12,11 @@ class TopicController extends Controller
     public function index()
 {
     // $menu_master = Menu::all(); 
-    $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
+    $menu_master = Menu::whereNull('parent_code')
+    ->with(['children.permissions', 'permissions'])
+    ->orderBy('sequence')
+    ->get();
+
     $topic_master = Topic::all(); // Ambil daftar topik
     return view('back.kategori.index', compact('menu_master', 'topic_master'));
 }

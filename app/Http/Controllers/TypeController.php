@@ -13,7 +13,11 @@ class TypeController extends Controller
     public function index()
     {
         $master_type = Type::all();
-        $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
+        $menu_master = Menu::whereNull('parent_code')
+        ->with(['children.permissions', 'permissions']) // penting!
+        ->orderBy('sequence')
+        ->get();
+    
         return view('back.sub_kategori.index', compact('master_type','menu_master'));
     }
 

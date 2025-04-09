@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Permission extends Model
 {
     use HasFactory;
-    protected $table = 'master_permission';
+    protected $table = 'permissions';
 
     static public function getSingle($id)
     {
@@ -44,4 +44,10 @@ class Permission extends Model
     {
         return Permission::where('groupby', '=', $groupby)->get();
     }
+
+    public function menu()
+{
+    return $this->belongsTo(Menu::class);
+}
+
 }

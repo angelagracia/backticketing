@@ -23,8 +23,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
 use App\Http\Controllers\EmailUpdateController;
 use App\Http\Controllers\PermissionsController;
-use App\Http\Controllers\ProfileLoginController;
-use App\Http\Controllers\UserPortalAuthController;
+use App\Http\Controllers\Auth\BoLoginController;
+use App\Http\Controllers\PortalLoginController;
+
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -59,17 +61,17 @@ Route::get('/home/profile', [FrontendController::class, 'profile'])
     ->name('profile') 
     ->middleware(['auth', 'verified']);
 
-    Route::group(['prefix' => 'portal', 'middleware' => ['web']], function () {
-        Route::get('/login-portal', [UserPortalAuthController::class, 'showLoginForm'])->name('user_portal.login');
-        Route::post('/login-portal', [UserPortalAuthController::class, 'loginPortal'])->name('loginPortal');
-        Route::post('/logout-portal', [UserPortalAuthController::class, 'logout'])->name('user_portal.logout');
+    // Route::group(['prefix' => 'portal', 'middleware' => ['web']], function () {
+    //     Route::get('/login-portal', [UserPortalAuthController::class, 'showLoginForm'])->name('user_portal.login');
+    //     Route::post('/login-portal', [UserPortalAuthController::class, 'loginPortal'])->name('loginPortal');
+    //     Route::post('/logout-portal', [UserPortalAuthController::class, 'logout'])->name('user_portal.logout');
     
-        Route::middleware('auth:users_portal')->group(function () {
-            Route::get('/backoffice', function () {
-                return view('back.backoffice');
-            })->name('user_portal.dashboard');
-        });
-    });
+    //     Route::middleware('auth:users_portal')->group(function () {
+    //         Route::get('/backoffice', function () {
+    //             return view('back.backoffice');
+    //         })->name('user_portal.dashboard');
+    //     });
+    // });
     
 
 
@@ -126,9 +128,16 @@ Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate
 
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, 'index'])
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+
+Route::middleware(['auth', 'verified', 'permission:dashboard-view'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+
+
 
 // Route::get('/dashboard', function () {
 //     return view ('dashboard');
@@ -139,22 +148,82 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/kategori', [TopicController::class, 'index'])->name('topic.index');
-Route::get('/kategori/tambah', [TopicController::class, 'tambah'])->name('topic.tambah');
-Route::post('/kategori/prosesTambah', [TopicController::class, 'prosesTambah'])->name('topic.prosesTambah');
-Route::get('/kategori/edit/{id}', [TopicController::class, 'edit'])->name('topic.edit');
-Route::post('/kategori/prosesEdit', [TopicController::class, 'prosesEdit'])->name('topic.prosesEdit');
-Route::get('/kategori/detail/{id}', [TopicController::class, 'detail'])->name('topic.detail');
-Route::get('/kategori/hapus/{id}', [TopicController::class, 'hapus'])->name('topic.hapus');
+// Route::get('/kategori', [TopicController::class, 'index'])->name('topic.index');
+// Route::get('/kategori/tambah', [TopicController::class, 'tambah'])->name('topic.tambah');
+// Route::post('/kategori/prosesTambah', [TopicController::class, 'prosesTambah'])->name('topic.prosesTambah');
+// Route::get('/kategori/edit/{id}', [TopicController::class, 'edit'])->name('topic.edit');
+// Route::post('/kategori/prosesEdit', [TopicController::class, 'prosesEdit'])->name('topic.prosesEdit');
+// Route::get('/kategori/detail/{id}', [TopicController::class, 'detail'])->name('topic.detail');
+// Route::get('/kategori/hapus/{id}', [TopicController::class, 'hapus'])->name('topic.hapus');
 
 
-Route::get('/sub_kategori', [TypeController::class, 'index'])->name('sub_kategori.index');
-Route::get('/sub_kategori/tambah', [TypeController::class, 'tambah'])->name('sub_kategori.tambah');
-Route::post('/sub_kategori/prosesTambah', [TypeController::class, 'prosesTambah'])->name('sub_kategori.prosesTambah');
-Route::get('/sub_kategori/ubah/{id}', [TypeController::class, 'ubah'])->name('sub_kategori.ubah');
-Route::post('/sub_kategori/ubah', [TypeController::class, 'prosesUbah'])->name('sub_kategori.prosesUbah');
-Route::get('/sub_kategori/detail{id}', [TypeController::class, 'detail'])->name('sub_kategori.detail');
-Route::get('/sub_kategori/hapus/{id}', [TypeController::class, 'hapus'])->name('sub_kategori.hapus');
+// Untuk menampilkan daftar kategori
+Route::middleware(['permission:kategori-list'])->group(function () {
+    Route::get('/kategori', [TopicController::class, 'index'])->name('topic.index');
+    Route::get('/kategori/detail/{id}', [TopicController::class, 'detail'])->name('topic.detail');
+});
+
+// Untuk menambahkan kategori
+Route::middleware(['permission:kategori-create'])->group(function () {
+    Route::get('/kategori/tambah', [TopicController::class, 'tambah'])->name('topic.tambah');
+    Route::post('/kategori/prosesTambah', [TopicController::class, 'prosesTambah'])->name('topic.prosesTambah');
+});
+
+// Untuk mengedit kategori
+Route::middleware(['permission:kategori-edit'])->group(function () {
+    Route::get('/kategori/edit/{id}', [TopicController::class, 'edit'])->name('topic.edit');
+    Route::post('/kategori/prosesEdit', [TopicController::class, 'prosesEdit'])->name('topic.prosesEdit');
+});
+
+// Untuk melihat detail kategori
+// Route::middleware(['permission:kategori-detail'])->group(function () {
+//     Route::get('/kategori/detail/{id}', [TopicController::class, 'detail'])->name('topic.detail');
+// });
+
+// Untuk menghapus kategori
+Route::middleware(['permission:kategori-delete'])->group(function () {
+    Route::get('/kategori/hapus/{id}', [TopicController::class, 'hapus'])->name('topic.hapus');
+});
+
+
+
+// Route::get('/sub_kategori', [TypeController::class, 'index'])->name('sub_kategori.index');
+// Route::get('/sub_kategori/tambah', [TypeController::class, 'tambah'])->name('sub_kategori.tambah');
+// Route::post('/sub_kategori/prosesTambah', [TypeController::class, 'prosesTambah'])->name('sub_kategori.prosesTambah');
+// Route::get('/sub_kategori/ubah/{id}', [TypeController::class, 'ubah'])->name('sub_kategori.ubah');
+// Route::post('/sub_kategori/ubah', [TypeController::class, 'prosesUbah'])->name('sub_kategori.prosesUbah');
+// Route::get('/sub_kategori/detail{id}', [TypeController::class, 'detail'])->name('sub_kategori.detail');
+// Route::get('/sub_kategori/hapus/{id}', [TypeController::class, 'hapus'])->name('sub_kategori.hapus');
+
+
+// Index & Detail (lihat data)
+Route::middleware(['permission:sub_kategori-list'])->group(function () {
+    Route::get('/sub_kategori', [TypeController::class, 'index'])->name('sub_kategori.index');
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Unit Kerja
+Route::middleware(['permission:sub_kategori-create'])->group(function () {
+    Route::get('/sub_kategori/tambah', [TypeController::class, 'tambah'])->name('sub_kategori.tambah');
+    Route::post('/sub_kategori/prosesTambah', [TypeController::class, 'prosesTambah'])->name('sub_kategori.prosesTambah');
+    Route::post('/get-subcategories', [TypeController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Unit Kerja
+Route::middleware(['permission:sub_kategori-edit'])->group(function () {
+    Route::get('/sub_kategori/ubah/{id}', [TypeController::class, 'ubah'])->name('sub_kategori.ubah');
+    Route::post('/sub_kategori/ubah', [TypeController::class, 'prosesUbah'])->name('sub_kategori.prosesUbah');
+    Route::post('/sub_kategori/proses/{id}', [TypeController::class, 'proses'])->name('sub_kategori.proses');
+});
+
+Route::middleware(['permission:sub_kategori-detail'])->group(function () {
+    Route::get('/sub_kategori/detail{id}', [TypeController::class, 'detail'])->name('sub_kategori.detail');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:sub_kategori-delete'])->group(function () {
+    Route::get('/sub_kategori/hapus/{id}', [TypeController::class, 'hapus'])->name('sub_kategori.hapus');
+});
 
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -164,6 +233,36 @@ Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edi
 Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
 Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
 Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+
+Route::middleware(['permission:users-list'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Unit Kerja
+Route::middleware(['permission:users-create'])->group(function () {
+    Route::get('/users/add', [UserController::class, 'add'])->name('users.add');
+    Route::post('/users/prosesAdd', [UserController::class, 'prosesAdd'])->name('users.prosesAdd');
+    Route::post('/get-subcategories', [UserController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Unit Kerja
+Route::middleware(['permission:users-edit'])->group(function () {
+    Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
+    Route::post('/users/proses/{id}', [UserController::class, 'proses'])->name('users.proses');
+});
+
+Route::middleware(['permission:users-detail'])->group(function () {
+    Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:users-delete'])->group(function () {
+    Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+});
+
 
 // Route::get('dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('chat/{id}', [UserController::class, 'chatUser'])->middleware(['auth', 'verified'])->name('chat');
@@ -188,46 +287,163 @@ Route::post('status/prosesEdit', [StatusController::class, 'prosesEdit'])->name(
 Route::get('status/delete/{id}', [StatusController::class, 'delete'])->name('status.delete');
 
 
+
+
+
 Route::get('/permission', [PermissionsController::class, 'index'])->name('permission.index');
 
 
-Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-Route::get('/menu/add', [MenuController::class, 'add'])->name('menu.add');
-Route::post('/menu/prosesAdd', [MenuController::class, 'prosesAdd'])->name('menu.prosesAdd');
-Route::get('/menu/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
-Route::post('/menu/prosesEdit', [MenuController::class, 'prosesEdit'])->name('menu.prosesEdit');
-Route::get('/menu/delete/{id}', [MenuController::class, 'delete'])->name('menu.delete');
+// Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+// Route::get('/menu/add', [MenuController::class, 'add'])->name('menu.add');
+// Route::post('/menu/prosesAdd', [MenuController::class, 'prosesAdd'])->name('menu.prosesAdd');
+// Route::get('/menu/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+// Route::post('/menu/prosesEdit', [MenuController::class, 'prosesEdit'])->name('menu.prosesEdit');
+// Route::get('/menu/delete/{id}', [MenuController::class, 'delete'])->name('menu.delete');
 
 
-Route::get('/sub-menu', [SubMenuController::class, 'index'])->name('sub-menu.index');
-Route::get('/sub-menu/add', [SubMenuController::class, 'add'])->name('sub-menu.add');
-Route::post('/sub-menu/prosesAdd', [SubMenuController::class, 'prosesAdd'])->name('sub-menu.prosesAdd');
-Route::get('/sub-menu/edit/{id}', [SubMenuController::class, 'edit'])->name('sub-menu.edit');
-Route::post('/sub-menu/prosesEdit', [SubMenuController::class, 'prosesEdit'])->name('sub-menu.prosesEdit');
-Route::get('/sub-menu/delete/{id}', [SubMenuController::class, 'delete'])->name('sub-menu.delete');
+// Index & Detail (lihat data)
+Route::middleware(['permission:menu-list'])->group(function () {
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');    
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Unit Kerja
+Route::middleware(['permission:menu-create'])->group(function () {
+    Route::get('/menu/add', [MenuController::class, 'add'])->name('menu.add');
+    Route::post('/menu/prosesAdd', [MenuController::class, 'prosesAdd'])->name('menu.prosesAdd');
+    Route::post('/get-subcategories', [MenuController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Unit Kerja
+Route::middleware(['permission:menu-edit'])->group(function () {
+    Route::get('/menu/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+    Route::post('/menu/prosesEdit', [MenuController::class, 'prosesEdit'])->name('menu.prosesEdit');
+    Route::post('/menu/proses/{id}', [MenuController::class, 'proses'])->name('menu.proses');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:menu-delete'])->group(function () {
+    Route::get('/menu/delete/{id}', [MenuController::class, 'delete'])->name('menu.delete');
+});
 
 
-Route::get('/unit_kerja', [UnitKerjaController::class, 'index'])->name('unit_kerja.index');
-Route::get('/unit_kerja/add', [UnitKerjaController::class, 'add'])->name('unit_kerja.add');
-Route::post('/unit_kerja/prosesTambah', [UnitKerjaController::class, 'prosesTambah'])->name('unit_kerja.prosesTambah');
-Route::get('/unit_kerja/edit/{id}', [UnitKerjaController::class, 'edit'])->name('unit_kerja.edit');
-Route::post('/unit_kerja/prosesEdit', [UnitKerjaController::class, 'prosesEdit'])->name('unit_kerja.prosesEdit');
-Route::get('/unit_kerja/delete/{id}', [UnitKerjaController::class, 'delete'])->name('unit_kerja.delete');
+// Route::get('/sub-menu', [SubMenuController::class, 'index'])->name('sub-menu.index');
+// Route::get('/sub-menu/add', [SubMenuController::class, 'add'])->name('sub-menu.add');
+// Route::post('/sub-menu/prosesAdd', [SubMenuController::class, 'prosesAdd'])->name('sub-menu.prosesAdd');
+// Route::get('/sub-menu/edit/{id}', [SubMenuController::class, 'edit'])->name('sub-menu.edit');
+// Route::post('/sub-menu/prosesEdit', [SubMenuController::class, 'prosesEdit'])->name('sub-menu.prosesEdit');
+// Route::get('/sub-menu/delete/{id}', [SubMenuController::class, 'delete'])->name('sub-menu.delete');
 
 
-Route::get('/ticket', [TicketController::class, 'index'])->name('ticket.index');
-Route::get('/ticket/addData', [TicketController::class, 'addData'])->name('ticket.addData');
-Route::post('/get-subcategories', [TicketController::class, 'getSubcategories']);
-Route::post('/ticket/prosesTambah', [TicketController::class, 'prosesTambah'])->name('ticket.prosesTambah');
-Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
-Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name('ticket.prosesEdit');
-Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
-Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
-Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+// Index & Detail (lihat data)
+Route::middleware(['permission:sub_menu-list'])->group(function () {
+    Route::get('/sub-menu', [SubMenuController::class, 'index'])->name('sub-menu.index');
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Unit Kerja
+Route::middleware(['permission:sub_menu-create'])->group(function () {
+    Route::get('/sub-menu/add', [SubMenuController::class, 'add'])->name('sub-menu.add');
+    Route::post('/sub-menu/prosesAdd', [SubMenuController::class, 'prosesAdd'])->name('sub-menu.prosesAdd');
+    Route::post('/get-subcategories', [SubMenuController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Unit Kerja
+Route::middleware(['permission:sub_menu-edit'])->group(function () {
+    Route::get('/sub-menu/edit/{id}', [SubMenuController::class, 'edit'])->name('sub-menu.edit');
+    Route::post('/sub-menu/prosesEdit', [SubMenuController::class, 'prosesEdit'])->name('sub-menu.prosesEdit');
+    Route::post('/sub-menu/proses/{id}', [SubMenuController::class, 'proses'])->name('sub-menu.proses');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:sub_menu-delete'])->group(function () {
+    Route::get('/sub-menu/delete/{id}', [SubMenuController::class, 'delete'])->name('sub-menu.delete');
+});
+
+
+
+// Route::get('/unit_kerja', [UnitKerjaController::class, 'index'])->name('unit_kerja.index');
+// Route::get('/unit_kerja/add', [UnitKerjaController::class, 'add'])->name('unit_kerja.add');
+// Route::post('/unit_kerja/prosesTambah', [UnitKerjaController::class, 'prosesTambah'])->name('unit_kerja.prosesTambah');
+// Route::get('/unit_kerja/edit/{id}', [UnitKerjaController::class, 'edit'])->name('unit_kerja.edit');
+// Route::post('/unit_kerja/prosesEdit', [UnitKerjaController::class, 'prosesEdit'])->name('unit_kerja.prosesEdit');
+// Route::get('/unit_kerja/delete/{id}', [UnitKerjaController::class, 'delete'])->name('unit_kerja.delete');
+
+
+// Index & Detail (lihat data)
+Route::middleware(['permission:unit_kerja-list'])->group(function () {
+    Route::get('/unit_kerja', [UnitKerjaController::class, 'index'])->name('unit_kerja.index');
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Unit Kerja
+Route::middleware(['permission:unit_kerja-create'])->group(function () {
+    Route::get('/unit_kerja/add', [UnitKerjaController::class, 'add'])->name('unit_kerja.add');
+    Route::post('/unit_kerja/prosesTambah', [UnitKerjaController::class, 'prosesTambah'])->name('unit_kerja.prosesTambah');
+    Route::post('/get-subcategories', [UnitKerjaController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Unit Kerja
+Route::middleware(['permission:unit_kerja-edit'])->group(function () {
+    Route::get('/unit_kerja/edit/{id}', [UnitKerjaController::class, 'edit'])->name('unit_kerja.edit');
+    Route::post('/unit_kerja/prosesEdit', [UnitKerjaController::class, 'prosesEdit'])->name('unit_kerja.prosesEdit');
+    Route::post('/unit_kerja/proses/{id}', [UnitKerjaController::class, 'proses'])->name('unit_kerja.proses');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:unit_kerja-delete'])->group(function () {
+    Route::get('/unit_kerja/delete/{id}', [UnitKerjaController::class, 'delete'])->name('unit_kerja.delete');
+});
+
+
+// Route::get('/ticket', [TicketController::class, 'index'])->name('ticket.index');
+// Route::get('/ticket/addData', [TicketController::class, 'addData'])->name('ticket.addData');
+// Route::post('/get-subcategories', [TicketController::class, 'getSubcategories']);
+// Route::post('/ticket/prosesTambah', [TicketController::class, 'prosesTambah'])->name('ticket.prosesTambah');
+// Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
+// Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name('ticket.prosesEdit');
+// Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+// Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
+// Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+
+// Index & Detail (lihat data)
+Route::middleware(['permission:ticket-list'])->group(function () {
+    Route::get('/ticket', [TicketController::class, 'index'])->name('ticket.index');
+    Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+// Create Ticket
+Route::middleware(['permission:ticket-create'])->group(function () {
+    Route::get('/ticket/addData', [TicketController::class, 'addData'])->name('ticket.addData');
+    Route::post('/ticket/prosesTambah', [TicketController::class, 'prosesTambah'])->name('ticket.prosesTambah');
+    Route::post('/get-subcategories', [TicketController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+// Edit Ticket
+Route::middleware(['permission:ticket-edit'])->group(function () {
+    Route::get('/ticket/edit/{id}', [TicketController::class, 'edit'])->name('ticket.edit');
+    Route::post('/ticket/prosesEdit', [TicketController::class, 'prosesEdit'])->name('ticket.prosesEdit');
+    Route::post('/ticket/proses/{id}', [TicketController::class, 'proses'])->name('ticket.proses');
+});
+
+// Delete Ticket
+Route::middleware(['permission:ticket-delete'])->group(function () {
+    Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
+});
+
+
 Route::get('chat/{id}', [TicketController::class, 'chatUser'])->middleware(['auth', 'verified'])->name('chat');
+
+// Route::middleware(['permission:role-list|role-create|role-edit|role-delete'])
+//     ->group(function () {
+//         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+//         Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+//     });
 
 
 Route::get('/laporan', [ReportController::class, 'index'])->name('report.index');
+// Route::get('/laporan', [ReportController::class, 'export'])->name('export.ticket');
+
 
 
 Route::get('/hak-akses', [HakAksesController::class, 'index'])->name('hak_akses.index');
@@ -250,15 +466,43 @@ Route::middleware('auth')->group(function () {
 
 
 
+// Back Office
+Route::get('login-bo', [BoLoginController::class, 'showLoginForm']);
+Route::post('login-bo', [BoLoginController::class, 'login']);
+Route::post('logout-bo', [BoLoginController::class, 'logout']);
+
+// Portal
+Route::get('login-portal', [PortalLoginController::class, 'showLoginForm']);
+Route::post('login-portal', [PortalLoginController::class, 'login']);
+Route::post('logout-portal', [PortalLoginController::class, 'logout']);
+
+// Protected routes
+Route::middleware('auth:bo')->group(function () {
+    Route::get('/dashboard-bo', fn () => view('back.dashboard'));
+});
+
+Route::middleware('auth:portal')->group(function () {
+    Route::get('/dashboard-portal', fn () => view('front.layouts.home.home'));
+});
+
+// Route::post('portal/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 
 
-Route::middleware(['permission:role-list|role-create|role-edit|role-delete'])
+
+
+
+Route::middleware(['permission:role-list'])
     ->group(function () {
         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-        Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     });
+
+Route::middleware(['permission:role-list'])
+    ->group(function () {
+        Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
+    });
+
 
 Route::middleware(['permission:role-create'])
     ->group(function () {
@@ -278,11 +522,11 @@ Route::middleware(['permission:role-delete'])
     });
 
 
-    // Route::group(['middleware' => ['auth']], function() {
-        Route::resource('roles', RoleController::class);
+
+    Route::group(['middleware' => ['auth']], function() {
         Route::resource('users', UserController::class);
         Route::resource('products', ProductController::class);
-    // });
+    });
 
 
 

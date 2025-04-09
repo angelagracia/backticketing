@@ -12,7 +12,11 @@ class StatusController extends Controller
     {
         $master_status = Status::all();
         // $menu_master = Menu::all();
-        $menu_master = Menu::whereNull('parent_code')->with('children')->orderBy('sequence')->get();
+        $menu_master = Menu::whereNull('parent_code')
+        ->with(['children.permissions', 'permissions']) // penting!
+        ->orderBy('sequence')
+        ->get();
+    
         return view('back.status.index', compact('master_status', 'menu_master'));
     }
 
