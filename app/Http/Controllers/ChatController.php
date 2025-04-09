@@ -1,19 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Message;
 
 use Illuminate\Http\Request;
-use App\Events\ChatMessageSent;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Reverb\Events\MessageSent;
+
+use App\Events\ChatMessageSent;
+use App\Models\Message;
 
 class ChatController extends Controller
 {
     public function sendMessage(Request $request)
     {
         $user = Auth::user(); // Mendapatkan user yang mengirim pesan
-        
+
         // Validasi pesan
         $request->validate([
             'message' => 'required|string',
@@ -38,6 +39,5 @@ class ChatController extends Controller
         broadcast(new ChatMessageSent($message))->toOthers();
 
         return response()->json(['message' => $message]);
-
     }
 }

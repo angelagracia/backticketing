@@ -6,17 +6,15 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
-use App\Models\Message;
-use Livewire\Component;
-use App\Events\UserTyping;
-use Livewire\Attributes\On;
-use App\Events\UnreadMessage;
-use Livewire\WithFileUploads;
-use App\Mail\ChatNotification;
 use App\Events\MessageSentEvent;
+use App\Events\UnreadMessage;
+use App\Events\UserTyping;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Chat extends Component
 {
@@ -80,11 +78,6 @@ class Chat extends Component
         // Append the new message manually for the sender's side
         $this->messages[] = $sentMessage;
 
-        // Kirim email notifikasi ke penerima
-        if ($this->user && $this->user->email) {
-            Mail::to($this->user->email)->send(new ChatNotification($sentMessage));
-        }        
-
         # Broadcast Sent Message Event
         broadcast(new MessageSentEvent($sentMessage))->toOthers();
 
@@ -94,7 +87,6 @@ class Chat extends Component
         # Broadcast unread message count
         broadcast(new UnreadMessage($this->receiverId, $this->senderId, $unreadCount))->toOthers();
 
-        $this->messages[] = $sentMessage;
         $this->message = null;
         $this->file    = null;
 
@@ -201,6 +193,4 @@ class Chat extends Component
             $this->sendMessage();
         }
     }
-
-    
 }
