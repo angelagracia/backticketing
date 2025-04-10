@@ -1,15 +1,19 @@
 <?php
 
+use App\Models\Ticket;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopicKategori;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TicketController;
@@ -18,18 +22,21 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HakAksesController;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UnitkerjaController;
+
+
+
+use App\Http\Controllers\BoDashboardController;
 use App\Http\Controllers\EmailUpdateController;
 use App\Http\Controllers\PermissionsController;
-
 use App\Http\Controllers\Auth\BoLoginController;
-use App\Http\Controllers\PortalLoginController;
-
-
-
-use App\Http\Controllers\FormController;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\PortalDashboardController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PortalLoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 
 // Route::get('/', function () {
@@ -54,14 +61,13 @@ Route::middleware(['auth:portal'])->group(function () {
 });
 
 
-
 Route::get('/forgetpassword', [FrontendController::class, 'forgetpassword'])->name('forgetpassword');
 Route::get('/faqs', [FrontendController::class, 'faqs'])->name('faqs');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 
 // Route bagian login
 
-Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
+// Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
 Route::get('/home/akun', [ProfileController::class, 'profile.edit'])
     ->name('profile.edit') 
     ->middleware(['auth', 'verified']);
@@ -127,7 +133,12 @@ Route::get('/home/contact_login', [FrontendController::class, 'contact_login'])
     ->name('home.contact_login')
     ->middleware(['auth', 'verified']);
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+// Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// Route::get('/login', function () {
+//     return redirect('/login/portal'); // Atau '/login/bo' sesuai default kamu
+// })->name('login');
+
 
 
 Route::get('/home/ticket/{id}/edit', [FrontendController::class, 'edit'])->name('ticketlogin.edit');
@@ -141,9 +152,9 @@ Route::post('home/ticket/proseUpdate', [FrontendController::class, 'prosesUpdate
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
 
-Route::middleware(['auth', 'verified', 'permission:dashboard-view'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
+// Route::middleware(['auth', 'verified', 'permission:dashboard-view'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// });
 
 
 
@@ -235,13 +246,13 @@ Route::middleware(['permission:sub_kategori-delete'])->group(function () {
 });
 
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/add', [UserController::class, 'add'])->name('users.add');
-Route::post('/users/prosesAdd', [UserController::class, 'prosesAdd'])->name('users.prosesAdd');
-Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
-Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
-Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
-Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+// Route::get('/users', [UserController::class, 'index'])->name('users.index');
+// Route::get('/users/add', [UserController::class, 'add'])->name('users.add');
+// Route::post('/users/prosesAdd', [UserController::class, 'prosesAdd'])->name('users.prosesAdd');
+// Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+// Route::post('/users/edit/', [UserController::class, 'prosesEdit'])->name('users.prosesEdit');
+// Route::post('/users/detail/{id}', [UserController::class, 'detail'])->name('users.detail');
+// Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 
 
 Route::middleware(['permission:users-list'])->group(function () {
@@ -271,6 +282,41 @@ Route::middleware(['permission:users-detail'])->group(function () {
 Route::middleware(['permission:users-delete'])->group(function () {
     Route::get('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 });
+
+
+
+Route::middleware(['permission:portal-list'])->group(function () {
+    Route::get('/portal', [PortalController::class, 'index'])->name('portal.index');
+    // Route::get('/ticket/detail/{id}', [TicketController::class, 'detail'])->name('ticket.detail');
+});
+
+Route::middleware(['permission:portal-list'])
+    ->group(function () {
+        Route::get('/portal/{portalrole}', [PortalController::class, 'detail'])->name('portal.show');
+    });
+
+Route::middleware(['permission:portal-create'])->group(function () {
+    Route::get('/portal/add', [PortalController::class, 'add'])->name('portal.add');
+    Route::post('/portal/prosesAdd', [PortalController::class, 'prosesAdd'])->name('portal.prosesAdd');
+    Route::post('/get-subcategories', [PortalController::class, 'getSubcategories']); // optional: bisa tetap public
+});
+
+Route::middleware(['permission:portal-edit'])->group(function () {
+    Route::get('/portal/edit/{id}', [PortalController::class, 'edit'])->name('portal.edit');
+    Route::post('/portal/edit/{id}', [PortalController::class, 'update'])->name('portal.prosesEdit');
+    Route::post('/portal/proses/{id}', [PortalController::class, 'proses'])->name('portal.proses');
+});
+
+Route::middleware(['permission:portal-detail'])->group(function () {
+    Route::post('/portal/detail/{id}', [PortalController::class, 'detail'])->name('portal.detail');
+});
+
+// Delete Unit Kerja
+Route::middleware(['permission:portal-delete'])->group(function () {
+    Route::get('/portal/delete/{id}', [PortalController::class, 'delete'])->name('portal.delete');
+});
+
+
 
 
 // Route::get('dashboard', [UserController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -480,33 +526,104 @@ Route::middleware('auth')->group(function () {
 
 
 // Back Office
-Route::get('login-bo', [BoLoginController::class, 'showLoginForm']);
-Route::post('login-bo', [BoLoginController::class, 'login']);
-Route::post('logout-bo', [BoLoginController::class, 'logout']);
+// Route::get('login-bo', [BoLoginController::class, 'showLoginForm']);
+// Route::post('login-bo', [BoLoginController::class, 'login']);
+// Route::post('logout-bo', [BoLoginController::class, 'logout']);
 
-// Portal
-Route::get('login-portal', [PortalLoginController::class, 'showLoginForm']);
-Route::post('login-portal', [PortalLoginController::class, 'login']);
-Route::post('logout-portal', [PortalLoginController::class, 'logout']);
+// // Portal
+// Route::get('login-portal', [PortalLoginController::class, 'showLoginForm']);
+// Route::post('login-portal', [PortalLoginController::class, 'login']);
+// Route::post('logout-portal', [PortalLoginController::class, 'logout']);
 
 // Protected routes
-Route::middleware('auth:bo')->group(function () {
-    Route::get('/dashboard-bo', fn () => view('back.dashboard'));
-});
+// Route::middleware('auth:bo')->group(function () {
+//     Route::get('/dashboard-bo', fn () => view('back.dashboard'));
+// });
 
-Route::middleware('auth:portal')->group(function () {
-    Route::get('/dashboard-portal', fn () => view('front.layouts.home.home'));
-});
+// Route::middleware('auth:portal')->group(function () {
+//     Route::get('/dashboard-portal', fn () => view('front.layouts.home.home'));
+// });
 
 // Route::post('portal/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
+// Kirim Cepat (tanpa login)
+Route::get('/ticket/kirim-cepat', [TicketController::class, 'formKirimCepat']);
+Route::post('/ticket/kirim-cepat', [TicketController::class, 'prosesKirimCepat']);
+
+// User Portal
+Route::get('/login/portal', [PortalLoginController::class, 'showLoginForm'])->name('login.portal');
+Route::post('/login/portal', [PortalLoginController::class, 'login']);
+Route::post('/logout/portal', [PortalLoginController::class, 'logout'])->name('logout.portal');
+// Route::middleware('auth:bo')->group(function () {
+//     Route::get('/home', function () {
+//         return view('front.layouts.home.home');
+//     })->name('home');
+// });
+
+Route::middleware('guest:portal')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    ->name('password.request');
+
+Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->name('password.email');
+
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+
+Route::post('reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.store');
+});
+
+
+// default redirect fallback
+Route::get('/login/bo', [BoLoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login/bo', [BoLoginController::class, 'login']);
+Route::post('/logout/bo', [BoLoginController::class, 'logout'])->name('logout.bo');
+
+Route::middleware(['auth:bo'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+Route::middleware(['auth:portal'])->group(function () {
+    Route::get('/home', [PortalDashboardController::class, 'index'])->name('home');
+});
+
+// Route::get('/dashboard', function () {
+//     $totalTicketsOpen = Ticket::whereHas('status', function ($query) {
+//         $query->where('name', 'Opens'); // sesuaikan dengan field di tabel status
+//     })->count();
+
+//     $totalTicketsProses = Ticket::whereHas('status', function ($query) {
+//         $query->where('name', 'Processed'); // pastikan ini sesuai kolom dan value di tabel master_status
+//     })->count();
+//     $totalTicketsClose = Ticket::whereHas('status', function ($query) {
+//         $query->where('name', 'Closed'); // pastikan ini sesuai kolom dan value di tabel master_status
+//     })->count();
+
+//     $ticketData = Ticket::with('status')
+//         ->get()
+//         ->groupBy(fn($ticket) => $ticket->status->name)
+//         ->map(fn($group) => $group->count());
+    
+    
+//     return view('back.dashboard', compact('totalTicketsOpen','totalTicketsProses','totalTicketsClose','ticketData'));
+// })->middleware('auth:bo')->name('dashboard');
 
 
 
+// Route::middleware('auth:portal')->group(function () {
+    //     Route::get('/home', [PortalLoginController::class, 'home'])->middleware(['auth', 'verified'])->name('home');
+    //     // Tambahan rute lain untuk user portal
+    // });
+    
+Route::middleware('auth:bo')->group(function () {   
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
-Route::middleware(['permission:role-list'])
+    Route::middleware(['permission:role-list'])
     ->group(function () {
         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     });
@@ -533,6 +650,39 @@ Route::middleware(['permission:role-delete'])
     ->group(function () {
         Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
     });
+
+});
+
+
+
+// // Kirim Cepat
+// Route::get('/ticket/kirim-cepat', [TicketController::class, 'formKirimCepat']);
+// Route::post('/ticket/kirim-cepat', [TicketController::class, 'prosesKirimCepat']);
+
+// // Portal User
+// Route::get('/login/portal', [PortalLoginController::class, 'showLoginForm'])->name('login.portal');
+// Route::post('/login/portal', [PortalLoginController::class, 'login']);
+// Route::post('/logout/portal', [PortalLoginController::class, 'logout'])->name('logout.portal');
+
+// // BOS / Admin
+// Route::get('/login/bos', [BoLoginController::class, 'showLoginForm'])->name('login.bos');
+// Route::post('/login/bos', [BoLoginController::class, 'login']);
+// Route::post('/logout/bos', [BoLoginController::class, 'logout'])->name('logout.bos');
+
+// Route::middleware('auth:bo')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('back.dashboard');
+//     })->name('bo.dashboard');
+// });
+
+
+// Route::middleware(['auth:portal'])->group(function () {
+//     Route::get('/portal/dashboard', [PortalDashboardController::class, 'index']);
+// });
+
+// Route::middleware(['auth:bos'])->group(function () {
+//     Route::get('/bos/dashboard', [BoDashboardController::class, 'index']);
+// });
 
 
 
@@ -571,4 +721,4 @@ Route::get('/ticket/{ticketNumber}/history', [TicketController::class, 'showTick
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
 
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';

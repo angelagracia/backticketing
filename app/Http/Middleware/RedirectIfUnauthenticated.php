@@ -9,29 +9,21 @@ use Illuminate\Http\Request;
 
 class RedirectIfUnauthenticated
 {
-    public function handle(Request $request, Closure $next, string ...$guards)
+    public function handle(Request $request, Closure $next, ...$guards)
     {
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return $next($request);
+                if ($guard === 'bo') {
+                    return redirect('/dashboard-bo');
+                } elseif ($guard === 'portal') {
+                    return redirect('/portal/dashboard');
+                }
             }
         }
-
-        $guard = $guards[0] ?? 'web';
-
-        switch ($guard) {
-            case 'bo':
-                $login = route('bo.login');
-                break;
-            case 'portal':
-                $login = route('portal.login');
-                break;
-            default:
-                $login = route('login');
-        }
-
-        return redirect()->guest($login);
+    
+        return $next($request);
     }
+    
 
     protected function redirectTo($request): ?string
 {

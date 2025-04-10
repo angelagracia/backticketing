@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table ->string('code', 255)->nullable()->after('menu_code');
-            $table->foreign('code')->references('code')->on('master_sub_menu');
+            // $table ->string('code', 255)->nullable()->after('menu_code');
+            // $table->foreign('code')->references('code')->on('master_sub_menu');
         });
     }
 

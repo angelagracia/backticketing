@@ -14,15 +14,13 @@ return [
         'driver' => 'session',
         'provider' => 'users',
     ],
-
-    'bo' => [
-        'driver' => 'session',
-        'provider' => 'user_bo',
-    ],
-
     'portal' => [
         'driver' => 'session',
         'provider' => 'user_portals',
+    ],
+    'bo' => [
+        'driver' => 'session',
+        'provider' => 'user_bo',
     ],
 ],
 
@@ -39,23 +37,19 @@ return [
 // ],
 
 'providers' => [
-    'users' => [
+   'users' => [
         'driver' => 'eloquent',
         'model' => App\Models\User::class,
     ],
-
-    'user_bo' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\UserBO::class,
-    ],
-
     'user_portals' => [
         'driver' => 'eloquent',
         'model' => App\Models\UserPortal::class,
     ],
+    'user_bo' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\UserBo::class,
+    ],
 ],
-
-
     'passwords' => [
         'users' => [
             'provider' => 'users',
