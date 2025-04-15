@@ -64,8 +64,8 @@ class Report extends Model
         return $this->hasMany(TicketHistory::class);
     }
 
-    public function attachments()
-    {
-        return $this->hasMany(TicketAttachment::class, 'ticket_id'); // pastikan foreign key 'ticket_id'
-    }
+    // public function attachments()
+    // {
+    //     return $this->hasMany(TicketAttachment::class, 'ticket_id'); // pastikan foreign key 'ticket_id'
+    // }
 }

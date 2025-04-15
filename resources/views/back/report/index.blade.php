@@ -54,9 +54,17 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>Unit Kerja</th>
                                     <th>Nomor Ticket</th>
+                                    <th>Email</th>
+                                    <th>No.Telepon</th>
                                     <th>Status</th>
-                                    <th>Aksi</th>
+                                    <th>Peran</th>
+                                    <th>Kategori</th>
+                                    <th>Sub Kategori</th>
+                                    <th>Deskripsi</th>
+                                    <th>lampiran</th>
+                                    {{-- <th>Aksi</th> --}}
                                 </tr>
                             </thead>
                         </table>
@@ -88,9 +96,19 @@
             },
             "columns": [
                 { "data": "name" },
+                { "data": 'unit_kerja', name: 'unit_kerja' },
                 { "data": "ticket_number" },
+                { "data": "email" },
+                { "data": "telepon" },
                 { "data": "status" },
-                { "data": "action", "orderable": false, "searchable": false }
+                { "data": "unit" },
+                { "data": "topic" },
+                { "data": "type" },
+                { "data": "req_description" },
+                { "data": "lampiran", render: function(data, type, row) {
+                    return '<a href="' + data + '" target="_blank">Lihat Lampiran</a>';
+                }},
+                // { "data": "action", "orderable": false, "searchable": false }
             ]
         });
     });

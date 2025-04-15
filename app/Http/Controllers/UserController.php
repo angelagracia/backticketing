@@ -106,6 +106,8 @@
 namespace App\Http\Controllers;
     
 use Illuminate\Support\Facades\DB;
+use App\Models\Menu;
+
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
@@ -128,14 +130,17 @@ class UserController extends Controller
     {
         $data = User::latest()->paginate(5);
         // $users = User::whereNot('id', Auth::user()->id)->withCount(['unreadMessages'])->get();
-  
-        return view('users.index',compact('data'))
+        $menu_master = Menu::whereNull('parent_code')
+        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
+        ->get();
+
+        return view('users.index',compact('data','menu_master'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
-    public function chatUser($userId)
+    public function chatUser($ticketId)
     {
-        return view('user-chat', compact('userId'));
+        return view('user-chat', compact('ticketId'));
     }
     
     /**

@@ -1,9 +1,10 @@
 {{-- Livewire Chat Component --}}
 
+{{-- Livewire Chat Component --}}
+
 <x-slot name="header">
     <h2 class="font-semibold text-4xl text-gray-100 leading-tight">
-        {{-- {{ __($ticket->name) }} --}}
-        Chatting Users
+        {{ auth()->user()->name }}
     </h2>
 </x-slot>
 
@@ -15,24 +16,25 @@
 
             <div class="w-full px-5 py-8 grow " id="message-list">
                 @foreach ($messages as $message)
-                @if ($message->sender->id != auth()->user()->id)
+                @if ($message->sender && $message->sender->id != auth()->user()->id)
+
                 {{-- Receiver Message --}}
                 <div class="grid pb-3">
                     <div class="flex gap-2.5">
                         <img src="{{ asset('assets/avatar_receiver.jpg') }}" alt="Receiver image"
                             class="w-10 h-11  rounded-3xl">
                         <div class="grid">
-                            <h5 class="text-black text-sm font-semibold leading-snug pb-1">
+                            <h5 class="text-gray-100 text-sm font-semibold leading-snug pb-1">
                                 {{ $message->sender->name }}
-                            </h5>                            
+                            </h5>
                             <div class="w-max grid">
 
                                 @if ($message->message)
                                 <div
                                     class="px-3.5 py-2 bg-blue-900 rounded-3xl rounded-tl-none justify-start items-center gap-3 inline-flex">
-                                    <h5 class="text-black text-sm font-normal leading-snug">
+                                    <h5 class="text-gray-100 text-sm font-normal leading-snug">
                                         {{ $message->message }}
-                                    </h5>                                    
+                                    </h5>
                                 </div>
                                 @else
                                 @php
@@ -264,7 +266,7 @@
     let typingTimeout;
     const chatContainer = document.getElementById('chat-container');
 
-    window.Echo.private(`chat-channel.{{ $senderId }}`)
+    window.Echo.private(chat-channel.{{ $senderId }})
         .listen('UserTyping', (event) => {
             const messageInputField = document.getElementById('message-input');
             if (messageInputField) {
@@ -309,4 +311,37 @@
         }
     }
 </script>
+
+
+<script>
+    Livewire.on('messages-updated', () => {
+        let box = document.getElementById('chat-box');
+        if (box) box.scrollTop = box.scrollHeight;
+    });
+</script>
+
+
+{{-- @push('scripts')
+    <script>
+        Echo.channel('chat-channel.{{ $ticketId }}')
+            .listen('MessageSentEvent', (event) => {
+                @this.set('messages', [...@this.get('messages'), event.message]);
+            });
+    </script>
+@endpush --}}
+
+
+@push('scripts')
+    <script>
+      Echo.private(`chat-channel.${ticketId}`)
+    .listen('MessageSentEvent', (e) => {
+        console.log("Pesan masuk:", e.message);
+    });
+
+    </script>
+@endpush
+
+
+
+
 @endscript

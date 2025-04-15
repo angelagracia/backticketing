@@ -118,9 +118,15 @@
     <!-- ========================= header end ========================= -->
     
         <div class="container pt-20">
+            @if(session('message'))
+                <div class="alert alert-warning">
+                    {{ session('message') }}
+                </div>
+            @endif
+
             <div class="card shadow-sm p-4">
                 <h4 class="mb-4">Detail Tiket
-                    <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
+                    <a href="{{ route('chatPortal', $ticket->id) }}" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Pesan"><i class="fas fa-comments"></i></a>
                     <button class="btn-edit-ticket-hidup" data-bs-toggle="modal" data-bs-target="#editTiketModal">Edit</button>
                 </h4>
                 <div class="row content-section">

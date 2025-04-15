@@ -79,7 +79,7 @@
                                 {{-- <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
                                         class="lni lni-lock-alt"></i> Login</a>
                                 <a href="{{ route('kirimcepat') }}" class="btn">Kirim cepat</a> --}}
-                                <a href="{{ route('login') }}" class="login"><i class="lni lni-lock-alt"></i> Login</a>
+                                <a href="{{ route('login.portal') }}" class="login"><i class="lni lni-lock-alt"></i> Login</a>
                                 <a href="{{ route('kirimcepat') }}" class="btn">Kirim cepat</a>
 
                             </div>

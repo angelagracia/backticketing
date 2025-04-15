@@ -1,4 +1,4 @@
-@extends('layouts.default')
+{{-- @extends('layouts.default')
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -11,13 +11,33 @@
             @endcan
         </div>
     </div>
-</div>
+</div> --}}
 
-@session('success')
-    <div class="alert alert-success" role="alert"> 
-        {{ $value }}
+@extends('layouts.default')
+@section('content')
+
+<section class="section">
+    <div class="section-header">
+        <h1> Roles</h1>
     </div>
-@endsession
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Data Roles</h4>
+                    <div class="card-header-action">
+                        @can('role-create')
+                            <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                        @endcan
+                </div>
+            </div>
+            
+            @session('success')
+                <div class="alert alert-success" role="alert"> 
+                    {{ $value }}
+                </div>
+            @endsession
 
 <table class="table table-bordered">
   <tr>

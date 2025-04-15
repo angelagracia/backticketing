@@ -241,7 +241,7 @@
                             {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                               <p style="color: black">Kamu Sudah memiliki Akun ?</p> {{ __('Masuk') }}
                             </a> --}}
-                            <p class="text-center create-new-account mt-3">Kamu sudah memiliki akun ? <a href="{{ route('login') }}">Masuk</a></p>
+                            <p class="text-center create-new-account mt-3">Kamu sudah memiliki akun ? <a href="{{ route('login.portal') }}">Masuk</a></p>
                         </div>
                     </form>
 

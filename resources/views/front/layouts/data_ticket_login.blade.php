@@ -91,7 +91,7 @@
                                     <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-user"></i> My Account</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{route('profile')}}"><i class="lni lni-briefcase"></i>Profil</a>
+                                        {{-- <a class="dropdown-item" href="{{route('profile')}}"><i class="lni lni-briefcase"></i>Profil</a> --}}
                                         <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="lni lni-rocket"></i> Akun</a>
                                         <a class="dropdown-item logout-btn" id="logoutButton" href="#"><i class="lni lni-close"></i>Logout</a>
                                     </div>
@@ -108,9 +108,7 @@
         <div class="container">
             <div class="card shadow-sm p-4">
                 <h4 class="mb-4">Data Tiket
-                    <a href="{{ route('chat', ['id' => $ticket->id]) }}">
-                        <button class="btn-data-tiket-chat" data-bs-toggle="modal" data-bs-target="#chatTiketModal">Chat</button>
-                    </a>
+                    <a href="{{ route('chatPortal', $ticket->id) }}" class="btn btn-success btn-action mr-1" data-toggle="tooltip" title="Pesan"><i class="fas fa-comments"></i></a>
                     <a href="{{ route('detail_ticket_login', ['id' => $ticket->id]) }}">
                         <button class="btn-data-tiket-detail">Detail</button>
                     </a>                    

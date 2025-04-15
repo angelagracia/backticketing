@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use data;
 use App\Models\Menu;
 use App\Models\Report;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\ReportExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,17 +18,30 @@ class ReportController extends Controller
     {
         // Jika request AJAX (DataTables meminta data)
         if ($request->ajax()) {
-            $query = Report::with('status')->select('tickets.*'); // Ubah 'reports.*' ke 'tickets.*'
+            $query = Report::with('status','unitKerja','unit','topic','type')->select('tickets.*'); // Ubah 'reports.*' ke 'tickets.*'
         
-            return DataTables::eloquent($query)
-                ->addColumn('status', function ($report) {
-                    return $report->status->name ?? '-';
-                })
-                ->addColumn('action', function ($report) {
-                    return '<a href="#" class="btn btn-sm btn-primary">Detail</a>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            return DataTables::of($query)
+            ->addColumn('unit_kerja', fn($row) => $row->unitKerja->name ?? '-')
+            ->addColumn('unit', fn($row) => $row->unit->name ?? '-')
+            ->addColumn('topic', fn($row) => $row->topic->name ?? '-')
+            ->addColumn('type', fn($row) => $row->type->name ?? '-')
+            ->addColumn('status', fn($row) => $row->status->name ?? '-')
+            ->addColumn('req_description', fn($row) => Str::limit($row->req_description, 50)) // optional
+            ->addColumn('lampiran', function ($row) {
+                return '<a href="' . asset('storage/' . $row->lampiran) . '" target="_blank">View</a>';
+            })
+            ->addColumn('lampiran', function ($row) {
+                if ($row->attachment) {
+                    // Pastikan path-nya sesuai penyimpanan kamu
+                    $url = asset('storage/' . $row->attachment); // jika disimpan di storage/app/public/
+                    return '<a href="' . $url . '" target="_blank">Lihat Lampiran</a>';
+                } else {
+                    return '-';
+                }
+            })
+            
+            ->rawColumns(['action', 'lampiran']) // biar HTML di lampiran tidak di-escape
+            ->make(true);
         }
         
 

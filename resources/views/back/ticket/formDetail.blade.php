@@ -120,16 +120,40 @@
                         
                             @if($ticket->status_id == 2) 
                                 <!-- Jika status_id adalah 2 (Processed), tampilkan tombol "Konfirmasi" -->
-                                <form action="" method="POST">
+                                <form action="{{ route('ticket.konfirmasi',['id' => $ticket->id]) }}" method="GET">
                                     @csrf
-                                    @method('POST')
+                                    @method('GET')
                                     <button type="submit" class="btn btn-warning">Konfirmasi</button>
                                 </form>
                             @endif
                         </div>
-                        
-                        
                     </div>
+
+                    @if($ticket->confirmation)
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h4>Konfirmasi Ticket</h4>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Nama Pengirim:</strong> {{ $ticket->confirmation->nama }}</p>
+                                <p><strong>Deskripsi:</strong> {{ $ticket->confirmation->deskripsi }}</p>
+
+                                @if($ticket->confirmation->attachments->count())
+                                    <p><strong>Lampiran:</strong></p>
+                                    <ul>
+                                        @foreach ($ticket->confirmation->attachments as $attachment)
+                                            <li>
+                                                <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">
+                                                    {{ basename($attachment->file_path) }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

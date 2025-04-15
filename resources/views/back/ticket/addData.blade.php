@@ -56,9 +56,6 @@
                                 <option value="{{ $item->id }}" {{ old('unit_kerja_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
-                        @error('topic_id')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="kategori" class="form-label">Kategori</label>
@@ -74,6 +71,9 @@
                         <label for="sub_kategori" class="form-label">Sub Kategori</label>
                         <select name="type_id" id="sub_kategori" class="form-control">
                             <option value="">Pilih Sub Kategori</option>
+                            @foreach ($master_type as $subcategory)
+                                <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 

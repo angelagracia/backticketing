@@ -19,6 +19,7 @@ class Message extends Model
     protected $fillable = [
         'sender_id',
         'receiver_id',
+        'ticket_id',
         'message',
         'is_read',
         'file_name',
@@ -45,25 +46,30 @@ class Message extends Model
 
     public function sender()
     {
-        return $this->belongsTo(User::class, 'sender_id', 'id');
+        return $this->belongsTo(Ticket::class, 'sender_id');
     }
 
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'receiver_id', 'id');
+        return $this->belongsTo(Ticket::class, 'receiver_id');
     }
     // use HasFactory;
 
     // protected $fillable = ['ticket_id', 'user_id', 'content'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
+    }
 
+    // public function ticket()
+    // {
+    //     return $this->belongsTo(Ticket::class, 'ticket_id');
+
+    // }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

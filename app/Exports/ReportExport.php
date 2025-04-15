@@ -12,16 +12,28 @@ class ReportExport implements FromCollection, WithHeadings, WithMapping, ShouldA
 {
     public function collection()
     {
-        return Report::with('status')->get(); // Pastikan 'status' adalah relasi
+
+        return Report::with('unitKerja','status','unit','topic','type')->get();
+
+        
     }
 
     public function headings(): array
     {
         return [
             'ID',
+            'Status',
             'Nama',
             'Nomor Ticket',
-            'Status',
+            'Email',
+            'No.Telepon',
+            'Peran',
+            'Unit Kerja',
+            'Kategori',
+            'Sub Kategori',
+            'Judul',
+            'Deskripsi',
+            'Lampiran',
         ];
     }
 
@@ -29,9 +41,18 @@ class ReportExport implements FromCollection, WithHeadings, WithMapping, ShouldA
     {
         return [
             $report->id,
+            $report->status->name ?? '-',
             $report->name,
             $report->ticket_number,
-            $report->status->name ?? '-', // Pastikan ada relasi status()
+            $report->email,
+            $report->telepon,
+            $report->unit->name ?? '-',
+            $report->unitKerja->name ?? '-',
+            $report->topic->name ?? '-',
+            $report->type->name ?? '-',
+            $report->title,
+            $report->description,
+            $report->attachment,
         ];
     }
 }

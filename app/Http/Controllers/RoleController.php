@@ -82,7 +82,10 @@ class RoleController extends Controller
     public function index(Request $request): View
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
+        $menu_master = Menu::whereNull('parent_code')
+        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
+        ->get();
+        return view('roles.index',compact('roles','menu_master'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     

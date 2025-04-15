@@ -54,6 +54,12 @@ class Ticket extends Model
         return $this->belongsTo(Type::class, 'type_id');
     }
 
+    public function confirmation()
+    {
+        return $this->hasOne(TicketConfirmation::class);
+    }
+    
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');

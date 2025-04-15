@@ -2,29 +2,32 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Str;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
-    protected function redirectTo($request)
-{
-    if (! $request->expectsJson()) {
 
-        // Cek apakah URL mengarah ke dashboard BO
-        if ($request->is('dashboard-bo*') || $request->routeIs('bo.*')) {
-            return route('login.bo');
+    protected function redirectTo($request): ?string
+    {
+        if (!$request->expectsJson()) {
+            if ($request->is('dashboard*')) {
+                return route('login.bo');
+            } elseif ($request->is('home*') || $request->is('portal*')) {
+                return route('login.portal');
+            }
         }
-
-        // Cek apakah URL mengarah ke halaman user portal
-        if ($request->is('home*') || $request->routeIs('home')) {
-            return route('login.portal');
-        }
-
-        // Fallback ke portal juga
+    
         return route('login.portal');
     }
-}
-
-    }
     
+    
+    
+    
+    
+    
+
+
 }
+    
+

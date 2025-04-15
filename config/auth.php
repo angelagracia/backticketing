@@ -10,10 +10,10 @@ return [
     ],
 
    'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
+    // 'web' => [
+    //     'driver' => 'session',
+    //     'provider' => 'users',
+    // ],
     'portal' => [
         'driver' => 'session',
         'provider' => 'user_portals',

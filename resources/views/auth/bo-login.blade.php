@@ -128,7 +128,7 @@
 
 
 
-                    <form class="card login-form inner-content" action="{{ route('login') }}" method="post">
+                    <form class="card login-form inner-content" action="{{ route('login.bo') }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="title">

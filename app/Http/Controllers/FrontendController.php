@@ -55,7 +55,7 @@ class FrontendController extends Controller
 
     public function ticketlogin(Request $request)
     {
-        $user = auth('user_portals')->user();
+        $user = auth('portal')->user();
 
         $query = Ticket::where('user_id', $user->id);
 
@@ -389,16 +389,17 @@ public function show($id)
 
 
     public function searchTicketLogin(Request $request)
-    {
-        // Ambil input dari form pencarian
-        $search = $request->input('subs-email');
+{
+    $search = $request->input('subs-email');
 
-        // Cari tiket berdasarkan nomor tiket
-        $ticket = Ticket::where('ticket_number', 'like', '%' . $search . '%')->first();
+    $ticket = Ticket::where('ticket_number', 'like', '%' . $search . '%')->first();
 
-        // Kembalikan hasil pencarian ke view
-        return view('front.layouts.detail_tiket', compact('ticket'));
+    if (!$ticket) {
+        return view('front.layouts.detail_tiket')->with('message', 'Tiket tidak ditemukan.');
     }
+
+    return view('front.layouts.detail_tiket', compact('ticket'));
+}
 
 
 

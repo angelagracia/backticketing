@@ -6,6 +6,7 @@
 
 namespace App\Events;
 
+use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -22,7 +23,7 @@ class MessageSentEvent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct(Message $message)
     {
         $this->message = $message->load('sender:id,name', 'receiver:id,name');
     }
@@ -32,10 +33,13 @@ class MessageSentEvent implements ShouldBroadcastNow
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn(): Channel
     {
-        return [
-            new PrivateChannel('chat-channel.' . ($this->message->receiver->id ?? 'unknown')),
-        ];        
+        return new PrivateChannel('chat-channel.' . $this->message->ticketId);
+    }
+
+    public function broadcastWith()
+    {
+        return ['message' => $this->message];
     }
 }

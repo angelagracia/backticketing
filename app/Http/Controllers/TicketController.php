@@ -14,7 +14,9 @@ use Illuminate\Http\Request;
 use App\Models\TicketHistory;
 use App\Mail\TicketCreatedMail;
 use App\Models\TicketAttachment;
+use App\Models\TicketConfirmation;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\TicketCreatedNotification;
@@ -41,6 +43,7 @@ class TicketController extends Controller
         $unit_kerja = UnitKerja::all();
         $topic_master = Topic::all();
         $master_type = Type::all();
+        $master_status = Status::all();
         return view('back.ticket.addData', compact('menu_master','master_unit','unit_kerja','topic_master','master_type','master_status'));
     }
 
@@ -211,6 +214,57 @@ class TicketController extends Controller
 
     }
 
+    public function konfirmasi($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        // $ticket->status_id = 3; // Status otomatis Closed
+        // $ticket->save();
+
+        // TicketHistory::create([
+        //     'ticket_id' => $ticket->id,
+        //     'status_id' => 3,
+        //     'description' => 'Tiket ditutup oleh admin.',
+        // ]);
+
+        // return redirect()->route('ticket.index')->with('success', 'Data berhasil diubah');
+        return view('back.ticket.konfirmasi', compact('ticket'));
+    }
+
+    public function prosesKonfirmasi(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'deskripsi' => 'required|string',
+            'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,xlsx|max:2048',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+
+        $lampiranPath = null;
+
+        
+        $konfirmasi = TicketConfirmation::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => Auth::check() ? Auth::id() : null,
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'lampiran' => $lampiranPath,
+        ]);
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->file('lampiran') as $file) {
+                $path = $file->store('lampiran_konfirmasi', 'public');
+                $konfirmasi->attachments()->create([
+                    'file_path' => $path,
+                ]);
+            }
+        }
+
+        $ticket->update(['status_id' => 3]); 
+
+        return redirect()->route('ticket.index')->with('success', 'Ticket berhasil ditutup.');
+    }
+
+
 
     public function delete($id)
     {
@@ -284,6 +338,7 @@ class TicketController extends Controller
     {
         return view('user-chat', compact('userId'));
     }
+    
 
     
 

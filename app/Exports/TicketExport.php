@@ -10,7 +10,7 @@ class TicketsExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return Ticket::select('name', 'ticket_number', 'status')->get();
+        return Ticket::select('name', 'ticket_number', 'status','email','telpon','unit_kerja')->get();
     }
 
     public function headings(): array
@@ -19,6 +19,9 @@ class TicketsExport implements FromCollection, WithHeadings
             'Nama',
             'Nomor Ticket',
             'Status',
+            'Email',
+            'No. HP',
+            'Unit Kerja',
         ];
     }
 }

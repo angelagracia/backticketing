@@ -18,7 +18,7 @@
 
             <div class="card-body p-0">
                 <div class="table-responsive">
-                <table class="table table-striped mb-0" id="dataTable">
+                <table class="table table-striped mb-0" id="unitKerja">
 
                     <thead>
                         <tr>
@@ -53,5 +53,15 @@
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables JS -->
+<script>
+    $(document).ready(function () {
+    $('#unitKerja').DataTable(); // tanpa serverSide
+});
+</script>
 
 @endsection
