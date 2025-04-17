@@ -12,11 +12,18 @@ class CreateAdminUserSeeder extends Seeder
     public function run(): void
     {
         // Buat user admin back office
-        $user = UserBo::create([
+        $user = UserBo::create(
+        [
             'name' => 'Admin BO', 
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456')
         ]);
+        $user2 = UserBo::create([
+            'name' => 'Admin BOO', 
+            'email' => 'admin12@gmail.com',
+            'password' => bcrypt('123456')
+        ]);
+           
 
         // Buat role Admin dengan guard bo
         $role = Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'bo']);
@@ -29,5 +36,6 @@ class CreateAdminUserSeeder extends Seeder
          
         // Assign role ke user
         $user->assignRole($role);
+        $user2->assignRole($role);
     }
 }

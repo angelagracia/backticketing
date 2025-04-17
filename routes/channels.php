@@ -15,13 +15,20 @@ Broadcast::channel('unread-channel.{receiverId}', function (Ticket $ticket, $rec
     return (int) $ticket->id === (int) $receiverId;
 });
 
-Broadcast::channel('chat-channel.{userId}', function ($user, $userId) {
-    return (int) $user->id === (int) $userId;
-});
-Broadcast::channel('private-chat-channel.{userId}', function ($user, $userId) {
-    return (int) $user->id === (int) $userId;
+// Broadcast::channel('chat-channel.{userId}', function ($user, $userId) {
+//     return (int) $user->id === (int) $userId;
+// });
+// Broadcast::channel('private-chat-channel.{userId}', function ($user, $userId) {
+//     return (int) $user->id === (int) $userId;
+// });
+Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
 });
 
+
+Broadcast::channel('chat-channel.{userId}',function(Ticket $user, $userId){
+    return (int) $user->id === (int) $userId;
+});
 
 
 

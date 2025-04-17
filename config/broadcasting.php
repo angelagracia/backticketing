@@ -102,7 +102,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'reverb'),
+    'default' => env('BROADCAST_CONNECTION', 'null'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,10 +122,11 @@ return [
         'app_id' => env('REVERB_APP_ID'),
         'options' => [
             'host' => env('REVERB_HOST'),
-            'port' => env('REVERB_PORT', 8080),
-            'scheme' => env('REVERB_SCHEME', 'http'),
-            'useTLS' => env('REVERB_SCHEME', 'http') === 'https',
+            'port' => env('REVERB_PORT', 443),
+            'scheme' => env('REVERB_SCHEME', 'https'),
+            'useTLS' => env('REVERB_SCHEME', 'https') === 'https',
         ],
+
     ],
 
         'pusher' => [

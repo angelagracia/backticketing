@@ -23,9 +23,9 @@ class MessageSentEvent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(Message $message)
+    public function __construct($message)
     {
-        $this->message = $message->load('sender:id,name', 'receiver:id,name');
+        $this->message = $message;
     }
 
     /**
@@ -33,13 +33,17 @@ class MessageSentEvent implements ShouldBroadcastNow
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('chat-channel.' . $this->message->ticketId);
+        return [
+            new PrivateChannel('chat-channel.' . $this->message->receivedId),
+        ];
     }
 
     public function broadcastWith()
     {
-        return ['message' => $this->message];
+        return [
+            'message' => $this->message->toArray()
+        ];
     }
 }

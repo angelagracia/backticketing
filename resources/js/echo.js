@@ -13,9 +13,9 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 
 });
-window.Echo.connector.pusher.connection.bind('connected', () => {
-    window.axios.defaults.headers.common['X-Socket-Id'] = window.Echo.socketId();
-});
+// window.Echo.connector.pusher.connection.bind('connected', () => {
+//     window.axios.defaults.headers.common['X-Socket-Id'] = window.Echo.socketId();
+// });
 
 // import Echo from 'laravel-echo'
 

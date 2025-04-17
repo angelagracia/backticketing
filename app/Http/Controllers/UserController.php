@@ -138,9 +138,9 @@ class UserController extends Controller
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
-    public function chatUser($ticketId)
+    public function chatUser($id)
     {
-        return view('user-chat', compact('ticketId'));
+        return view('user-chat', compact('id'));
     }
     
     /**

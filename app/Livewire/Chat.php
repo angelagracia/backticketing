@@ -22,7 +22,7 @@ class Chat extends Component
 
     public $ticket;
     public $ticketId;
-    public $senderId;
+    public $senderId; 
     public $receiverId;
     public $message;
     public $messages = [];

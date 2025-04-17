@@ -39,36 +39,36 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allow your team to quickly build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo';
-// import Pusher from 'pusher-js';
+// import Echo from 'laravel-echo';
+// // import Pusher from 'pusher-js';
 
-// window.Pusher = Pusher;
+// // window.Pusher = Pusher;
 
-window.Echo = new Echo({
-    broadcaster: 'reverb',
-    key: process.env.VITE_REVERB_APP_KEY,
-    wsHost: process.env.VITE_REVERB_HOST,
-    wsPort: process.env.VITE_REVERB_PORT ?? 8080,
-    forceTLS: process.env.VITE_REVERB_SCHEME === 'https',
-    enabledTransports: ['ws', 'wss'],
-});
+// window.Echo = new Echo({
+//     broadcaster: 'reverb',
+//     key: process.env.VITE_REVERB_APP_KEY,
+//     wsHost: process.env.VITE_REVERB_HOST,
+//     wsPort: process.env.VITE_REVERB_PORT ?? 8080,
+//     forceTLS: process.env.VITE_REVERB_SCHEME === 'https',
+//     enabledTransports: ['ws', 'wss'],
+// });
 
 
 
-document.addEventListener("livewire:load", () => {
-    if (window.Echo && typeof window.Echo.socketId === 'function') {
-        Livewire.hook('message.sent', (message, component) => {
-            message.connection = {
-                ...message.connection,
-                socketId: window.Echo.socketId(),
-            };
-        });
-    }
-});
+// document.addEventListener("livewire:load", () => {
+//     if (window.Echo && typeof window.Echo.socketId === 'function') {
+//         Livewire.hook('message.sent', (message, component) => {
+//             message.connection = {
+//                 ...message.connection,
+//                 socketId: window.Echo.socketId(),
+//             };
+//         });
+//     }
+// });
 
-window.Echo.connector.pusher.connection.bind('connected', () => {
-    console.log("Koneksi berhasil dengan socket ID:", window.Echo.socketId());
-});
+// window.Echo.connector.pusher.connection.bind('connected', () => {
+//     console.log("Koneksi berhasil dengan socket ID:", window.Echo.socketId());
+// });
 
 
 

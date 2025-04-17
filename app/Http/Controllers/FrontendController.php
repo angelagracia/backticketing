@@ -233,7 +233,9 @@ class FrontendController extends Controller
                 'type_id' => $request->sub_category,
                 'req_description' => $request->description,
                 'status_id' => 1,
+                'user_id' => auth('portal')->id(),
             ]);
+            
 
              // Simpan lampiran jika ada
             if ($request->hasFile('lampiran')) {

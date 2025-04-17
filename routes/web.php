@@ -369,12 +369,12 @@ Route::middleware(['auth:portal'])->group(function () {
 
     Route::get('chatPortal/{id}', [UserController::class, 'chatUser'])->name('chatPortal');
 
-    Route::get('/messages', [ChatController::class, 'fetchMessages']);
-    Route::post('/messages', [ChatController::class, 'sendMessage']);
+    // Route::get('/messages', [ChatController::class, 'fetchMessages']);
+    // Route::post('/messages', [ChatController::class, 'sendMessage']);
 
-    Route::post('/send-message', [ChatController::class, 'sendMessage']);
+    // Route::post('/send-message', [ChatController::class, 'sendMessage']);
 
-    Route::post('/chat/send', [ChatController::class, 'sendMessage']);
+    // Route::post('/chat/send', [ChatController::class, 'sendMessage']);
 
     // Route::get('chat/{id}', [TicketController::class, 'chatUser'])->name('chat');
 
@@ -570,7 +570,14 @@ Route::middleware(['auth:bo'])->group(function () {
     });
     
 
-    Route::get('chat/{id}', [UserController::class, 'chatUser'])->name('chat');
+    // Route::get('chat/{id}', [UserController::class, 'chatUser'])->name('chat');
+
+    Route::get('/chat/{id}', function($id){
+        return view('user-chat',[
+            'id' => $id
+        ]);
+    })->name('chat');
+    
 
  
     Route::get('/peran', [UnitController::class, 'index'])->name('peran.index');
@@ -707,10 +714,10 @@ Route::middleware(['auth:bo'])->group(function () {
 
 
     // chat
-    Route::get('/messages', [ChatController::class, 'fetchMessages']);
-    Route::post('/messages', [ChatController::class, 'sendMessage']);
+    // Route::get('/messages', [ChatController::class, 'fetchMessages']);
+    // Route::post('/messages', [ChatController::class, 'sendMessage']);
 
-    Route::post('/send-message', [ChatController::class, 'sendMessage']);
+    // Route::post('/send-message', [ChatController::class, 'sendMessage']);
 
 
 
@@ -722,7 +729,7 @@ Route::middleware(['auth:bo'])->group(function () {
     // Route::post('/roles/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
 
 
-    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth:bo');
+    // Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth:bo');
 
     // Route::get('chat/{id}', [TicketController::class, 'chatUser'])->name('chat');
 
