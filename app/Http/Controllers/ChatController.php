@@ -44,17 +44,17 @@
 
 
 
-// namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
-// use App\Events\MessageSentEvent;
+use Illuminate\Http\Request;
+use App\Events\MessageSentEvent;
 
-// use Illuminate\Support\Facades\Auth;
-// use App\Events\ChatMessageSent;
-// use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
+use App\Events\ChatMessageSent;
+use App\Models\Message;
 
-// class ChatController extends Controller
-// {
+class ChatController extends Controller
+{
     // public function sendMessage(Request $request)
     // {
     //     $ticket = Auth::Ticket();
@@ -81,27 +81,27 @@
     // }
 
 
-//     public function sendMessage(Request $request)
-// {
-//     $user = auth('bo')->check() ? auth('bo')->user() : auth('portal')->user();
-//  // atau 'portal' tergantung login
+    public function sendMessage(Request $request)
+{
+    $user = auth('bo')->check() ? auth('bo')->user() : auth('portal')->user();
+ // atau 'portal' tergantung login
 
-//     $request->validate([
-//         'receiver_id' => 'required|exists:users,id', // atau user_portals
-//         'ticket_id' => 'required|exists:tickets,id',
-//         'message' => 'required|string',
-//     ]);
+    $request->validate([
+        'receiver_id' => 'required|exists:users,id', // atau user_portals
+        'ticket_id' => 'required|exists:tickets,id',
+        'message' => 'required|string',
+    ]);
 
-//     $message = Message::create([
-//         'ticket_id' => $request->ticket_id,
-//         'sender_id' => $user->id,
-//         'receiver_id' => $request->receiver_id,
-//         'message' => $request->message,
-//     ]);
+    $message = Message::create([
+        'ticket_id' => $request->ticket_id,
+        'sender_id' => $user->id,
+        'receiver_id' => $request->receiver_id,
+        'message' => $request->message,
+    ]);
 
-//     broadcast(new MessageSentEvent($message))->toOthers();
+    broadcast(new MessageSentEvent($message))->toOthers();
 
-//     return response()->json(['message' => $message]);
-// }
+    return response()->json(['message' => $message]);
+}
 
-// }
+}

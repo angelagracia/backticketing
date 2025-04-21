@@ -175,7 +175,7 @@
             </div>
 
             {{-- Bottom Message Search Box --}}
-            <form wire:submit="sendMessage" class="w-full px-3 py-2 border-t border-gray-200 bg-transparent sticky bottom-0">
+            <form wire:submit="sendMessage()" class="w-full px-3 py-2 border-t border-gray-200 bg-transparent sticky bottom-0">
                 <div
                     class="w-full pl-3 pr-1 py-1 rounded-3xl border border-gray-200 items-center gap-2 flex justify-between">
                     <div class="flex w-full items-center gap-2">
@@ -238,7 +238,7 @@
                     </div>
 
                     {{-- File Preview --}}
-                    @if ($file)
+                    {{-- @if ($file)
                     <div class="mt-2 p-2 bg-gray-100 rounded-lg flex items-center justify-between">
                         @php
                         $imgType = str_starts_with($file->getMimeType(), 'image/') ? true : false;
@@ -254,7 +254,7 @@
                         <button type="button" wire:click="$set('file', null)" class="text-red-500 ms-2"><span
                                 class="text-2xl">x</span></button>
                     </div>
-                    @endif
+                    @endif --}}
                 </div>
             </form>
         </div>

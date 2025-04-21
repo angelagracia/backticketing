@@ -15,5 +15,4 @@
 //         // Tambahkan pesan baru ke UI
 //     });
 
-
 import './bootstrap';
