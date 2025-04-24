@@ -19,7 +19,7 @@
 
                 <div class="card-body">
                     <!-- Form Pencarian -->
-                    <form action="{{ route('report.index') }}" method="GET" class="mb-4">
+                    <form action="" method="GET" class="mb-4">
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="name">Nama:</label>
@@ -34,6 +34,7 @@
                                 <select name="status" id="status" class="form-control">
                                     <option value="">Pilih Status</option>
                                     <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Open</option>
+                                    <option value="processed" {{ request('status') == 'processed' ? 'selected' : '' }}>Proses</option>
                                     <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
                                 </select>
                             </div>
@@ -85,32 +86,42 @@
 <script>
     $(document).ready(function () {
         $('#reportTable').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "{{ route('report.index') }}",
-                "type": "GET",
-                "error": function(xhr, error, thrown) {
-                    console.log("Error:", xhr.responseText);
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('report.index') }}",
+                type: "GET",
+                data: function (d) {
+                    d.name = $('#name').val();
+                    d.ticket_number = $('#ticket_number').val();
+                    d.status = $('#status').val();
                 }
             },
-            "columns": [
-                { "data": "name" },
-                { "data": 'unit_kerja', name: 'unit_kerja' },
-                { "data": "ticket_number" },
-                { "data": "email" },
-                { "data": "telepon" },
-                { "data": "status" },
-                { "data": "unit" },
-                { "data": "topic" },
-                { "data": "type" },
-                { "data": "req_description" },
-                { "data": "lampiran", render: function(data, type, row) {
-                    return '<a href="' + data + '" target="_blank">Lihat Lampiran</a>';
-                }},
-                // { "data": "action", "orderable": false, "searchable": false }
+            columns: [
+                { data: "name" },
+                { data: "unit_kerja" },
+                { data: "ticket_number" },
+                { data: "email" },
+                { data: "telepon" },
+                { data: "status" },
+                { data: "unit" },
+                { data: "topic" },
+                { data: "type" },
+                { data: "req_description" },
+                {
+                    data: "lampiran",
+                    render: function (data) {
+                        return data ? '<a href="' + data + '" target="_blank">Lihat Lampiran</a>' : '-';
+                    }
+                }
             ]
         });
+
+        $('#filterForm').on('submit', function(e) {
+            e.preventDefault(); // cegah reload halaman
+            $('#reportTable').DataTable().ajax.reload(); // reload data tabel
+        });
+
     });
 </script>
 

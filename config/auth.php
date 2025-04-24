@@ -5,7 +5,7 @@ use App\Models\UserPortal;
 return [
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'bo',
         'passwords' => 'users',
     ],
 
@@ -37,10 +37,10 @@ return [
 // ],
 
 'providers' => [
-   'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\User::class,
-    ],
+//    'users' => [
+//         'driver' => 'eloquent',
+//         'model' => App\Models\User::class,
+//     ],
     'user_portals' => [
         'driver' => 'eloquent',
         'model' => App\Models\UserPortal::class,

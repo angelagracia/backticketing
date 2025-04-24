@@ -83,7 +83,7 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
 {
-    $user = auth('bo')->check() ? auth('bo')->user() : auth('portal')->user();
+    $user = auth()->guard('bo')->check() ? auth()->guard('bo')->user() : auth()->guard('portal')->user();
  // atau 'portal' tergantung login
 
     $request->validate([

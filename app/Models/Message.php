@@ -7,69 +7,32 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Message extends Model
 {
 
-    protected $fillable = [
-        'sender_id',
-        'receiver_id',
-        'ticket_id',
-        'message',
-        'is_read',
-        'file_name',
-        'file_name_original',
-        'file_path',
-        'file_type',
-    ];
-
-    protected $appends = ['formatted_date'];
-
-    public function getFormattedDateAttribute()
+use HasFactory;
+protected $table = 'messages';
+protected $fillable = [
+    'ticket_id',
+    'sender_id',
+    'sender_type',
+    'receiver_id',
+    'receiver_type',
+    'message',
+];
+public function sender(): MorphTo
     {
-        $date = Carbon::parse($this->created_at);
-        return $date->isToday() ? 'Today' : ($date->isYesterday() ? 'Yesterday' : $date->format('d M Y'));
+        return $this->morphTo(__FUNCTION__, 'sender_type', 'sender_id');
     }
 
-    protected static function boot()
+    public function receiver(): MorphTo
     {
-        parent::boot();
-        static::creating(function ($model) {
-            $model->created_at = Carbon::now();
-        });
+        return $this->morphTo(__FUNCTION__, 'receiver_type', 'receiver_id');
     }
 
-    public function sender()
-    {
-        return $this->belongsTo(Ticket::class, 'sender_id');
-    }
-
-    public function receiver()
-    {
-        return $this->belongsTo(Ticket::class, 'receiver_id');
-    }
-    // use HasFactory;
-
-    // protected $fillable = ['ticket_id', 'user_id', 'content'];
-
-    public function ticket()
-    {
-        return $this->belongsTo(Ticket::class);
-    }
-
-    // public function ticket()
-    // {
-    //     return $this->belongsTo(Ticket::class, 'ticket_id');
-
-    // }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

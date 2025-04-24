@@ -1,34 +1,24 @@
 <?php
 
 use App\Models\Ticket;
+use App\Models\UserBO;
+use App\Models\UserPortal;
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('App.Models.Ticket.{id}', function ($ticket, $id) {
-    return (int) $ticket->id === (int) $id;
+Broadcast::channel('chat-ticket.{ticketId}', function ($user, $ticketId) {
+    $ticket = Ticket::find($ticketId);
+
+    return $ticket && (
+        ($user instanceof UserBO && $ticket->admin_id == $user->id) ||
+        ($user instanceof UserPortal && $ticket->user_id == $user->id)
+    );
 });
 
-Broadcast::channel('chat-channel.{receiverId}', function (Ticket $ticket, $receiverId) {
-    return (int) $ticket->id === (int) $receiverId;
+Broadcast::channel('chat.{ticketId}', function ($user, $ticketId) {
+    logger('USER AUTH:', [$user]); // akan tercatat di log
+    return true;
 });
 
-Broadcast::channel('unread-channel.{receiverId}', function (Ticket $ticket, $receiverId) {
-    return (int) $ticket->id === (int) $receiverId;
-});
-
-// Broadcast::channel('chat-channel.{userId}', function ($user, $userId) {
-//     return (int) $user->id === (int) $userId;
-// });
-// Broadcast::channel('private-chat-channel.{userId}', function ($user, $userId) {
-//     return (int) $user->id === (int) $userId;
-// });
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
-
-
-Broadcast::channel('chat-channel.{userId}',function(Ticket $user, $userId){
-    return (int) $user->id === (int) $userId;
-});
 
 
 

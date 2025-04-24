@@ -15,7 +15,7 @@ class Ticket extends Model
     // // protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description'];
     // protected $fillable = ['name','title'];
     protected $fillable = [
-        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description','user_portal_id', 'assigned_admin_id'
+        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description'
     ];    
     
     protected $guarded = ['id']; 
@@ -68,18 +68,6 @@ class Ticket extends Model
     public function attachments() {
         return $this->hasMany(TicketAttachment::class);
     }
-
-    // Ticket.php
-    public function userPortal()
-    {
-        return $this->belongsTo(UserPortal::class, 'user_portal_id');
-    }
-
-    public function assignedAdmin()
-    {
-        return $this->belongsTo(UserBo::class, 'assigned_admin_id');
-    }
-
 
     public function histories()
     {

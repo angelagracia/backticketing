@@ -1,50 +1,31 @@
 <?php
 
-/**
- * @author	 : Vishal Kumar Sinha <vishalsinhadev@gmail.com>
- */
+// namespace App\Events;
 
-namespace App\Events;
+// use App\Models\Message;
+// use Illuminate\Broadcasting\PrivateChannel;
+// use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+// use Illuminate\Foundation\Events\Dispatchable;
+// use Illuminate\Queue\SerializesModels;
 
-use App\Models\Message;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+// class MessageSentEvent implements ShouldBroadcast
+// {
+    // use Dispatchable, SerializesModels;
 
-class MessageSentEvent implements ShouldBroadcastNow
-{
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    // public $message;
 
-    public $message;
+    // public function __construct(Message $message)
+    // {
+    //     $this->message = $message;
+    // }
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct($message)
-    {
-        $this->message = $message;
-    }
+    // public function broadcastOn()
+    // {
+    //     return new PrivateChannel('chat.' . $this->message->receiver_id);
+    // }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
-    {
-        // dd($this->message);
-        return [
-            new PrivateChannel('chat-channel.' . $this->message->ticket_id),
-        ];
-    }
-
-    public function broadcastWith()
-    {
-        return [
-            'message' => $this->message->toArray()
-        ];
-    }
-}
+    // public function broadcastAs()
+    // {
+    //     return 'MessageSendEvent';
+    // }
+// }
