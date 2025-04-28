@@ -415,6 +415,26 @@
                         });
 
                     </script>
+
+                    @if (session('success'))
+                        <script>
+                            Swal.fire({
+                                title: 'Data Berhasil Dikirim!',
+                                text: 'Anda akan dialihkan dalam beberapa detik...',
+                                icon: 'success',
+                                timer: 3000,
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                timerProgressBar: true
+                            });
+
+                            setTimeout(() => {
+                                window.location.href = "{{ route('data_ticket_login') }}"; // Ganti ke route tujuan
+                            }, 3000);
+                        </script>
+                    @endif
     
 
                 
