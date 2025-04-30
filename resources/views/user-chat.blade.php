@@ -1,7 +1,3 @@
-<!-- resources/views/user-chat.blade.php -->
-
 <x-app-layout>
-    @livewire('chat', ['ticket_id' => $id])
+    @livewire('chat', ['ticket_id' => $ticket_id, 'user_id' => $user_id])
 </x-app-layout>
-
-

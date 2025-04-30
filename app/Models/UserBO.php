@@ -26,6 +26,18 @@ class UserBo extends Authenticatable
     {
         return $this->hasMany(Ticket::class); // Pastikan relasi ini sesuai dengan hubungan antara UserBO dan Ticket
     }
+
+    // Di BoUser
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
+
 }
 
 

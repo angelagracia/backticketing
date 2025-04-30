@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'broadcast.auth' => \App\Http\Middleware\EnsureBroadcastAuthenticated::class,
-            
+            'check.guard' => \App\Http\Middleware\CheckGuard::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

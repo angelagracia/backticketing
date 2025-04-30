@@ -17,16 +17,12 @@
                 />
               </svg>
             </a>
+
             @php
-                $user = auth()->guard('bo')->user() ?? auth('portal')->user();
+                $user = auth('bo')->user() ?? auth('portal')->user();
             @endphp
-            
-            @if ($user)
-                <div class="my-3 text-green-100 font-bold text-lg tracking-wide">{{ $user->name }}</div>
-            @else
-                <div class="text-red-500">Tidak ada user login</div>
-            @endif
-        
+
+            <div class="my-3 text-green-100 font-bold text-lg tracking-wide">{{ $user->name }}</div>
             <!-- 3 dots -->
             <svg
               xmlns="http://www.w3.org/2000/svg"

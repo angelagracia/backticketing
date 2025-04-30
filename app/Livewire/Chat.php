@@ -17,8 +17,6 @@ class Chat extends Component
     public $ticket_id;
     public $sender_id;
     public $receiver_id;
-    public $sender_type;
-    public $currentUserName;    
     public $message = '';
     public $messages = [];
 
@@ -28,70 +26,70 @@ class Chat extends Component
     }
 
 
-    public function mount($ticket_id)
-    {
-        $this->ticket_id = $ticket_id;
-    
-        if (auth()->guard('bo')->check()) {
-            $user = auth()->guard('bo')->user();
-            $this->sender_id = $user->id;
-            $this->sender_type = UserBO::class;
-            $this->currentUserName = $user->name;
-        } elseif (auth()->guard('portal')->check()) {
-            $user = auth()->guard('portal')->user();
-            $this->sender_id = $user->id;
-            $this->sender_type = UserPortal::class;
-            $this->currentUserName = $user->name;
-        }
-        
-    
-        $this->receiver_id = $ticket_id;
-    
-        $messages = Message::where('ticket_id', $ticket_id)
-            ->with('sender:id,name', 'receiver:id,name')
-            ->get();
-    
-        foreach ($messages as $message) {
-            $this->appendChatMessage($message);
-        }
-    
-        $this->user = UserBO::find($ticket_id) ?? UserPortal::find($ticket_id);
+    public function mount($ticket_id, $user_id)
+{
+    if (auth('bo')->check()) {
+        $this->sender_id = auth('bo')->user()->id;
+    } elseif (auth('portal')->check()) {
+        $this->sender_id = auth('portal')->user()->id;
+    } else {
+        abort(403, 'Unauthorized');
     }
-    
 
+    $this->receiver_id = $user_id;  // Pastikan receiver_id diisi dengan benar
+    $this->ticket_id = $ticket_id;
+
+    // Ambil pesan sebelumnya berdasarkan sender_id dan receiver_id
+    $messages = Message::where(function ($query) {
+        $query->where('sender_id', $this->sender_id)
+              ->where('receiver_id', $this->receiver_id);
+    })->orWhere(function ($query) {
+        $query->where('sender_id', $this->receiver_id)
+              ->where('receiver_id', $this->sender_id);
+    })
+    ->with('sender:id,name', 'receiver:id,name')
+    ->get();
+
+    foreach ($messages as $message) {
+        $this->appendChatMessage($message);
+    }
+}
+
+
+    
 
     
 
     public function sendMessage(){
-        $receiver_type = $this->sender_type === UserBO::class ? UserPortal::class : UserBO::class;
-    
-        $chatMessage = Message::create([
-            'ticket_id' => $this->ticket_id,
-            'sender_id' => $this->sender_id,
-            'sender_type' => $this->sender_type,
-            'receiver_id' => $this->receiver_id,
-            'receiver_type' => $receiver_type,
-            'message' => $this->message,
-        ]);
-        
+        $chatMessage = new Message();
+        $chatMessage->sender_id = $this->sender_id;
+        $chatMessage->receiver_id = $this->receiver_id;
+        $chatMessage->ticket_id = $this->ticket_id;
+        $chatMessage->message = $this->message;
+        $chatMessage->save();
+
         $this->appendChatMessage($chatMessage);
         
         broadcast(new MessageSendEvent($chatMessage))->toOthers();
-    
-        $this->message = '';
-    }
-    
 
-    #[On('echo-private:chat-ticket.{ticket_id},MessageSendEvent')]
-    public function listenForMessage($event)
+        $this->message = '';
+
+    }
+
+    public function getListeners()
     {
+        return [
+            "echo-private:chat-channel.{$this->ticket_id},MessageSendEvent" => 'listenForMessage',
+        ];
+    }
+
+    public function listenForMessage($event){
         $chatMessage = Message::whereId($event['message']['id'])
             ->with('sender:id,name', 'receiver:id,name')
             ->first();
 
         $this->appendChatMessage($chatMessage);
     }
-
 
     public function appendChatMessage($message)
     {

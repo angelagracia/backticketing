@@ -41,6 +41,13 @@
           </div>
           <div class="card-body p-0">
             <div class="table-responsive">
+
+              @session('success')
+                  <div class="alert alert-success" role="alert"> 
+                      {{ $value }}
+                  </div>
+              @endsession
+
               <table id="peranTable" class="table table-striped mb-0">
                 <thead>
                   <tr>

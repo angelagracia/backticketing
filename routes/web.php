@@ -294,6 +294,8 @@ Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
                 //         return view('front.layouts.home.home');
                 //     })->name('home');
                 // });
+            
+
 Route::middleware('guest:portal')->group(function () {
     // Route::get('/login', function () {
     //     return redirect()->route('login.portal');
@@ -320,8 +322,8 @@ Route::middleware('guest:portal')->group(function () {
 
 Route::middleware('guest:bo')->group(function () {
     // Route::get('/login', function () {
-    //     return redirect()->route('login.bo');
-    // })->name('login');
+        //     return redirect()->route('login.bo');
+        // })->name('login');
     Route::get('/login/bo', [BoLoginController::class, 'showLoginForm'])->name('login.bo');
     Route::post('/login/bo', [BoLoginController::class, 'login']);
 });    
@@ -390,6 +392,11 @@ Route::middleware(['auth:portal'])->group(function () {
 //     return redirect()->route('login.portal');
 // })->name('login');
 
+// Untuk user BO (admin)
+
+// Untuk user Portal
+Route::get('/portal/login', [PortalLoginController::class, 'showLoginForm'])->name('login.portal');
+
         
 
 Route::middleware(['auth:bo'])->group(function () {
@@ -453,6 +460,12 @@ Route::middleware(['auth:bo'])->group(function () {
     Route::middleware(['auth:bo'])->group(function () {
         Route::get('/ticket/delete/{id}', [TicketController::class, 'delete'])->name('ticket.delete');
     });
+
+
+
+    Route::get('/chat/{ticket_id}', [TicketController::class, 'showChat']) // atau auth:portal, tergantung guard
+    ->name('chat.show');
+
 
     
 
@@ -576,6 +589,9 @@ Route::middleware(['auth:bo'])->group(function () {
             'id' => $id
         ]);
     })->name('chat');
+
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     
 
  
@@ -628,33 +644,30 @@ Route::middleware(['auth:bo'])->group(function () {
     });
 
 
-    Route::middleware(['auth:bo'])
+    Route::middleware(['auth:bo', 'permission:role-list'])
     ->group(function () {
         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
     });
 
-    Route::middleware(['auth:bo'])
-        ->group(function () {
-            Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
-        });
+Route::middleware(['auth:bo', 'permission:role-create'])
+    ->group(function () {
+        Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    });
+
+Route::middleware(['auth:bo', 'permission:role-edit'])
+    ->group(function () {
+        Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    });
+
+Route::middleware(['auth:bo', 'permission:role-delete'])
+    ->group(function () {
+        Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    });
 
 
-    Route::middleware(['auth:bo'])
-        ->group(function () {
-            Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-            Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
-        });
-
-    Route::middleware(['auth:bo'])
-        ->group(function () {
-            Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-            Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
-        });
-
-    Route::middleware(['auth:bo'])
-        ->group(function () {
-            Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
-        });
 
 
     // Untuk menampilkan daftar kategori

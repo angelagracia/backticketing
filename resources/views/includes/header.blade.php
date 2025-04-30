@@ -39,9 +39,11 @@
           
             <div class="dropdown-menu dropdown-menu-right">
               {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-              <a href="features-profile.html" class="dropdown-item has-icon">
+              <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
-              </a>
+            </a>
+            
+            
               <a href="features-activities.html" class="dropdown-item has-icon">
                 <i class="fas fa-bolt"></i> Akun
               </a>

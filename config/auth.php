@@ -6,7 +6,7 @@ return [
 
     'defaults' => [
         'guard' => 'bo',
-        'passwords' => 'users',
+        'passwords' => 'user_bo',
     ],
 
    'guards' => [
@@ -19,8 +19,8 @@ return [
         'provider' => 'user_portals',
     ],
     'bo' => [
-        'driver' => 'session',
-        'provider' => 'user_bo',
+        'driver'   => 'session',
+        'provider' => 'users',      // ganti dari 'user_bo'
     ],
 ],
 
@@ -45,19 +45,26 @@ return [
         'driver' => 'eloquent',
         'model' => App\Models\UserPortal::class,
     ],
-    'user_bo' => [
+    'users' => [
         'driver' => 'eloquent',
-        'model' => App\Models\UserBo::class,
+        'model'  => App\Models\User::class,  // model default
     ],
 ],
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'user_bo' => [
+            'provider' => 'user_bo',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'user_portals' => [
+            'provider' => 'user_portals',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
     ],
+
 
     'password_timeout' => 10800,
 ];

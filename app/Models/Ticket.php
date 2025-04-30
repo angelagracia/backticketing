@@ -58,6 +58,11 @@ class Ticket extends Model
     {
         return $this->hasOne(TicketConfirmation::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
     
 
     public function status()
@@ -74,17 +79,29 @@ class Ticket extends Model
         return $this->hasMany(TicketHistory::class);
     }
     protected static function booted()
+    {
+        static::updated(function ($ticket) {
+            if ($ticket->isDirty('status_id')) {
+                TicketHistory::create([
+                    'ticket_id' => $ticket->id,
+                    'status_id' => $ticket->status_id,
+                    'description' => 'Status otomatis tercatat',
+                ]);
+            }
+        });
+    }
+
+
+    public function user_portal()
 {
-    static::updated(function ($ticket) {
-        if ($ticket->isDirty('status_id')) {
-            TicketHistory::create([
-                'ticket_id' => $ticket->id,
-                'status_id' => $ticket->status_id,
-                'description' => 'Status otomatis tercatat',
-            ]);
-        }
-    });
+    return $this->belongsTo(UserPortal::class, 'user_portal_id');
 }
+
+public function admin()
+{
+    return $this->belongsTo(UserBO::class, 'admin_id');
+}
+
 
 
 

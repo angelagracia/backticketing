@@ -1,3 +1,5 @@
+
+
 <?php
 
 // namespace App\Http\Controllers;
@@ -44,14 +46,16 @@
 
 
 
-namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Events\MessageSentEvent;
 
-use Illuminate\Support\Facades\Auth;
-use App\Events\ChatMessageSent;
 use App\Models\Message;
+use Illuminate\Http\Request;
+
+use App\Events\ChatMessageSent;
+use App\Events\MessageSendEvent;
+use App\Events\MessageSentEvent;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -83,7 +87,7 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
 {
-    $user = auth()->guard('bo')->check() ? auth()->guard('bo')->user() : auth()->guard('portal')->user();
+    $user = auth('bo')->check() ? auth('bo')->user() : auth('portal')->user();
  // atau 'portal' tergantung login
 
     $request->validate([
@@ -99,7 +103,7 @@ class ChatController extends Controller
         'message' => $request->message,
     ]);
 
-    broadcast(new MessageSentEvent($message))->toOthers();
+    broadcast(new MessageSendEvent($message))->toOthers();
 
     return response()->json(['message' => $message]);
 }

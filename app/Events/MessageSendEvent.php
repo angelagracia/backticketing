@@ -17,37 +17,35 @@ class MessageSendEvent implements ShouldBroadcastNow
 
     public $message;
 
-    /**
-     * Create a new event instance.
-     */
     public function __construct($message)
     {
         $this->message = $message;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('chat-ticket.' . $this->message->ticket_id);
-    }
-
-    public function broadcastWith()
+    public function broadcastOn(): array
     {
         return [
-            'message' => [
-                'id' => $this->message->id,
-                'message' => $this->message->message,
-                'ticket_id' => $this->message->ticket_id,
-                'sender_id' => $this->message->sender_id,
-                'sender_type' => $this->message->sender_type,
-                'receiver_id' => $this->message->receiver_id,
-                'receiver_type' => $this->message->receiver_type,
-                'created_at' => $this->message->created_at->toDateTimeString(),
-            ]
+            new PrivateChannel('chat-channel.' . $this->message->ticket_id),
+        ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'message.sent';
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'id' => $this->message->id,
+            'ticket_id' => $this->message->ticket_id,
+            'sender_id' => $this->message->sender_id,
+            'receiver_id' => $this->message->receiver_id,
+            'sender_type' => $this->message->sender_type,
+            'receiver_type' => $this->message->receiver_type,
+            'content' => $this->message->content,
+            'created_at' => $this->message->created_at->toDateTimeString(),
         ];
     }
 }
+
