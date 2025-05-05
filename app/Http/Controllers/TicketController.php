@@ -334,10 +334,26 @@ class TicketController extends Controller
 }
 
 
- public function chatUser($userId)
-    {
-        return view('user-chat', compact('userId'));
+public function showChat($ticket_id)
+{
+    $ticket = Ticket::findOrFail($ticket_id);
+
+    if (auth('bo')->check()) {
+        $user_id = $ticket->user_portal_id; // <-- user portal id
+    } elseif (auth('portal')->check()) {
+        $user_id = $ticket->admin_id; // <-- admin id
+    } else {
+        abort(403);
     }
+
+    return view('user-chat', [
+        'ticket_id' => $ticket_id,
+        'user_id' => $user_id,
+    ]);
+}
+
+
+
     
 
     

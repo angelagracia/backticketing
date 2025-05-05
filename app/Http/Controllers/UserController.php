@@ -1,108 +1,5 @@
 <?php
 
-// namespace App\Http\Controllers;
-
-// use App\Models\Menu;
-// use App\Models\Role;
-// use App\Models\User;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Hash;
-
-// class UserController extends Controller
-// {
-//     public function index(Request $request)
-// {
-//     // Ambil semua user dengan relasi roles
-//     $master_users = User::with('roles')->get(); 
-//     // dd($master_users);
-
-//     // Ambil semua role dari tabel roles
-//     $master_roles = Role::all(); 
-
-//     // Ambil semua menu dari tabel menus
-//     $menu_master = Menu::all(); 
-
-//     return view('back.user.index', compact('master_users', 'menu_master', ));
-// }
-
-//     public function add()
-//     {
-//         return view('back.user.add');
-//     }
-
-//     public function prosesAdd(Request $request)
-//     {
-//         // Validate input data
-//         $validated = $request->validate([
-//             'name' => 'required|string|max:255',
-//             'email' => 'required|email|unique:users,email',
-//             'password' => 'required|string|min:8|confirmed', // This line checks if password matches password_confirmation
-//         ]);
-
-//         // Create the user
-//         $user = new User();
-//         $user->name = $request->name;
-//         $user->email = $request->email;
-//         $user->password = Hash::make($request->password); // Hash the password
-//         $user->save();
-
-//         return redirect()->route('users.index')->with('success', 'User successfully added!');
-//     }
-
-//     public function edit($id)
-//     {
-//         $user = User::findOrFail($id);
-//         return view('back.user.formEdit', compact('user'));
-//     }
-
-//     public function prosesEdit(Request $request)
-//     {
-
-//     // Validasi input
-//     $validated = $request->validate([
-//         'name' => 'required|string|max:255',
-//         'email' => 'required|email|unique:users,email,' . $request->id, // Cek unik kecuali user saat ini
-//         'password' => 'nullable|string|min:8|confirmed', // Password opsional, hanya update jika diisi
-//     ]);
-
-//     // Cari user berdasarkan ID
-//     $user = User::findOrFail($request->id);
-
-//     // Update data user
-//     $user->name = $request->name;
-//     $user->email = $request->email;
-
-//     // Jika password diisi, update password
-//     if (!empty($request->password)) {
-//         $user->password = Hash::make($request->password);
-//     }
-
-//     // Simpan perubahan
-//     $user->save();
-
-//     // Redirect kembali dengan pesan sukses
-//     return redirect()->route('users.index')->with('success', 'User berhasil diperbarui!');
-
-//     }
-
-//     public function delete($id)
-//     {
-
-//     // Cari user berdasarkan ID
-//     $user = User::findOrFail($id);
-
-//     // Hapus user dari database
-//     $user->delete();
-
-//     // Redirect kembali dengan pesan sukses
-//     return redirect()->route('users.index')->with('success', 'User berhasil dihapus!');
-//     }
-
-// }
-
-
-
-
 namespace App\Http\Controllers;
     
 use Illuminate\Support\Facades\DB;
@@ -128,14 +25,13 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $data = User::latest()->paginate(5);
+        $data = User::with('roles')->paginate(5);
         // $users = User::whereNot('id', Auth::user()->id)->withCount(['unreadMessages'])->get();
         $menu_master = Menu::whereNull('parent_code')
         ->with('subMenu') // pastikan relasi subMenu ada di model Menu
         ->get();
 
-        return view('users.index',compact('data','menu_master'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('users.index',compact('data','menu_master','data'));
     }
 
     public function chatUser($id)

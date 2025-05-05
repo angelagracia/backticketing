@@ -15,7 +15,7 @@ class Ticket extends Model
     // // protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description'];
     // protected $fillable = ['name','title'];
     protected $fillable = [
-        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description','user_portal_id', 'assigned_admin_id'
+        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description', 'user_id', 'user_portal_id', 'ticket_number', 'telepon',
     ];    
     
     protected $guarded = ['id']; 
@@ -58,6 +58,11 @@ class Ticket extends Model
     {
         return $this->hasOne(TicketConfirmation::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
     
 
     public function status()
@@ -69,36 +74,26 @@ class Ticket extends Model
         return $this->hasMany(TicketAttachment::class);
     }
 
-    // Ticket.php
-    public function userPortal()
-    {
-        return $this->belongsTo(UserPortal::class, 'user_portal_id');
-    }
-
-    public function assignedAdmin()
-    {
-        return $this->belongsTo(UserBo::class, 'assigned_admin_id');
-    }
-
-
     public function histories()
     {
         return $this->hasMany(TicketHistory::class);
     }
     protected static function booted()
-{
-    static::updated(function ($ticket) {
-        if ($ticket->isDirty('status_id')) {
-            TicketHistory::create([
-                'ticket_id' => $ticket->id,
-                'status_id' => $ticket->status_id,
-                'description' => 'Status otomatis tercatat',
-            ]);
-        }
-    });
-}
+    {
+        static::updated(function ($ticket) {
+            if ($ticket->isDirty('status_id')) {
+                TicketHistory::create([
+                    'ticket_id' => $ticket->id,
+                    'status_id' => $ticket->status_id,
+                    'description' => 'Status otomatis tercatat',
+                ]);
+            }
+        });
+    }
 
 
-
-
+    public function user_portal()
+    {
+        return $this->belongsTo(UserPortal::class, 'user_portal_id');
+    }
 }

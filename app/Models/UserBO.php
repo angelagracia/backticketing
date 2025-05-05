@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class UserBo extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
+    protected $guard_name = 'bo';
     protected $table = 'users';
 
     protected $fillable = [
@@ -20,5 +21,24 @@ class UserBo extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class); // Pastikan relasi ini sesuai dengan hubungan antara UserBO dan Ticket
+    }
+
+    // Di BoUser
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
+
 }
+
+
 
