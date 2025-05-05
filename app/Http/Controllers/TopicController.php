@@ -39,9 +39,9 @@ class TopicController extends Controller
 
         try {
             $topic->save();
-            return redirect()->route('kategori.index')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('topic.index')->with('success', 'Data berhasil ditambahkan');
         } catch (\Exception $e) {
-            return redirect()->route('kategori.index')->with('error', 'Data gagal ditambahkan');
+            return redirect()->route('topic.index')->with('error', 'Data gagal ditambahkan');
         } 
     }
 

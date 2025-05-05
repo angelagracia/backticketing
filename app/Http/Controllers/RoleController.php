@@ -61,31 +61,18 @@ use Illuminate\Http\RedirectResponse;
     
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // function __construct()
-    // {
-    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-    //      $this->middleware('permission:role-create', ['only' => ['create','store']]);
-    //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    // }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-create', ['only' => ['create','store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request): View
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        $menu_master = Menu::whereNull('parent_code')
-        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
-        ->get();
-        return view('roles.index',compact('roles','menu_master'))
+        return view('roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
@@ -130,14 +117,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): View
+
+     public function show($id): View
     {
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
+
         $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
             ->where("role_has_permissions.role_id",$id)
             ->get();
+        $menu_master = Menu::whereNull('parent_code')
+        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
+        ->get();
     
-        return view('roles.show',compact('role','rolePermissions'));
+        return view('roles.show',compact('role','rolePermissions','menu_master'));
     }
     
     /**
@@ -146,29 +138,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    // public function edit($id): View
-    // {
-    //     $role = Role::find($id);
-    //     $permission = Permission::get();
-    
-    //     // Ambil permission yang dimiliki role
-    //     $rolePermissions = DB::table("role_has_permissions")
-    //         ->where("role_has_permissions.role_id", $id)
-    //         ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-    //         ->all();
-    
-    //     // Ambil menu dan submenu dengan relasi permission
-    //     $menu = Menu::with(['permissions', 'children.permissions'])
-    //         ->whereNull('parent_code')
-    //         ->orderBy('sequence')
-    //         ->get();
-    
-    //     return view('roles.edit', compact('role', 'permission', 'rolePermissions', 'menu'));
-    // }
-
-
-    public function edit($id): View
+       public function edit($id): View
 {
     $role = Role::findOrFail($id);
     $permission = Permission::get();
@@ -186,9 +156,12 @@ class RoleController extends Controller
     ->orderBy('sequence')
     ->get();
 
-    return view('roles.edit', compact('role', 'permission', 'rolePermissions', 'menu'));
-}
+    $menu_master = Menu::whereNull('parent_code')
+        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
+        ->get();
 
+    return view('roles.edit', compact('role', 'permission', 'rolePermissions', 'menu', 'menu_master'));
+}
     
     /**
      * Update the specified resource in storage.

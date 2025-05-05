@@ -34,4 +34,16 @@ class UserPortal extends Authenticatable
     {
         return $this->hasMany(Ticket::class,'id');
     }
+
+    // Di PortalUser
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
+
 }

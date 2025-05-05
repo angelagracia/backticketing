@@ -23,7 +23,9 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
+                            @can('unit-kerja-create')
                             <button type="submit"class="btn btn-primary">Tambah</button>
+                            @endcan
                             <a href="{{ route('unit_kerja.index')}}" class="btn btn-secondary"> Kembali</a>
                         </div>
                     </form>
