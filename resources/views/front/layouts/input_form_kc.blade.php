@@ -80,7 +80,7 @@
                 <span style="color: red;">*</span> Semua informasi adalah benar dan bebas dari kesalahan.
             </div>
             <div class="form-container-inputform">
-                <form name="input_kc" action="{{ route('prosesSimpan') }}" method="POST" enctype="multipart/form-data">
+            <form id="submissionForm" name="input_kc" action="{{ route('prosesSimpan') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="input-box">
@@ -286,6 +286,38 @@
                     });
 
                </script> --}}
+
+               <script>
+                    document.getElementById("submissionForm").addEventListener("submit", function(event) {
+                        event.preventDefault(); // Cegah submit form langsung
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Pastikan Data Yang Di Inputkan\nSudah Benar Dan Lengkap',
+                            showCancelButton: true,
+                            confirmButtonText: 'YA',
+                            cancelButtonText: 'BATAL',
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Tampilkan notifikasi sukses
+                                Swal.fire({
+                                    title: "Berhasil Dikirim",
+                                    text: "Data Berhasil Dikirim",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+
+                                // Submit form setelah delay
+                                setTimeout(() => {
+                                    document.getElementById("submissionForm").submit();
+                                }, 2000);
+                            }
+                        });
+                    });
+                </script>
 
     <!-- Login Modal -->
     {{-- <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">

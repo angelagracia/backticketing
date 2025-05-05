@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Models\LoginRequest; 
+use App\Models\LoginRequest;
 
 class FormController extends Controller
 {
-    public function prosesSimpanLogin(Request $request)
+    public function prosesSimpan(Request $request)
     {
-        // Validasi data input
         $request->validate([
             'nama' => 'required',
             'judul' => 'required',
@@ -21,16 +20,27 @@ class FormController extends Controller
             'unit' => 'required',
             'category' => 'required',
             'sub_category' => 'required',
-            'lampiran' => 'nullable|file|mimes:png,jpg,jpeg,pdf|max:2048',
+            'lampiran.*' => 'nullable|file|mimes:png,jpg,jpeg,pdf|max:2048',
         ]);
 
-        // Simpan data ke database 
-        LoginRequest::create($request->all());
+        // Handle upload file jika ada
+        $filePaths = [];
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->file('lampiran') as $file) {
+                $filePaths[] = $file->store('lampiran', 'public');
+            }
+        }
 
-        // Set flash session agar alert muncul di tampilan
-        Session::flash('success', 'Data Berhasil Dikirim!');
+        // Simpan ke database
+        $formData = $request->except('lampiran');
+        $formData['lampiran'] = json_encode($filePaths);
+        LoginRequest::create($formData);
 
-        // Redirect kembali ke halaman form
-        return redirect()->back();
+        // Flash sukses
+        Session::flash('success', 'Data berhasil dikirim!');
+
+        // Redirect ke halaman detail tiket kc
+        return redirect()->route('detail_ticket_kc')->with('success', 'Data berhasil dikirim!');
+
     }
 }
