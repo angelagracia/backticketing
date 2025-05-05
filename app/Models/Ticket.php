@@ -15,7 +15,7 @@ class Ticket extends Model
     // // protected $fillable = ['ticket_number','name','email','telepon','status_id','unit_id','unit_kerja_id','topic_id','type_id','title','req_description'];
     // protected $fillable = ['name','title'];
     protected $fillable = [
-        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description'
+        'name', 'title', 'email', 'unit_id', 'unit_kerja_id', 'topic_id', 'type_id', 'status_id', 'req_description', 'user_id', 'user_portal_id', 'ticket_number', 'telepon',
     ];    
     
     protected $guarded = ['id']; 
@@ -93,17 +93,7 @@ class Ticket extends Model
 
 
     public function user_portal()
-{
-    return $this->belongsTo(UserPortal::class, 'user_portal_id');
-}
-
-public function admin()
-{
-    return $this->belongsTo(UserBO::class, 'admin_id');
-}
-
-
-
-
-
+    {
+        return $this->belongsTo(UserPortal::class, 'user_portal_id');
+    }
 }

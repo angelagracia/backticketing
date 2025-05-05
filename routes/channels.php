@@ -14,6 +14,11 @@ Broadcast::channel('chat-channel.{ticketId}', function ($user, $ticketId) {
 });
 
 
+Broadcast::channel('chat.{ticketId}', function ($user, $ticketId) {
+    return true;
+});
+
+
 
 
 

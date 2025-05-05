@@ -2,50 +2,33 @@
 
 namespace App\Events;
 
+use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageSendEvent implements ShouldBroadcastNow
+
+class MessageSendEvent implements ShouldBroadcast
+
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $ticket_id;
     public $message;
+    public $sender_id;
 
-    public function __construct($message)
+    public function __construct($ticket_id, $message, $sender_id)
     {
+        $this->ticket_id = $ticket_id;
         $this->message = $message;
+        $this->sender_id = $sender_id;
     }
 
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('chat-channel.' . $this->message->ticket_id),
-        ];
-    }
-
-    public function broadcastAs(): string
-    {
-        return 'message.sent';
-    }
-
-    public function broadcastWith(): array
-    {
-        return [
-            'id' => $this->message->id,
-            'ticket_id' => $this->message->ticket_id,
-            'sender_id' => $this->message->sender_id,
-            'receiver_id' => $this->message->receiver_id,
-            'sender_type' => $this->message->sender_type,
-            'receiver_type' => $this->message->receiver_type,
-            'content' => $this->message->content,
-            'created_at' => $this->message->created_at->toDateTimeString(),
-        ];
+        return new Channel('ticket.' . $this->ticket_id);
     }
 }
-

@@ -39,13 +39,17 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->description }}</td>
                             <td>
+                              @can('status-edit')
                                 <a href="{{ route('status.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                @endcan
+                                @can('status-delete')
                                 <a href="{{ route('status.delete',$item->id) }}" 
                                   class="btn btn-danger btn-action mr-1" 
                                   data-toggle="tooltip" 
                                   title="Delete"
                                   onclick="return confirm('Are you sure? This action cannot be undone.')">
                                   <i class="fas fa-trash"></i>
+                                @endcan
                                 <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>

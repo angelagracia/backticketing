@@ -2,107 +2,79 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
-use App\Models\UserBO;
+use App\Models\Ticket;
 use App\Models\Message;
 use Livewire\Component;
-use App\Models\UserPortal;
-use Livewire\Attributes\On;
+use Livewire\WithPagination;
 use App\Events\MessageSendEvent;
+use Illuminate\Support\Facades\Auth;
 
 class Chat extends Component
 {
+    use WithPagination;
 
-    public $user;
     public $ticket_id;
+    public $message;
     public $sender_id;
     public $receiver_id;
-    public $message = '';
-    public $messages = [];
+    public $sender_type;
 
-    public function render()
+    protected $listeners = ['messageReceived' => 'loadMessages'];
+
+    public function mount($ticket_id)
     {
-        return view('livewire.chat');
+        $this->ticket_id = $ticket_id;
+        $ticket = Ticket::findOrFail($ticket_id);
+    
+        if (auth('bo')->check()) {
+            // Admin login → pengirim = admin, penerima = user portal
+            $this->sender_id = auth('bo')->id();
+            $this->receiver_id = $ticket->user_portal_id;
+        } elseif (auth('portal')->check()) {
+            // User portal login → pengirim = user portal, penerima = admin
+            $this->sender_id = auth('portal')->id();
+            $this->receiver_id = $ticket->user_id;
+        }
     }
-
-
-    public function mount($ticket_id, $user_id)
-{
-    if (auth('bo')->check()) {
-        $this->sender_id = auth('bo')->user()->id;
-    } elseif (auth('portal')->check()) {
-        $this->sender_id = auth('portal')->user()->id;
-    } else {
-        abort(403, 'Unauthorized');
-    }
-
-    $this->receiver_id = $user_id;  // Pastikan receiver_id diisi dengan benar
-    $this->ticket_id = $ticket_id;
-
-    // Ambil pesan sebelumnya berdasarkan sender_id dan receiver_id
-    $messages = Message::where(function ($query) {
-        $query->where('sender_id', $this->sender_id)
-              ->where('receiver_id', $this->receiver_id);
-    })->orWhere(function ($query) {
-        $query->where('sender_id', $this->receiver_id)
-              ->where('receiver_id', $this->sender_id);
-    })
-    ->with('sender:id,name', 'receiver:id,name')
-    ->get();
-
-    foreach ($messages as $message) {
-        $this->appendChatMessage($message);
-    }
-}
-
-
     
 
-    
 
-    public function sendMessage(){
-        $chatMessage = new Message();
-        $chatMessage->sender_id = $this->sender_id;
-        $chatMessage->receiver_id = $this->receiver_id;
-        $chatMessage->ticket_id = $this->ticket_id;
-        $chatMessage->message = $this->message;
-        $chatMessage->save();
+    public function loadMessages()
+    {
+        $this->message = Message::where('ticket_id', $this->ticket_id)
+        ->orderBy('created_at', 'asc')
+        ->get();
+    }
 
-        $this->appendChatMessage($chatMessage);
-        
-        broadcast(new MessageSendEvent($chatMessage))->toOthers();
+    public function sendMessage()
+    {
+        // Validasi pesan
+        $this->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $senderType = auth('bo')->check() ? 'bo' : 'portal';
+        $body = $this->message;
+
+        // Kirim pesan
+        Message::create([
+            'ticket_id' => $this->ticket_id,
+            'sender_id' => $this->sender_id,
+            'receiver_id' => $this->receiver_id,
+            'message' => $this->message,
+            'sender_type' => $senderType,
+        ]);
 
         $this->message = '';
 
+        broadcast(new MessageSendEvent($this->ticket_id, $body, $this->sender_id))->toOthers();        
+        $this->emit('messageReceived');
     }
 
-    public function getListeners()
+    public function render()
     {
-        return [
-            "echo-private:chat-channel.{$this->ticket_id},MessageSendEvent" => 'listenForMessage',
-        ];
+        return view('livewire.chat', [
+            'messages' => Message::where('ticket_id', $this->ticket_id)->orderBy('created_at')->get(),
+        ]);
     }
-
-    public function listenForMessage($event){
-        $chatMessage = Message::whereId($event['message']['id'])
-            ->with('sender:id,name', 'receiver:id,name')
-            ->first();
-
-        $this->appendChatMessage($chatMessage);
-    }
-
-    public function appendChatMessage($message)
-    {
-        $sender = $message->sender ?? UserBO::find($message->sender_id) ?? UserPortal::find($message->sender_id);
-        $receiver = $message->receiver ?? UserBO::find($message->receiver_id) ?? UserPortal::find($message->receiver_id);
-    
-        $this->messages[] = [
-            'id' => $message->id,
-            'message' => $message->message,
-            'sender' => $sender?->name,
-            'receiver' => $receiver?->name,
-        ];
-    }
-    
-    
 }

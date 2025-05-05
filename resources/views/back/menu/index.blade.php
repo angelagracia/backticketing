@@ -12,7 +12,9 @@
                     <div class="card-header">
                         <h4>Status Ticket</h4>
                         <div class="card-header-action">
+                            @can('menu-create')
                         <a href="{{ route('menu.add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                        @endcan
                     </div>
                 </div>
 
@@ -47,13 +49,17 @@
                                         {{ $item->status }}
                                     </td>
                                     <td>
+                                        @can('menu-edit')
                                         <a href="{{ route('menu.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                        @endcan
+                                        @can('menu-delete')
                                         <a href="{{ route('menu.delete',$item->id) }}" 
                                         class="btn btn-danger btn-action mr-1" 
                                         data-toggle="tooltip" 
                                         title="Delete"
                                         onclick="return confirm('Are you sure? This action cannot be undone.')">
                                         <i class="fas fa-trash"></i>
+                                        @endcan
                                         <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                                     </td>
                                 </tr>

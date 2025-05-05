@@ -36,7 +36,9 @@
           <div class="card-header">
             <h4>Kategori Peran</h4>
             <div class="card-header-action">
+              @can('peran-create')
               <a href="{{ route('peran.add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+              @endcan
             </div>
           </div>
           <div class="card-body p-0">
@@ -62,13 +64,17 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
                             <td>
+                              @can('peran-edit')
                                 <a href="{{ route('peran.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                @endcan
+                                @can('peran-delete')
                                 <a href="{{ route('peran.delete',$item->id) }}" 
                                   class="btn btn-danger btn-action mr-1" 
                                   data-toggle="tooltip" 
                                   title="Delete"
                                   onclick="return confirm('Are you sure? This action cannot be undone.')">
                                   <i class="fas fa-trash"></i>
+                                @endcan
                                 <a class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>

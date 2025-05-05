@@ -13,13 +13,20 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id');
-            $table->foreignId('sender_id');
-            $table->foreignId('receiver_id');
+
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+
+            $table->unsignedBigInteger('sender_id');
+            $table->unsignedBigInteger('receiver_id');
+            $table->string('sender_type');   // 'admin' atau 'user'
+            $table->string('receiver_type'); // 'admin' atau 'user'
+
             $table->text('message');
-            $table->string('sender_type');
-            $table->string('receiver_type');
+
             $table->timestamps();
+
+            // Index untuk performa
+            $table->index(['ticket_id', 'sender_id', 'receiver_id']);
         });
     }
 

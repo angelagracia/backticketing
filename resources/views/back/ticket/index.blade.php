@@ -15,8 +15,8 @@
                         @can('ticket-create')
                             <a href="{{ route('ticket.addData') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
                         @endcan
+                    </div>
                 </div>
-            </div>
             {{-- <div class="pull-right">
                 @can('role-create')
                     <a class="btn btn-success btn-sm mb-2" href="{{ route('roles.create') }}"><i class="fa fa-plus"></i> Create New Role</a>
@@ -58,7 +58,7 @@
                                     {{-- @can('role-edit')
                                         <a class="btn btn-primary btn-sm" href="{{ route('roles.edit',$role->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                                     @endcan --}}
-                                    @can('role-edit')
+                                    @can('ticket-edit')
                                         <a href="{{ route('ticket.edit',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                     @endcan
                                     @can('ticket-delete')

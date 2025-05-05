@@ -6,7 +6,9 @@
             <h2>Users Management</h2>
         </div>
             <div class="pull-right">
+                @can('user-create')
                 <a class="btn btn-success mb-2" href="{{ route('users.create') }}"><i class="fa fa-plus"></i> Create New User</a>
+                @endcan
             </div>
     
     </div>
@@ -38,13 +40,17 @@
         </td>
         <td>
              <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a>
+             @can('user-edit')
              <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-              <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
+              @endcan
+                @can('user-delete')
+             <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
                   @csrf
                   @method('DELETE')
 
                   <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
               </form>
+                @endcan
         </td>
     </tr>
  @endforeach

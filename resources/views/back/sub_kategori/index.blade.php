@@ -11,7 +11,9 @@
           <div class="card-header">
             <h4>Kategori Type</h4>
             <div class="card-header-action">
+              @can('sub-kategori-create')
               <a href="{{ route('sub_kategori.tambah') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+              @endcan
             </div>
           </div>
           <div class="card-body p-0">
@@ -39,7 +41,10 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->topic->name }}</td>
                             <td>
+                                @can('sub-kategori-edit')
                                 <a href="{{ route('sub_kategori.ubah',$item->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                @endcan
+                                @can('sub-kategori-delete')
                                 <a href="" 
                                   class="btn btn-danger btn-action mr-1" 
                                   data-toggle="tooltip" 
@@ -47,6 +52,7 @@
                                   onclick="return confirm('Are you sure? This action cannot be undone.')">
                                   <i class="fas fa-trash"></i>
                                </a>
+                                @endcan
                                 <a href="{{ route('sub_kategori.detail',$item->id) }}" class="btn btn-info btn-action mr-1" data-toggle="tooltip" title="Detail"><i class=" fas fa-eye"></i></a>
                             </td>
                         </tr>
