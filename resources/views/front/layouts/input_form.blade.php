@@ -201,7 +201,7 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button type="submit" class="btn btn-primary" id="swal-2">Kirim</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -416,25 +416,30 @@
 
                     </script>
 
-                    @if (session('success'))
-                        <script>
-                            Swal.fire({
-                                title: 'Data Berhasil Dikirim!',
-                                text: 'Anda akan dialihkan dalam beberapa detik...',
-                                icon: 'success',
-                                timer: 3000,
-                                showConfirmButton: false,
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                timerProgressBar: true
-                            });
+            <script>
+                document.getElementById("submitBtn").addEventListener("click", function(event) {
+                    event.preventDefault(); // Mencegah form langsung terkirim
 
-                            setTimeout(() => {
-                                window.location.href = "{{ route('data_ticket_login') }}"; // Ganti ke route tujuan
-                            }, 3000);
-                        </script>
-                    @endif
+                    // Validasi jika perlu dilakukan di sini...
+
+                    Swal.fire({
+                        title: 'Data Berhasil Dikirim!',
+                        text: 'Anda akan dialihkan dalam beberapa detik...',
+                        icon: 'success',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        timerProgressBar: true
+                    });
+
+                    // Setelah alert selesai, kirimkan form
+                    setTimeout(() => {
+                        document.forms["input_form"].submit();
+                    }, 3000);
+                });
+            </script>
     
 
                 

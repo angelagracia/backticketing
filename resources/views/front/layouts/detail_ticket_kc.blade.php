@@ -92,13 +92,13 @@
                             <p class=" fw-bold colon">:</p>
                             <p class="text-value mb-0">
                                 {{ $ticket->name }} <br>
-                                <span class="text-muted">{{ $ticket->unit->name }}</span>
+                                <span class="text-muted">{{ $ticket->unit ? $ticket->unit->name : '-' }}</span>
                             </p>
                         </div>
                         <div class="d-flex align-items-center mb-2 tiket-desc">
                             <p class="fw-bold text-start text-label">Kategori</p>
                             <p class="fw-bold colon">:</p>
-                            <p class="text-value">{{ $ticket->topic->name }}</p>
+                            <p class="text-value">{{ $ticket->topic ? $ticket->topic->name : '-' }}</p>
                         </div>
                     </div>
                     <div class="col-md-2"></div>

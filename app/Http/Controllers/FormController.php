@@ -31,16 +31,19 @@ class FormController extends Controller
             }
         }
 
-        // Simpan ke database
+        // Simpan ke database dan simpan hasilnya ke variabel $ticket
         $formData = $request->except('lampiran');
         $formData['lampiran'] = json_encode($filePaths);
-        LoginRequest::create($formData);
-
-        // Flash sukses
-        Session::flash('success', 'Data berhasil dikirim!');
+        $ticket = LoginRequest::create($formData);
 
         // Redirect ke halaman detail tiket kc
-        return redirect()->route('detail_ticket_kc')->with('success', 'Data berhasil dikirim!');
-
+        return redirect()->route('detail_ticket_kc', ['id' => $ticket->id]);
     }
+
+    public function detail_ticket_kc($id)
+    {
+        $ticket = \App\Models\LoginRequest::with(['unit', 'topic', 'subCategory', 'status'])->findOrFail($id);
+        return view('front.layouts.detail_ticket_kc', compact('ticket'));
+    }
+    
 }

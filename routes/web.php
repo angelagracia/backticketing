@@ -54,7 +54,8 @@ Route::get('/', [FrontendController::class, 'index'])->name('index');
 Route::get('/kirimcepat', [FrontendController::class, 'kirimcepat'])->name('kirimcepat');
 Route::get('/input_form_kc', [FrontendController::class, 'input_form_kc'])->name('input_form_kc');
 Route::post('/kirimcepat', [FormController::class, 'prosesSimpan'])->name('prosesSimpan');
-Route::get('/detail_ticket_kc', [FormController::class, 'detail_ticket_kc'])->name('detail_ticket_kc');
+Route::get('/detail_ticket_kc/{id}', [FormController::class, 'detail_ticket_kc'])->name('detail_ticket_kc');
+
 
 // Route::get('/cari-ticket', [FrontendController::class, 'searchTicket'])->name('searchTicket');
 // Route::get('/cari-ticket', [FrontendController::class, 'searchTicketLogin'])->name('searchTicketLogin');
