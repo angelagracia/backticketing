@@ -228,9 +228,12 @@
                         </div>
                     </div>
                 </div>
-
-                
-                <a href="#"><button class="btn-close-ticket mt-4" id="closeTicket">Close Ticket</button></a>
+                @if(auth('portal')->id() === $ticket->user_id && in_array($ticket->status_id, [1, 2]))
+                    <form action="{{ route('ticket.close', $ticket->id) }}" method="POST">
+                        @csrf 
+                        <button type="button" class="btn-close-ticket mt-4" id="closeTicket">Close Ticket</button>
+                    </form>
+                @endif
             </div>
         </div>
 

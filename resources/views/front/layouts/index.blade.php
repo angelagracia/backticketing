@@ -45,7 +45,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
+                            <a class="navbar-brand" href="{{ route('index') }}">
                                 <img src="{{ asset('front/assets/img/logo/logo_new.svg') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -107,7 +107,7 @@
                                             <input type="text" name="ticket_number" id="ticket_number" placeholder="Cari Nomor Ticket" required>
                                             <button type="submit"><i class="lni lni-search-alt"></i></button>
                                         </form> 
-                                                                               {{-- {{ route('searchTicket') }} --}}
+                                        {{-- {{ route('searchTicket') }} --}}
                                     </div>
                                 </div>
                             </div>
