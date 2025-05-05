@@ -105,6 +105,9 @@ Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'v
 
 
 
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
  Route::post('/login', [AuthController::class, 'login'])->name('login');
 
  Route::get('/login', function () {
@@ -112,8 +115,9 @@ Route::get('/home', [FrontendController::class, 'home'])->middleware(['auth', 'v
  })->name('login');
 
 
-
-
+Route::get('/login', function () {
+    return redirect('/login/portal'); // Atau '/login/bo' sesuai default kamu
+})->name('login');
 
 
 
@@ -746,12 +750,16 @@ Route::middleware(['auth:bo', 'permission:role-delete'])
     // Route::get('chat/{id}', [TicketController::class, 'chatUser'])->name('chat');
 
     Route::get('/home/detail_ticket', [FrontendController::class, 'detail_ticket'])
-    ->name('detail_ticket')
-    ->middleware(['auth:portal', 'verified']);
-    
+        ->name('detail_ticket')
+        ->middleware(['auth:portal', 'verified']);
+        
+    // Close Ticket dari detail ticket 
+    Route::post('/home/detail_ticket/close/{id}', [FrontendController::class, 'close_ticket'])
+        ->name('ticket.close')
+        ->middleware(['auth:portal', 'verified']);
 
     Route::get('/home/detail_ticket_closed', [FrontendController::class, 'detail_ticket_closed'])
-        ->name('home.detail_ticket_closed')
+            ->name('home.detail_ticket_closed')
         ->middleware(['auth:portal', 'verified']);
 
     Route::get('/home/faqs_login', [FrontendController::class, 'faqs_login'])

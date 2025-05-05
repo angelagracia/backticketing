@@ -403,11 +403,26 @@ public function show($id)
     return view('front.layouts.detail_tiket', compact('ticket'));
 }
 
+    public function close_ticket($id)
+{
+    $ticket = Ticket::findOrFail($id);
 
+    // Cek apakah user yang login adalah pemilik tiket
+    if (auth('portal')->id() !== $ticket->user_id) {
+        abort(403, 'Anda tidak berhak menutup tiket ini.');
+    }
 
+    // Cek status tiket, jika belum ditutup
+    if (in_array($ticket->status_id, [1, 2])) { // 1=open, 2=process
+        $ticket->status_id = 3; // 3 = closed
+        $ticket->closed_at = now(); // jika pakai kolom ini
+        $ticket->save();
 
+        return redirect()->route('home.detail_ticket_closed')->with('success', 'Tiket berhasil ditutup.');
+    }
 
-
+    return redirect()->back()->with('error', 'Tiket sudah ditutup sebelumnya.');
+}
 
     public function detail_ticket_closed()
     {
