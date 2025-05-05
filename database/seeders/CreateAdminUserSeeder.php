@@ -18,11 +18,6 @@ class CreateAdminUserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456')
         ]);
-        $user2 = UserBo::create([
-            'name' => 'Admin BOO', 
-            'email' => 'admin12@gmail.com',
-            'password' => bcrypt('123456')
-        ]);
            
 
         // Buat role Admin dengan guard bo
@@ -36,6 +31,5 @@ class CreateAdminUserSeeder extends Seeder
          
         // Assign role ke user
         $user->assignRole($role);
-        $user2->assignRole($role);
     }
 }

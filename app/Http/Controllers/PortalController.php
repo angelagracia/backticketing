@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Portal;
 use Illuminate\View\View;
 use Illuminate\Support\Arr;
@@ -15,10 +16,13 @@ class PortalController extends Controller
 {
     public function index(Request $request): View
     {
+
         $data = Portal::latest()->paginate(5);
         // $users = User::whereNot('id', Auth::user()->id)->withCount(['unreadMessages'])->get();
-  
-        return view('back.portal.index',compact('data'))
+        $menu_master = Menu::whereNull('parent_code')
+        ->with('subMenu') // pastikan relasi subMenu ada di model Menu
+        ->get();
+        return view('back.portal.index',compact('data','menu_master'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 

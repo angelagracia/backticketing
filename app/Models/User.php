@@ -13,9 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
-
     protected $guard_name = 'bo';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -50,20 +48,15 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function ticket()
-    {
-        return $this->hasMany(Ticket::class,'id');
-    }
+    // public function ticket()
+    // {
+    //     return $this->hasMany(Ticket::class,'id');
+    // }
 
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'user_id'); // Sesuaikan dengan foreign key
     }
-
-    public function role()
-{
-    return $this->belongsTo(Role::class, 'role_id');
-}
 
     public function hasPermission($permission)
     {
@@ -71,6 +64,18 @@ class User extends Authenticatable implements MustVerifyEmail
             $query->where('name', $permission);
         })->exists();
     }
+
+    public function hasAccessToTicket($ticketId)
+    {
+        if ($this->is_admin) {
+            return true;
+        }
+
+        return \App\Models\Ticket::where('id', $ticketId)
+            ->where('user_portal_id', $this->id)
+            ->exists();
+    }
+
 
     
 }
