@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "2eede398cec28d1b9816f1cd2e5c1f0d",
+
     "packages": [
         {
             "name": "brick/math",
